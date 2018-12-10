@@ -14,8 +14,8 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     Fragment fragment = null;
+    Context context;
 
-    private TextView mTextMessage;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -35,17 +35,19 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        context = this;
-        startFragment(new HomeFragment());
-        mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        context = this;
+
+        startFragment(new HomeFragment());
+
     }
 
     @Override
@@ -62,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, fragment)
+                    .addToBackStack(null)
                     .commit();
             return true;
         }
