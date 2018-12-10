@@ -9,9 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class BookshelvesFragment extends Fragment {
+public class HomeFragment extends Fragment {
 
-    public BookshelvesFragment(){
+    public HomeFragment(){
 
     }
 
@@ -28,7 +28,7 @@ public class BookshelvesFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.bookshelves_fragment_layout, container, false);
+        return inflater.inflate(R.layout.home_fragment_layout, container, false);
     }
 
     @Override
@@ -50,5 +50,4 @@ public class BookshelvesFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
     }
-
 }

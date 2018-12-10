@@ -9,9 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class AllBooksFragment extends Fragment {
+public class UsersBooksFragment extends Fragment {
 
-    public AllBooksFragment(){
+    public UsersBooksFragment(){
 
     }
 
@@ -28,7 +28,7 @@ public class AllBooksFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(R.layout.users_books_fragment_layout, container, false);
     }
 
     @Override

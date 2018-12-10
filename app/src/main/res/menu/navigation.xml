@@ -7,13 +7,13 @@
         android:title="@string/title_home"/>
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_bookshelves"
         android:icon="@drawable/ic_collections_bookmark_black_24dp"
         android:title="@string/title_bookshelves"/>
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_your_books"
         android:icon="@drawable/ic_book_black_24dp"
-        android:title="@string/title_all_books"/>
+        android:title="@string/title_your_books"/>
 
 </menu>
