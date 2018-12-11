@@ -79,7 +79,7 @@ public class UsersBooksFragment extends Fragment {
                     Bundle bundle = new Bundle();
                     bundle.putParcelable("book", bookVolume);
                     editBookDialogFragment.setArguments(bundle);
-                    ft.add(R.id.dialog_container, editBookDialogFragment);
+                    ft.add(R.id.dialog_container, editBookDialogFragment, "edit_book_fragment");
                     ft.addToBackStack(null);
                     ft.commit();
                     /*BookVolumeViewModel.deleteBook(bookVolume);
