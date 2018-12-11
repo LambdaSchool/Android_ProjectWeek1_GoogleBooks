@@ -6,31 +6,40 @@ import org.json.JSONObject;
 
 public class Book {
 
-    private String title, review;
-    private Bitmap cover;
+    private String title, author, review, publishDate, googleBooksID, image;
     private Boolean isRead;
 
-    public Book(String title, String review, Bitmap cover, Boolean isRead) {
+    public Book(String title, String author, String review, String publishDate, String googleBooksID, String image) {
         this.title = title;
+        this.author = author;
         this.review = review;
-        this.cover = cover;
-        this.isRead = isRead;
-    }
-
-    public Book(JSONObject o) {
-        //Do Some things.
+        this.publishDate = publishDate;
+        this.googleBooksID = googleBooksID;
+        this.image = image;
     }
 
     public String getTitle() {
         return title;
     }
 
+    public String getAuthor() {
+        return author;
+    }
+
     public String getReview() {
         return review;
     }
 
-    public Bitmap getCover() {
-        return cover;
+    public String getPublishDate() {
+        return publishDate;
+    }
+
+    public String getGoogleBooksID() {
+        return googleBooksID;
+    }
+
+    public String getImage() {
+        return image;
     }
 
     public Boolean getRead() {

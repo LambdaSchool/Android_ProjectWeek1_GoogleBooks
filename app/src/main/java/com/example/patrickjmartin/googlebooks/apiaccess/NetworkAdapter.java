@@ -1,4 +1,4 @@
-package com.example.patrickjmartin.googlebooks;
+package com.example.patrickjmartin.googlebooks.apiaccess;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
