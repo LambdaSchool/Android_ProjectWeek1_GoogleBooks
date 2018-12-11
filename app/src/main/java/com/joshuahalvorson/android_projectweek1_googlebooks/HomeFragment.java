@@ -1,11 +1,15 @@
 package com.joshuahalvorson.android_projectweek1_googlebooks;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +22,12 @@ import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
     private EditText searchText;
-    private LinearLayout resultsContainer;
+    private RecyclerView recyclerView;
     private Button searchButton;
-    ArrayList<BookVolume> booksList;
+    private BookSearchListAdapter adapter;
+    ArrayList<BookVolume> bookVolumes;
+    private Activity activity;
+
     public HomeFragment(){
 
     }
@@ -45,8 +52,15 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         searchText = view.findViewById(R.id.search_for_book_edit_text);
-        resultsContainer = view.findViewById(R.id.search_results_container);
+        bookVolumes = new ArrayList<>();
         searchButton = view.findViewById(R.id.search_button);
+        activity = getActivity();
+        recyclerView = view.findViewById(R.id.search_results_list_recycler_view);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new BookSearchListAdapter(activity, bookVolumes);
+        recyclerView.setAdapter(adapter);
+
         BooksDbDao.initializeInstance(getContext());
     }
 
@@ -56,35 +70,7 @@ public class HomeFragment extends Fragment {
          searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        booksList = GoogleBooksApiDao.getBooksFromSearch(searchText.getText().toString());
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                resultsContainer.removeAllViews();
-                                for(int i = 0; i < booksList.size(); i++){
-                                    final TextView tv = new TextView(getContext());
-                                    final String title = booksList.get(i).getTitle();
-                                    final BookVolume bookVolume = booksList.get(i);
-                                    tv.setText(booksList.get(i).getTitle());
-                                    tv.setTextSize(20);
-                                    tv.setTextColor(Color.BLACK);
-                                    tv.setOnLongClickListener(new View.OnLongClickListener() {
-                                        @Override
-                                        public boolean onLongClick(View v) {
-                                            BookVolumeViewModel.addBook(bookVolume);
-                                            tv.setTextColor(Color.YELLOW);
-                                            return false;
-                                        }
-                                    });
-                                    resultsContainer.addView(tv);
-                                }
-                            }
-                        });
-                    }
-                }).start();
+                new getSearchResults().execute(searchText.getText().toString());
             }
         });
     }
@@ -97,5 +83,26 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    public class getSearchResults extends AsyncTask<String, Integer, ArrayList<BookVolume>>{
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<BookVolume> volumes) {
+            super.onPostExecute(volumes);
+            bookVolumes.clear();
+            bookVolumes.addAll(volumes);
+            adapter.notifyDataSetChanged();
+        }
+
+        @Override
+        protected ArrayList<BookVolume> doInBackground(String... strings) {
+            return GoogleBooksApiDao.getBooksFromSearch(strings[0]);
+        }
     }
 }
