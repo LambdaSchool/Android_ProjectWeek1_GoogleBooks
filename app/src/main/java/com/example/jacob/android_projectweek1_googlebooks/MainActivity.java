@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -21,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
     Context context;
     EditText editTextSearch;
     ProgressBar progressBar;
+    private ArrayList<Book> booksList = new ArrayList<>();
+    private LinearLayoutManager layoutManager;
+    private RecyclerView recyclerView;
+    private SearchListAdapter listAdapter;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -62,9 +69,16 @@ public class MainActivity extends AppCompatActivity {
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        recyclerView = findViewById(R.id.search_recycler_view);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(context);
+        recyclerView.setLayoutManager(layoutManager);
+        listAdapter = new SearchListAdapter(booksList, this);
+        recyclerView.setAdapter(listAdapter);
     }
 
-    public class getBooksTask extends AsyncTask<String, Integer, View> {
+    public class getBooksTask extends AsyncTask<String, Integer, ArrayList<Book>> {
 
         @Override
         protected void onPreExecute() {
@@ -73,16 +87,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(View view) {
-            super.onPostExecute(view);
+        protected void onPostExecute(ArrayList<Book> books) {
+            super.onPostExecute(books);
             progressBar.setVisibility(View.GONE);
-
+            booksList.clear();
+            booksList.addAll(books);
+            listAdapter.notifyDataSetChanged();
         }
 
         @Override
-        protected View doInBackground(String... strings) {
-            ArrayList<Book> temp = BookGoogleApiDao.searchBooks(strings[0]);
-            return null;
+        protected ArrayList<Book> doInBackground(String... strings) {
+            return BookGoogleApiDao.searchBooks(strings[0]);
         }
 
         @Override

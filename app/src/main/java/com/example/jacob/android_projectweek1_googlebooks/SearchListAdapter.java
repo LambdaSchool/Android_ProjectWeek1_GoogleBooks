@@ -2,6 +2,8 @@ package com.example.jacob.android_projectweek1_googlebooks;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -51,6 +53,7 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
     public void onBindViewHolder(@NonNull SearchListAdapter.ViewHolder viewHolder, int i) {
        final Book data = dataList.get(i);
        viewHolder.bookTitle.setText(data.getTitle());
+//       new getBookImageTask().execute()
        //TODO add other elements
     }
 
@@ -58,4 +61,8 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
     public int getItemCount() {
         return dataList.size();
     }
+
+
+
+
 }

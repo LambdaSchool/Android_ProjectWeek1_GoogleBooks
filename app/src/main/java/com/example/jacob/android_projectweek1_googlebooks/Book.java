@@ -5,7 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Book {
-    private String id, title, author, publishedDate, imageUrl;
+    private String id, title, author, publishedDate, imageUrl, cachedFileLocation;
 
     public Book(String id, String title, String author, String publishedDate, String imageUrl) {
         this.id = id;
