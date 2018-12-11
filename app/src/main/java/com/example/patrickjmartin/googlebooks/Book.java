@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 
 import org.json.JSONObject;
 
+//Should I make this parcelable?
 public class Book {
 
     private String title, author, review, publishDate, googleBooksID, image;
