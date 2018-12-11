@@ -11,4 +11,8 @@ public class BookVolumeViewModel {
     public static ArrayList<BookVolume> readBooks(){
         return repo.readBooks();
     }
+
+    public static void deleteBook(BookVolume bookVolume){
+        repo.deleteBook(bookVolume);
+    }
 }

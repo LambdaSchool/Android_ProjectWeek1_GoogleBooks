@@ -17,4 +17,8 @@ public class BookVolumeRepo {
         booksList = BooksDbDao.readAllBookEntries();
         return booksList;
     }
+
+    public void deleteBook(BookVolume bookVolume){
+        BooksDbDao.deleteBookEntry(bookVolume);
+    }
 }

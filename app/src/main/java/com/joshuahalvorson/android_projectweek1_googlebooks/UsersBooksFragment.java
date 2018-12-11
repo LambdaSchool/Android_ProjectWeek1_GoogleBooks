@@ -8,13 +8,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class UsersBooksFragment extends Fragment {
-    private TextView scrollView;
+    private LinearLayout scrollView;
+    ArrayList<BookVolume> bookVolumes;
 
     public UsersBooksFragment(){
 
@@ -45,9 +47,21 @@ public class UsersBooksFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ArrayList<BookVolume> bookVolumes = BookVolumeViewModel.readBooks();
+        bookVolumes = BookVolumeViewModel.readBooks();
         for(int i = 0; i < bookVolumes.size(); i++){
-            scrollView.setText(scrollView.getText() + bookVolumes.get(i).getTitle() + "\n");
+            final TextView tv = new TextView(getContext());
+            final BookVolume bookVolume = bookVolumes.get(i);
+            tv.setText(bookVolume.getTitle());
+            tv.setTextSize(25);
+            tv.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    BookVolumeViewModel.deleteBook(bookVolume);
+                    tv.setVisibility(View.GONE);
+                    return false;
+                }
+            });
+            scrollView.addView(tv);
         }
     }
 

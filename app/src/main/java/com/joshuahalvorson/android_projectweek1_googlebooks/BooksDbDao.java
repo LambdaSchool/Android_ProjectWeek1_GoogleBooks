@@ -60,4 +60,11 @@ public class BooksDbDao {
             return new ArrayList<>();
         }
     }
+
+    public static void deleteBookEntry(BookVolume bookVolume){
+        if(db != null){
+            String where = String.format("%s = '%s'", BooksDbContract.BookEntry.BOOKS_COLUMN_TITLE, bookVolume.getTitle());
+            int affectedRows = db.delete(BooksDbContract.BookEntry.BOOKS_TABLE_NAME, where, null);
+        }
+    }
 }
