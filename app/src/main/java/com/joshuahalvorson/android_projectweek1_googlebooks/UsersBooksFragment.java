@@ -1,6 +1,7 @@
 package com.joshuahalvorson.android_projectweek1_googlebooks;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -52,7 +53,23 @@ public class UsersBooksFragment extends Fragment {
             final TextView tv = new TextView(getContext());
             final BookVolume bookVolume = bookVolumes.get(i);
             tv.setText(bookVolume.getTitle());
+            tv.setTextColor(Color.BLACK);
             tv.setTextSize(25);
+            tv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(bookVolume.isHasRead() == 0){
+                        tv.setTextColor(Color.YELLOW);
+                        bookVolume.setHasRead(1);
+                        BookVolumeViewModel.updateBook(bookVolume);
+                    }else{
+                        tv.setTextColor(Color.BLACK);
+                        bookVolume.setHasRead(0);
+                        BookVolumeViewModel.updateBook(bookVolume);
+                    }
+
+                }
+            });
             tv.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {

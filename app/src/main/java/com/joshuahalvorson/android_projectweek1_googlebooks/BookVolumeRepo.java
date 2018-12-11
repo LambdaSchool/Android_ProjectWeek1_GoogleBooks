@@ -18,6 +18,10 @@ public class BookVolumeRepo {
         return booksList;
     }
 
+    public void updateBook(BookVolume bookVolume){
+        BooksDbDao.updateBookEntry(bookVolume);
+    }
+
     public void deleteBook(BookVolume bookVolume){
         BooksDbDao.deleteBookEntry(bookVolume);
     }
