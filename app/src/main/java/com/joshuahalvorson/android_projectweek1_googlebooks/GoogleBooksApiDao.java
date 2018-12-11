@@ -36,7 +36,7 @@ public class GoogleBooksApiDao {
                 if(volumeInfo.has("pageCount")){
                     pages = volumeInfo.getInt("pageCount");
                 }
-                BookVolume book = new BookVolume(title, imageUrl, null, authors, publishedDate, pages, false);
+                BookVolume book = new BookVolume(title, imageUrl, null, authors, publishedDate, pages, 0);
                 books.add(book);
             }
         } catch (JSONException e) {

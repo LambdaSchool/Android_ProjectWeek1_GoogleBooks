@@ -3,9 +3,9 @@ package com.joshuahalvorson.android_projectweek1_googlebooks;
 public class BookVolume {
     private String title, imageUrl, userReview, authors, publishedDate;
     private int pages;
-    private boolean hasRead;
+    private int hasRead;
 
-    public BookVolume(String title, String imageUrl, String userReview, String authors, String publishedDate, int pages, boolean hasRead) {
+    public BookVolume(String title, String imageUrl, String userReview, String authors, String publishedDate, int pages, int hasRead) {
         this.title = title;
         this.imageUrl = imageUrl;
         this.userReview = userReview;
@@ -63,11 +63,11 @@ public class BookVolume {
         this.userReview = userReview;
     }
 
-    public boolean isHasRead() {
+    public int isHasRead() {
         return hasRead;
     }
 
-    public void setHasRead(boolean hasRead) {
+    public void setHasRead(int hasRead) {
         this.hasRead = hasRead;
     }
 }

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
     private EditText searchText;
-    private TextView resultsContainer;
+    private LinearLayout resultsContainer;
     private Button searchButton;
     ArrayList<BookVolume> booksList;
     public HomeFragment(){
@@ -61,9 +61,7 @@ public class HomeFragment extends Fragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                for(int i = 0; i < booksList.size(); i++){
-                                    resultsContainer.setText(resultsContainer.getText().toString() + booksList.get(i).getTitle() + '\n');
-                                }
+                                generateTextViews(booksList);
                             }
                         });
                     }
@@ -80,5 +78,21 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    private void generateTextViews(ArrayList<BookVolume> booksList){
+        for(int i = 0; i < booksList.size(); i++){
+            TextView tv = new TextView(getContext());
+            tv.setText(booksList.get(i).getTitle());
+            tv.setTextSize(20);
+            tv.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    return false;
+                }
+            });
+            resultsContainer.addView(tv);
+        }
     }
 }
