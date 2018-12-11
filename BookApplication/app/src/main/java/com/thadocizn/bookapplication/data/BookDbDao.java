@@ -63,27 +63,6 @@ public class BookDbDao {
                     Book book;
 
                     book = getBookFromCursor(cursor);
-                   /* index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.COLUMN_NAME_BOOK_TITLE);
-                    String title = cursor.getString(index);
-
-                    index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.COLUMN_NAME_BOOK_IMAGE_URL);
-                    String imageUrl = cursor.getString(index);
-
-                    index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.COLUMN_NAME_BOOK_REVIEW);
-                    String bookReview = cursor.getString(index);
-
-                    index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.COLUMN_NAME_READ_BOOK);
-                    int readBook = cursor.getInt(index);
-
-                    index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.COLUMN_NAME_BOOK_ID);
-                    int idBook = cursor.getInt(index);
-
-                    book = new Book();
-                    book.setBookTitle(title);
-                    book.setBookImageUrl(imageUrl);
-                    book.setBookReview(bookReview);
-                    book.setReadBook(readBook);
-                    book.setBookId(idBook);*/
 
                     return book;
                 }

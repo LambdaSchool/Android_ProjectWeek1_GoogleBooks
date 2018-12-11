@@ -6,15 +6,22 @@ public class Bookshelf {
     private int bookId;
     private String shelfName;
 
-    public Bookshelf(int shelfId, String shelfName, int tagId, int bookId) {
+    public Bookshelf(int shelfId, int tagId, int bookId) {
         this.shelfId   = shelfId;
-        this.shelfName = shelfName;
         this.tagId     = tagId;
         this.bookId    = bookId;
     }
 
     public Bookshelf(int shelfId) {
         this.shelfId = shelfId;
+    }
+
+    public int getTagId() {
+        return tagId;
+    }
+
+    public void setTagId(int tagId) {
+        this.tagId = tagId;
     }
 
     public int getShelfId() {
@@ -25,11 +32,4 @@ public class Bookshelf {
         this.shelfId = shelfId;
     }
 
-    public String getShelfName() {
-        return shelfName;
-    }
-
-    public void setShelfName(String shelfName) {
-        this.shelfName = shelfName;
-    }
 }
