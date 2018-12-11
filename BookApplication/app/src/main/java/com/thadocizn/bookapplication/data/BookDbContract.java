@@ -45,7 +45,8 @@ public class BookDbContract {
                 COLUMN_NAME_BOOKSHELF_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_NAME_BOOK_ID + " INTEGER, " +
                 COLUMN_TAG_ID + " INTEGER, " +
-                "FOREIGN KEY(" + COLUMN_NAME_BOOK_ID + ") REFERENCES " + TABLE_NAME_BOOK + "(" + COLUMN_BOOK_ID + ")";
+                "FOREIGN KEY(book_id) REFERENCES books(_ID)," +
+                "FOREIGN KEY(tag_id) REFERENCES tags(_ID)";
 
 
         public static final String SQL_DELETE_TABLE_BOOK = "DROP TABLE IF EXISTS " + TABLE_NAME_BOOK + ";";

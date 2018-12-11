@@ -3,13 +3,40 @@ package com.thadocizn.bookapplication.classes;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Book implements Parcelable {
 
     private int bookId;
-    private String  bookTitle;
-    private String  bookImageUrl;
-    private String  bookReview;
+    private String bookTitle;
+    private String bookImageUrl;
+    private String bookReview;
     private int readBook;
+
+    public Book(JSONObject json) {
+
+        try {
+            this.bookId = json.getInt("id");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            this.bookTitle = json.getString("title");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            JSONObject links = json.getJSONObject("imageLinks");
+            this.bookImageUrl = links.getString("smallThumbnail");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+
+        }
+    }
 
     public Book(String bookTitle, String bookImageUrl, String bookReview, int bookId) {
         this.bookTitle = bookTitle;
