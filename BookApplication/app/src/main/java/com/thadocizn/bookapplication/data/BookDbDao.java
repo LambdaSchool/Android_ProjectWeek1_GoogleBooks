@@ -62,7 +62,8 @@ public class BookDbDao {
                 if (cursor.moveToNext()){
                     Book book;
 
-                    index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.COLUMN_NAME_BOOK_TITLE);
+                    book = getBookFromCursor(cursor);
+                   /* index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.COLUMN_NAME_BOOK_TITLE);
                     String title = cursor.getString(index);
 
                     index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.COLUMN_NAME_BOOK_IMAGE_URL);
@@ -82,7 +83,7 @@ public class BookDbDao {
                     book.setBookImageUrl(imageUrl);
                     book.setBookReview(bookReview);
                     book.setReadBook(readBook);
-                    book.setBookId(idBook);
+                    book.setBookId(idBook);*/
 
                     return book;
                 }
