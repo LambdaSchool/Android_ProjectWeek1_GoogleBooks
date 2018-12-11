@@ -2,11 +2,15 @@ package com.thadocizn.bookapplication.classes;
 
 public class Bookshelf {
     private int shelfId;
+    private int tagId;
+    private int bookId;
     private String shelfName;
 
-    public Bookshelf(int shelfId, String shelfName) {
-        this.shelfId = shelfId;
+    public Bookshelf(int shelfId, String shelfName, int tagId, int bookId) {
+        this.shelfId   = shelfId;
         this.shelfName = shelfName;
+        this.tagId     = tagId;
+        this.bookId    = bookId;
     }
 
     public Bookshelf(int shelfId) {
