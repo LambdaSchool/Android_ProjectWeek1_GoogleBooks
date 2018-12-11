@@ -5,23 +5,25 @@ import android.os.Parcelable;
 
 public class Book implements Parcelable {
 
+    private int bookId;
     private String  bookTitle;
     private String  bookImageUrl;
     private String  bookReview;
-    private boolean readBook;
+    private int readBook;
 
-    public Book(String bookTitle, String bookImageUrl, String bookReview) {
+    public Book(String bookTitle, String bookImageUrl, String bookReview, int bookId) {
         this.bookTitle = bookTitle;
         this.bookImageUrl = bookImageUrl;
         this.bookReview = bookReview;
-        this.readBook = false;
+        this.bookId = bookId;
     }
 
     protected Book(Parcel in) {
         bookTitle = in.readString();
         bookImageUrl = in.readString();
         bookReview = in.readString();
-        readBook = in.readByte() != 0;
+        readBook = in.readInt();
+        bookId = in.readInt();
     }
 
     public static final Creator<Book> CREATOR = new Creator<Book>() {
@@ -35,6 +37,18 @@ public class Book implements Parcelable {
             return new Book[size];
         }
     };
+
+    public Book() {
+
+    }
+
+    public int getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
+    }
 
     public String getBookTitle() {
         return bookTitle;
@@ -60,11 +74,11 @@ public class Book implements Parcelable {
         this.bookReview = bookReview;
     }
 
-    public boolean isReadBook() {
+    public int isReadBook() {
         return readBook;
     }
 
-    public void setReadBook(boolean readBook) {
+    public void setReadBook(int readBook) {
         this.readBook = readBook;
     }
 
@@ -78,7 +92,8 @@ public class Book implements Parcelable {
         dest.writeString(bookTitle);
         dest.writeString(bookImageUrl);
         dest.writeString(bookReview);
-        dest.writeByte((byte) (readBook ? 1 : 0));
+        dest.writeInt(readBook);
+        dest.writeInt(bookId);
     }
 
 }
