@@ -56,21 +56,6 @@ public class UsersBooksFragment extends Fragment {
             tv.setText(bookVolume.getTitle());
             tv.setTextColor(Color.BLACK);
             tv.setTextSize(25);
-            /*tv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(bookVolume.isHasRead() == 0){
-                        tv.setTextColor(Color.YELLOW);
-                        bookVolume.setHasRead(1);
-                        BookVolumeViewModel.updateBook(bookVolume);
-                    }else{
-                        tv.setTextColor(Color.BLACK);
-                        bookVolume.setHasRead(0);
-                        BookVolumeViewModel.updateBook(bookVolume);
-                    }
-
-                }
-            });*/
             tv.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
@@ -82,8 +67,6 @@ public class UsersBooksFragment extends Fragment {
                     ft.add(R.id.dialog_container, editBookDialogFragment, "edit_book_fragment");
                     ft.addToBackStack(null);
                     ft.commit();
-                    /*BookVolumeViewModel.deleteBook(bookVolume);
-                    tv.setVisibility(View.GONE);*/
                     return false;
                 }
             });
