@@ -13,6 +13,8 @@ public class BookDbDao {
 
     private static SQLiteDatabase db;
 
+    //TODO work on the table joins
+
     public static void initializeInstance(Context context){
         if (db == null){
             BookDbHelper helper = new BookDbHelper(context);
