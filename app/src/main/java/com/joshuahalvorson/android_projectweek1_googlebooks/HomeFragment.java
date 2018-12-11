@@ -60,7 +60,6 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new BookSearchListAdapter(activity, bookVolumes);
         recyclerView.setAdapter(adapter);
-
         BooksDbDao.initializeInstance(getContext());
     }
 
