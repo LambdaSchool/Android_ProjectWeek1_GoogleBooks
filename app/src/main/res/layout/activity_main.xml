@@ -59,4 +59,4 @@
 
 </android.support.constraint.ConstraintLayout>
 
-    <!--TODO: Navigation Buttons, move stuff to resources.-->
+    <!--TODO: Navigation Buttons, move stuff to string/dimen resources.-->
