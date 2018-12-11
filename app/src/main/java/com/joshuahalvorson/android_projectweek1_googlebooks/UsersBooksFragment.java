@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,7 @@ public class UsersBooksFragment extends Fragment {
             tv.setText(bookVolume.getTitle());
             tv.setTextColor(Color.BLACK);
             tv.setTextSize(25);
-            tv.setOnClickListener(new View.OnClickListener() {
+            /*tv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(bookVolume.isHasRead() == 0){
@@ -69,12 +70,20 @@ public class UsersBooksFragment extends Fragment {
                     }
 
                 }
-            });
+            });*/
             tv.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    BookVolumeViewModel.deleteBook(bookVolume);
-                    tv.setVisibility(View.GONE);
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    EditBookDialogFragment  editBookDialogFragment= new EditBookDialogFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("book", bookVolume);
+                    editBookDialogFragment.setArguments(bundle);
+                    ft.add(R.id.dialog_container, editBookDialogFragment);
+                    ft.addToBackStack(null);
+                    ft.commit();
+                    /*BookVolumeViewModel.deleteBook(bookVolume);
+                    tv.setVisibility(View.GONE);*/
                     return false;
                 }
             });
