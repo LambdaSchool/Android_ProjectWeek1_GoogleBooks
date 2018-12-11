@@ -13,9 +13,6 @@ public class BooksDbContract {
         public static final String BOOKS_COLUMN_PAGES = "pages";
         public static final String BOOKS_COLUMN_HAS_READ = "has_read";
 
-        public static final String BOOKSHELVES_TABLE_NAME = "bookshelves";
-
-
         public static final String SQL_CREATE_BOOKS_TABLE = String.format(
                 "CREATE TABLE IF NOT EXISTS %s (" +
                         "%s TEXT PRIMARY KEY, " +
@@ -37,6 +34,26 @@ public class BooksDbContract {
                 BOOKS_COLUMN_HAS_READ);
 
         public static final String SQL_DELETE_BOOKS_TABLE = "DROP TABLE IF EXISTS "
+                + BOOKS_TABLE_NAME + ";";
+
+        public static final String BOOKSHELVES_TABLE_NAME = "bookshelves";
+        public static final String BOOKSHELVES_COLUMN_TITLE = "bookshelf_name";
+
+        public static final String SQL_CREATE_BOOKSHELVES_TABLE = String.format(
+                "CREATE TABLE IF NOT EXISTS %s (" +
+                        "%s TEXT PRIMARY KEY, " +
+                        "%s TEXT, " +
+                        "%s TEXT, " +
+                        "%s TEXT, " +
+                        "%s TEXT, " +
+                        "%s TEXT, " +
+                        "%s INTEGER, " +
+                        "%s INTEGER);",
+                BOOKSHELVES_TABLE_NAME,
+                _ID,
+                BOOKSHELVES_COLUMN_TITLE);
+
+        public static final String SQL_DELETE_BOOKSHELVES_TABLE = "DROP TABLE IF EXISTS "
                 + BOOKSHELVES_TABLE_NAME + ";";
 
     }
