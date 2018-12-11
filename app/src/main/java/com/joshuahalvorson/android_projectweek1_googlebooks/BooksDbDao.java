@@ -21,12 +21,12 @@ public class BooksDbDao {
         if(db != null){
             ContentValues values = new ContentValues();
             values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_TITLE, bookVolume.getTitle());
-            values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_IMAGE_URL, bookVolume.getTitle());
-            values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_USER_REVIEW, bookVolume.getTitle());
-            values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_AUTHORS, bookVolume.getTitle());
-            values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_PUBLISHED_DATE, bookVolume.getTitle());
-            values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_PAGES, bookVolume.getTitle());
-            values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_HAS_READ, bookVolume.getTitle());
+            values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_IMAGE_URL, bookVolume.getImageUrl());
+            values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_USER_REVIEW, bookVolume.getUserReview());
+            values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_AUTHORS, bookVolume.getAuthors());
+            values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_PUBLISHED_DATE, bookVolume.getPublishedDate());
+            values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_PAGES, bookVolume.getPages());
+            values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_HAS_READ, bookVolume.isHasRead());
             long resultId = db.insert(BooksDbContract.BookEntry.BOOKS_TABLE_NAME, null, values);
         }
     }

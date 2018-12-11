@@ -17,7 +17,7 @@ public class BooksDbContract {
 
 
         public static final String SQL_CREATE_BOOKS_TABLE = String.format(
-                "CREATE TABLE %s (" +
+                "CREATE TABLE IF NOT EXISTS %s (" +
                         "%s TEXT PRIMARY KEY, " +
                         "%s TEXT, " +
                         "%s TEXT, " +

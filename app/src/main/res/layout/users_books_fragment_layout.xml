@@ -11,10 +11,14 @@
         android:layout_height="wrap_content"
         android:text="your books" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/your_books_list_recycler_view"
-        android:scrollbars="vertical"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.joshuahalvorson.android_projectweek1_googlebooks;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -46,6 +47,7 @@ public class HomeFragment extends Fragment {
         searchText = view.findViewById(R.id.search_for_book_edit_text);
         resultsContainer = view.findViewById(R.id.search_results_container);
         searchButton = view.findViewById(R.id.search_button);
+        BooksDbDao.initializeInstance(getContext());
     }
 
     @Override
@@ -61,7 +63,24 @@ public class HomeFragment extends Fragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                generateTextViews(booksList);
+                                resultsContainer.removeAllViews();
+                                for(int i = 0; i < booksList.size(); i++){
+                                    final TextView tv = new TextView(getContext());
+                                    final String title = booksList.get(i).getTitle();
+                                    final BookVolume bookVolume = booksList.get(i);
+                                    tv.setText(booksList.get(i).getTitle());
+                                    tv.setTextSize(20);
+                                    tv.setTextColor(Color.BLACK);
+                                    tv.setOnLongClickListener(new View.OnLongClickListener() {
+                                        @Override
+                                        public boolean onLongClick(View v) {
+                                            BookVolumeViewModel.addBook(bookVolume);
+                                            tv.setTextColor(Color.YELLOW);
+                                            return false;
+                                        }
+                                    });
+                                    resultsContainer.addView(tv);
+                                }
                             }
                         });
                     }
@@ -78,21 +97,5 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-    }
-
-    private void generateTextViews(ArrayList<BookVolume> booksList){
-        for(int i = 0; i < booksList.size(); i++){
-            TextView tv = new TextView(getContext());
-            tv.setText(booksList.get(i).getTitle());
-            tv.setTextSize(20);
-            tv.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-
-                    return false;
-                }
-            });
-            resultsContainer.addView(tv);
-        }
     }
 }
