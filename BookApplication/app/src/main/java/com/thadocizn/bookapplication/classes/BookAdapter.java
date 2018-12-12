@@ -11,13 +11,16 @@ import android.widget.TextView;
 import com.thadocizn.bookapplication.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> {
-    public BookAdapter(ArrayList<Book> bookList) {
+
+    private List<Book> bookList;
+
+    public BookAdapter(List<Book> bookList) {
         this.bookList = bookList;
     }
 
-    private ArrayList<Book> bookList;
     @NonNull
     @Override
     public BookAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int index) {

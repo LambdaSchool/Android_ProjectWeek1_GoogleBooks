@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Loader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -15,11 +16,13 @@ import android.widget.ImageButton;
 
 import com.thadocizn.bookapplication.classes.Book;
 import com.thadocizn.bookapplication.classes.BookAdapter;
+import com.thadocizn.bookapplication.data.BookDao;
 import com.thadocizn.bookapplication.data.BookDbDao;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements android.app.LoaderManager.LoaderCallbacks<ArrayList<Book>> {
+public class MainActivity extends AppCompatActivity {
 
     public static final int BOOK_LOADER_ID = 1;
     private EditText search;
@@ -27,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
     private ImageButton searchButton;
     private View loadingIndicator;
     private BookAdapter adapter;
-    private ArrayList<Book> bookList;
+    private List<Book> bookList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,42 +49,13 @@ public class MainActivity extends AppCompatActivity implements android.app.Loade
         RecyclerView.ItemDecoration itemDecoration =
                 new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
         recyclerView.addItemDecoration(itemDecoration);
+    }
 
-        if (checkConnection()){
-            android.app.LoaderManager loaderManager = getLoaderManager();
-            loaderManager.initLoader(BOOK_LOADER_ID, null, this);
-        }else {
-            loadingIndicator.setVisibility(View.GONE);
+    public class getBooks extends AsyncTask<String, Integer, ArrayList<Book>>{
+
+        @Override
+        protected ArrayList<Book> doInBackground(String... strings) {
+            return BookDao.findBooks(strings[0]);
         }
-    }
-
-    private Boolean checkConnection(){
-        ConnectivityManager connMgr = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        Boolean connected = false;
-        if (connMgr != null){
-
-            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-            if (networkInfo != null && networkInfo.isConnected()){
-                connected = true;
-            }else {
-                connected = false;
-            }
-        }
-        return connected;
-    }
-
-    @Override
-    public Loader<ArrayList<Book>> onCreateLoader(int id, Bundle args) {
-        return null;
-    }
-
-    @Override
-    public void onLoadFinished(Loader<ArrayList<Book>> loader, ArrayList<Book> data) {
-
-    }
-
-    @Override
-    public void onLoaderReset(Loader<ArrayList<Book>> loader) {
-
     }
 }
