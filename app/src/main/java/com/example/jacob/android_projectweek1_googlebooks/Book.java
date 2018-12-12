@@ -5,14 +5,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Book {
-    private String id, title, author, publishedDate, imageUrl, cachedFileLocation;
+    private String id, title, author, publishedDate, imageUrl, review;
+    private boolean hasBeenRead;
 
-    public Book(String id, String title, String author, String publishedDate, String imageUrl) {
+    public Book(String id, String title, String author, String publishedDate, String imageUrl, String review, boolean hasBeenRead) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.publishedDate = publishedDate;
         this.imageUrl = imageUrl;
+        this.review = review;
+        this.hasBeenRead = hasBeenRead;
     }
 
     public Book(JSONObject inputJson) {
@@ -60,7 +63,8 @@ public class Book {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        this.review = "";
+        this.hasBeenRead = false;
     }
 
     public String getId() {
@@ -101,5 +105,21 @@ public class Book {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getReview() {
+        return review;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
+    }
+
+    public boolean isHasBeenRead() {
+        return hasBeenRead;
+    }
+
+    public void setHasBeenRead(boolean hasBeenRead) {
+        this.hasBeenRead = hasBeenRead;
     }
 }

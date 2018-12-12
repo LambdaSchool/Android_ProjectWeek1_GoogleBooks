@@ -2,8 +2,6 @@ package com.example.jacob.android_projectweek1_googlebooks;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,32 +10,29 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class BookshelvesListAdapter extends RecyclerView.Adapter<BookshelvesListAdapter.ViewHolder> {
 
         static class ViewHolder extends RecyclerView.ViewHolder {
-            TextView bookTitle, bookContent;
+            TextView bookshelfTitle, bookContent;
             ImageView imageView;
             ViewGroup parentView;
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 imageView = itemView.findViewById(R.id.image_bookshelves_element);
-                bookTitle = itemView.findViewById(R.id.text_bookshelves_element_title);
+                bookshelfTitle = itemView.findViewById(R.id.text_bookshelves_element_title);
                 bookContent = itemView.findViewById(R.id.text_bookshelves_element_content);
                 parentView = itemView.findViewById(R.id.bookshelves_element_parent_layout);
             }
         }
 
-        private ArrayList<Book> dataList;
+        private ArrayList<Bookshelf> dataList;
         private Context context;
         private Activity activity;
 
-    BookshelvesListAdapter(ArrayList<Book> dataList, Activity activity) {
+    BookshelvesListAdapter(ArrayList<Bookshelf> dataList, Activity activity) {
             this.dataList = dataList;
             this.activity = activity;
         }
@@ -57,42 +52,12 @@ public class BookshelvesListAdapter extends RecyclerView.Adapter<BookshelvesList
 
         @Override
         public void onBindViewHolder(@NonNull BookshelvesListAdapter.ViewHolder viewHolder, int i) {
-            final Book data = dataList.get(i);
-            viewHolder.bookTitle.setText(data.getTitle());
-            viewHolder.bookContent.setText(data.getAuthor());
-            String imageUrl = data.getImageUrl();
-            if (imageUrl != null) {
-                String[] urlParts = imageUrl.substring(imageUrl.indexOf("id=") + 3).split("&");
-                String fileName = urlParts[0];
-                File file = getFileFromCache(fileName);
-                Bitmap bitmap = null;
-                try {
-                    bitmap = BitmapFactory.decodeStream(new FileInputStream(file));
-                    viewHolder.imageView.setImageBitmap(bitmap);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                    viewHolder.imageView.setImageResource(R.color.colorPrimaryDark);
-                } catch (NullPointerException e) {
-                    viewHolder.imageView.setImageResource(R.color.colorPrimaryDark);
-                }
-            }
+            final Bookshelf data = dataList.get(i);
+            viewHolder.bookshelfTitle.setText(data.getTitle());
         }
 
         @Override
         public int getItemCount() {
             return dataList.size();
-        }
-
-        private File getFileFromCache(String searchText) {
-            File file = null;
-            String filePath = null;
-            File[] items = context.getCacheDir().listFiles();
-            for (File item : items) {
-                if (item.getName().contains(searchText)) {
-                    file = item;
-                    break;
-                }
-            }
-            return file;
         }
     }
