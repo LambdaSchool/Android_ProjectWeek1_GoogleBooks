@@ -95,8 +95,20 @@ public class MainActivity extends AppCompatActivity {
             booksList.addAll(books);
             listAdapter.notifyDataSetChanged();
             for (int i = 0; i < books.size(); ++i) {
-                String url = books.get(i).getImageUrl();
-                new getBookImageTask().execute(url, String.valueOf(i));
+                String imageUrl = books.get(i).getImageUrl();
+                String[] urlParts = imageUrl.substring(imageUrl.indexOf("id=") + 3).split("&");
+                String searchText = urlParts[0];
+                File[] items = context.getCacheDir().listFiles();
+                Boolean fileFound = false;
+                for (File item : items) {
+                    if (item.getName().contains(searchText)) {
+                        fileFound = true;
+                        break;
+                    }
+                }
+                if (!fileFound) {
+                    new getBookImageTask().execute(imageUrl, String.valueOf(i));
+                }
             }
         }
 
@@ -154,6 +166,4 @@ public class MainActivity extends AppCompatActivity {
             this.index = index;
         }
     }
-
-
 }

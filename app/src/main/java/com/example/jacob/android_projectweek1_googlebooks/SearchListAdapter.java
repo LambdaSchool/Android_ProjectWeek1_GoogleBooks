@@ -2,10 +2,8 @@ package com.example.jacob.android_projectweek1_googlebooks;
 
 import android.app.Activity;
 import android.content.Context;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -86,7 +84,7 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
         return dataList.size();
     }
 
-    public File getFileFromCache(String searchText) {
+    private File getFileFromCache(String searchText) {
         File file = null;
         String filePath = null;
         File[] items = context.getCacheDir().listFiles();
