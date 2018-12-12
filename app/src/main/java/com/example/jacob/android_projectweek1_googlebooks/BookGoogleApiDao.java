@@ -17,14 +17,15 @@ public class BookGoogleApiDao {
 
     private static final String BASE_URL = "https://www.googleapis.com/books/v1/volumes/";
     private static final String SEARCH_SUFFIX = "?q=";
+    private static final String SEARCH_ENDING= "&maxResults=40";
 
-    private static final String SEARCH_URL = BASE_URL + SEARCH_SUFFIX;
+    private static final String SEARCH_URL = BASE_URL + SEARCH_SUFFIX + "%s" + SEARCH_ENDING ;
 
 
     public static ArrayList<Book> searchBooks(String searchString) {
         Book book = null;
         ArrayList<Book> books = new ArrayList<>();
-        String fullUrl = SEARCH_URL + searchString;
+        String fullUrl = String.format(SEARCH_URL,searchString);
         final String result = NetworkAdapter.httpRequest(fullUrl, NetworkAdapter.GET);
         Log.i("GoogleAPI DAO", result);
         try {
@@ -43,23 +44,27 @@ public class BookGoogleApiDao {
     }
 
     public static File getImageFile(String url, Context context) {
-        Bitmap bitmap = NetworkAdapter.httpImageRequest(url);
-        String[] urlParts = url.substring(url.indexOf("id=")).split("&");
-        String fileName = urlParts[urlParts.length - 1];
-        FileOutputStream fileOutputStream = null;
         File file = null;
-        try {
-            file = File.createTempFile(fileName, null, context.getCacheDir());
-            fileOutputStream = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fileOutputStream != null) {
-                try {
-                    fileOutputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+        if (url != null) {
+            Bitmap bitmap = NetworkAdapter.httpImageRequest(url);
+            String[] urlParts = url.substring(url.indexOf("id=")+3).split("&");
+            String fileName = urlParts[0];
+            FileOutputStream fileOutputStream = null;
+
+            try {
+                file = File.createTempFile(fileName, null, context.getCacheDir());
+                fileOutputStream = new FileOutputStream(file);
+                //TODO figure out if I need/want compression thing below.
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (fileOutputStream != null) {
+                    try {
+                        fileOutputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }

@@ -2,14 +2,21 @@ package com.example.jacob.android_projectweek1_googlebooks;
 
 import android.app.Activity;
 import android.content.Context;
+
 import android.graphics.Bitmap;
-import android.os.AsyncTask;
+import android.graphics.BitmapFactory;
+
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import java.util.ArrayList;
 
@@ -17,10 +24,12 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView bookTitle, bookContent;
+        ImageView imageView;
         ViewGroup parentView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            imageView = itemView.findViewById(R.id.image_search_element);
             bookTitle = itemView.findViewById(R.id.text_search_element_title);
             bookContent = itemView.findViewById(R.id.text_search_element_content);
             parentView = itemView.findViewById(R.id.search_element_parent_layout);
@@ -31,7 +40,7 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
     private Context context;
     private Activity activity;
 
-   SearchListAdapter(ArrayList<Book> dataList, Activity activity) {
+    SearchListAdapter(ArrayList<Book> dataList, Activity activity) {
         this.dataList = dataList;
         this.activity = activity;
     }
@@ -51,10 +60,24 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull SearchListAdapter.ViewHolder viewHolder, int i) {
-       final Book data = dataList.get(i);
-       viewHolder.bookTitle.setText(data.getTitle());
-//       new getBookImageTask().execute()
-       //TODO add other elements
+        final Book data = dataList.get(i);
+        viewHolder.bookTitle.setText(data.getTitle());
+        String imageUrl = data.getImageUrl();
+        if (imageUrl != null) {
+            String[] urlParts = imageUrl.substring(imageUrl.indexOf("id=") + 3).split("&");
+            String fileName = urlParts[0];
+            File file = getFileFromCache(fileName);
+            Bitmap bitmap = null;
+            try {
+                bitmap = BitmapFactory.decodeStream(new FileInputStream(file));
+                viewHolder.imageView.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                viewHolder.imageView.setImageResource(R.color.colorPrimaryDark);
+            } catch (NullPointerException e) {
+                viewHolder.imageView.setImageResource(R.color.colorPrimaryDark);
+            }
+        }
     }
 
     @Override
@@ -62,7 +85,16 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
         return dataList.size();
     }
 
-
-
-
+    public File getFileFromCache(String searchText) {
+        File file = null;
+        String filePath = null;
+        File[] items = context.getCacheDir().listFiles();
+        for (File item : items) {
+            if (item.getName().contains(searchText)) {
+                file = item;
+                break;
+            }
+        }
+        return file;
+    }
 }

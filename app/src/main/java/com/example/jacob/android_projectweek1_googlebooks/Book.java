@@ -15,29 +15,35 @@ public class Book {
         this.imageUrl = imageUrl;
     }
 
-    public Book(JSONObject json) {
+    public Book(JSONObject inputJson) {
+
         try {
-            this.id = json.getString("id");
+            this.id = inputJson.getString("id");
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        JSONObject json = null;
         try {
-            this.title = json.getString("title");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        try {
-            JSONArray authors = json.getJSONArray("authors");
-            author = "";
-            for (int i = 0; i < authors.length(); i++) {
-                if (i < (authors.length() - 1)) {
-                    author += authors.getString(i) + ", ";
-                } else {
-                    author += authors.getString(i);
-                }
+            json = inputJson.getJSONObject("volumeInfo");
+
+            try {
+                this.title = json.getString("title");
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+            try {
+                JSONArray authors = json.getJSONArray("authors");
+                author = "";
+                for (int i = 0; i < authors.length(); i++) {
+                    if (i < (authors.length() - 1)) {
+                        author += authors.getString(i) + ", ";
+                    } else {
+                        author += authors.getString(i);
+                    }
+                }
                 this.author = author;
-            } catch(JSONException e){
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
             try {
@@ -51,46 +57,49 @@ public class Book {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
-        public String getId () {
-            return id;
-        }
-
-        public void setId (String id){
-            this.id = id;
-        }
-
-        public String getTitle () {
-            return title;
-        }
-
-        public void setTitle (String title){
-            this.title = title;
-        }
-
-        public String getAuthor () {
-            return author;
-        }
-
-        public void setAuthor (String author){
-            this.author = author;
-        }
-
-        public String getPublishedDate () {
-            return publishedDate;
-        }
-
-        public void setPublishedDate (String publishedDate){
-            this.publishedDate = publishedDate;
-        }
-
-        public String getImageUrl () {
-            return imageUrl;
-        }
-
-        public void setImageUrl (String imageUrl){
-            this.imageUrl = imageUrl;
-        }
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getPublishedDate() {
+        return publishedDate;
+    }
+
+    public void setPublishedDate(String publishedDate) {
+        this.publishedDate = publishedDate;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+}

@@ -1,21 +1,25 @@
 package com.example.jacob.android_projectweek1_googlebooks;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
+
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -83,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            booksList.clear();
             progressBar.setVisibility(View.VISIBLE);
         }
 
@@ -90,9 +95,12 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(ArrayList<Book> books) {
             super.onPostExecute(books);
             progressBar.setVisibility(View.GONE);
-            booksList.clear();
             booksList.addAll(books);
             listAdapter.notifyDataSetChanged();
+            for (int i = 0; i < books.size(); ++i) {
+                String url = books.get(i).getImageUrl();
+                new getBookImageTask().execute(url, String.valueOf(i));
+            }
         }
 
         @Override
@@ -106,4 +114,49 @@ public class MainActivity extends AppCompatActivity {
             progressBar.setProgress(values[0]);
         }
     }
+
+    public class getBookImageTask extends AsyncTask<String, Integer, Wrapper> {
+
+        @Override
+        protected void onPostExecute(Wrapper wrapper) {
+            super.onPostExecute(wrapper);
+            File imageFile = wrapper.getFile();
+            //TODO get rid of wrapper.
+            int index = wrapper.getIndex();
+            listAdapter.notifyItemChanged(index);
+        }
+
+        @Override
+        protected Wrapper doInBackground(String... strings) {
+            File file = BookGoogleApiDao.getImageFile(strings[0], context);
+            int index = Integer.parseInt(strings[1]);
+            Wrapper wrapper = new Wrapper();
+            wrapper.setFile(file);
+            wrapper.setIndex(index);
+            return wrapper;
+        }
+    }
+
+    private class Wrapper {
+        public File file;
+        public int index;
+
+        public File getFile() {
+            return file;
+        }
+
+        public void setFile(File file) {
+            this.file = file;
+        }
+
+        public int getIndex() {
+            return index;
+        }
+
+        public void setIndex(int index) {
+            this.index = index;
+        }
+    }
+
+
 }
