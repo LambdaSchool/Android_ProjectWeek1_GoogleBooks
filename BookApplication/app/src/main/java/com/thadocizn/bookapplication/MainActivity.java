@@ -25,7 +25,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     public static final int BOOK_LOADER_ID = 1;
-    private EditText search;
+    public EditText search;
     private RecyclerView recyclerView;
     private ImageButton searchButton;
     private View loadingIndicator;
@@ -44,6 +44,13 @@ public class MainActivity extends AppCompatActivity {
         loadingIndicator = findViewById(R.id.progressBar);
         bookList = new ArrayList<>();
 
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new getBooks().execute(search.getText().toString());
+            }
+        });
+
         adapter = new BookAdapter(bookList);
         recyclerView.setAdapter(adapter);
         RecyclerView.ItemDecoration itemDecoration =
@@ -51,7 +58,12 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(itemDecoration);
     }
 
-    public class getBooks extends AsyncTask<String, Integer, ArrayList<Book>>{
+    public static class getBooks extends AsyncTask<String, Integer, ArrayList<Book>>{
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+        }
 
         @Override
         protected ArrayList<Book> doInBackground(String... strings) {
