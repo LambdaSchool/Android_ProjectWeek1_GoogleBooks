@@ -30,13 +30,14 @@ public class GoogleBooksApiDao {
                     }
                 }
                 String title = volumeInfo.getString("title");
+                String desc = volumeInfo.getString("description");
                 String imageUrl = imageUrls.getString("thumbnail");
                 String publishedDate = volumeInfo.getString("publishedDate");
                 int pages = 0;
                 if(volumeInfo.has("pageCount")){
                     pages = volumeInfo.getInt("pageCount");
                 }
-                BookVolume book = new BookVolume(title, imageUrl, null, authors, publishedDate, pages, 0, 0);
+                BookVolume book = new BookVolume(title, desc, imageUrl, null, authors, publishedDate, pages, 0, 0);
                 books.add(book);
             }
         } catch (JSONException e) {

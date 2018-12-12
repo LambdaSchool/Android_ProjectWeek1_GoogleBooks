@@ -35,7 +35,13 @@ public class BookSearchListAdapter extends RecyclerView.Adapter<BookSearchListAd
     @Override
     public void onBindViewHolder(@NonNull final BookSearchListAdapter.ViewHolder viewHolder, int i) {
         final BookVolume bookVolume = bookVolumes.get(i);
-        viewHolder.titleText.setText(bookVolume.getTitle());
+        String title = bookVolume.getTitle();
+        String authors = bookVolume.getAuthors().replaceAll(", $", "");
+        String descFull = bookVolume.getDesc();
+        String descCut = "";
+        if(descFull.length() > 100)
+            descCut = descFull.substring(0,75) + "...";
+        viewHolder.titleText.setText(title + '\n' + authors + '\n' + descCut);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -48,8 +54,6 @@ public class BookSearchListAdapter extends RecyclerView.Adapter<BookSearchListAd
                 });
             }
         }).start();
-        //viewHolder.authorText.setText(bookVolume.getAuthors());
-        //viewHolder.descText.setText("description");
         viewHolder.parentView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -66,7 +70,7 @@ public class BookSearchListAdapter extends RecyclerView.Adapter<BookSearchListAd
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView titleText, authorText, descText;
+        TextView titleText;
         ImageView imageView;
         CardView parentView;
 
@@ -74,8 +78,6 @@ public class BookSearchListAdapter extends RecyclerView.Adapter<BookSearchListAd
             super(itemView);
             titleText = itemView.findViewById(R.id.title_text);
             imageView = itemView.findViewById(R.id.image_view);
-            //authorText = itemView.findViewById(R.id.author_text);
-            //descText = itemView.findViewById(R.id.desc_text);
             parentView = itemView.findViewById(R.id.parent_view);
         }
     }

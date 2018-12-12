@@ -6,6 +6,7 @@ public class BooksDbContract {
     public static class BookEntry implements BaseColumns {
         public static final String BOOKS_TABLE_NAME = "books";
         public static final String BOOKS_COLUMN_TITLE = "title";
+        public static final String BOOKS_COLUMN_BOOK_DESC = "desc";
         public static final String BOOKS_COLUMN_IMAGE_URL = "image";
         public static final String BOOKS_COLUMN_USER_REVIEW = "user_review";
         public static final String BOOKS_COLUMN_AUTHORS = "authors";
@@ -22,12 +23,14 @@ public class BooksDbContract {
                         "%s TEXT, " +
                         "%s TEXT, " +
                         "%s TEXT, " +
+                        "%s TEXT, " +
                         "%s INTEGER, " +
                         "%s INTEGER, " +
                         "%s INTEGER);",
                 BOOKS_TABLE_NAME,
                 _ID,
                 BOOKS_COLUMN_TITLE,
+                BOOKS_COLUMN_BOOK_DESC,
                 BOOKS_COLUMN_IMAGE_URL,
                 BOOKS_COLUMN_USER_REVIEW,
                 BOOKS_COLUMN_AUTHORS,
