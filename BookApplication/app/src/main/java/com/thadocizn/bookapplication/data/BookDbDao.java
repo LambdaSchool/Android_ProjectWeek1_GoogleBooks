@@ -121,6 +121,27 @@ public class BookDbDao {
         }
     }
 
+    public static void updateTag(Tag tag) {
+
+        if (db != null){
+
+
+            String whereClause = String.format("%s = '%s'",
+                    BookDbContract.BookEntry.COLUMN_TAG_ID,
+                    tag.getTagId());
+            Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE %s",
+                    BookDbContract.BookEntry.TABLE_NAME_TAG, whereClause),
+                    null);
+
+            if (cursor.getCount() == 1){
+                ContentValues values = new ContentValues();
+                values.put(BookDbContract.BookEntry.COLUMN_NAME_TAG, tag.getTagName());
+                int row = db.update(BookDbContract.BookEntry.TABLE_NAME_TAG, values, whereClause, null);
+            }
+
+        }
+    }
+
     public static void updateBook(Book book){
         if (db != null){
 
