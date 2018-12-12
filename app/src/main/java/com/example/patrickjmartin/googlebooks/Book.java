@@ -19,7 +19,7 @@ public class Book {
         this.image = image;
     }
 
-    public Book(JS)
+
 
     public String getTitle() {
         return title;

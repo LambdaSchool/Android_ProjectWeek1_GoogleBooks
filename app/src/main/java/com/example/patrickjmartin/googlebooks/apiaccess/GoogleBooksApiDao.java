@@ -12,9 +12,9 @@ public class GoogleBooksApiDao {
 
     //Basic search, no fancy paramteters,
     private static final String BASE_URL = "https://www.googleapis.com/books/v1/volumes?q=";
-
+    private static final String MAX_RESULTS = "&maxResults=25";
     public static ArrayList<Book> searchGoogleBooks(final String searchTerm) {
-        ArrayList<Book> foundBooks = new ArrayList<>();
+        final ArrayList<Book> foundBooks = new ArrayList<>();
 
         //Runnable dealing with a ton of elements in items
         new Thread(new Runnable() {
@@ -28,11 +28,12 @@ public class GoogleBooksApiDao {
                     JSONObject volumeInfo = dataJsonArray.getJSONObject(i).getJSONObject("volumeInfo");
                     String title = volumeInfo.getString("title");
                     JSONArray authorsJsonArray = volumeInfo.getJSONArray("authors");
-                    String author = (authorsJsonArray == null) ? "" :
-
-
+                    String author = (authorsJsonArray == null) ? "" : parseAuthors(authorsJsonArray);
+                    String publishDate = volumeInfo.getString("publishedDate");
+                    String googleBooksId = toplevel.getString("id");
+                    String image = volumeInfo.getJSONObject("imageLinks").getString("thumbnail");
+                    foundBooks.add(new Book(title, author, null, publishDate, googleBooksId, image));
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -43,11 +44,23 @@ public class GoogleBooksApiDao {
         return foundBooks;
     }
 
-    private String parseAuthors(JSONArray authorsAry) {
+    private static String parseAuthors(JSONArray authorsAry) {
 
-        Strring authors;
+        StringBuilder authorsString = new StringBuilder();
 
-        return authorsString;
+        for (int i = 0; i < authorsAry.length(); i++) {
+            try {
+                if (i == 0) {
+                    authorsString.append(authorsAry.getString(i));
+                } else {
+                    authorsString.append(" - ").append(authorsAry.getString(i));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return authorsString.toString();
     }
 
 }
