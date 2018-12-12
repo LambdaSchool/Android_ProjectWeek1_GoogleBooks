@@ -8,6 +8,7 @@ public class BooksDbContract {
         public static final String BOOKS_COLUMN_TITLE = "title";
         public static final String BOOKS_COLUMN_BOOK_DESC = "desc";
         public static final String BOOKS_COLUMN_IMAGE_URL = "image";
+        public static final String BOOKS_COLUMN_SALE_LINK = "sale_link";
         public static final String BOOKS_COLUMN_USER_REVIEW = "user_review";
         public static final String BOOKS_COLUMN_AUTHORS = "authors";
         public static final String BOOKS_COLUMN_PUBLISHED_DATE = "published_date";
@@ -24,6 +25,7 @@ public class BooksDbContract {
                         "%s TEXT, " +
                         "%s TEXT, " +
                         "%s TEXT, " +
+                        "%s TEXT, " +
                         "%s INTEGER, " +
                         "%s INTEGER, " +
                         "%s INTEGER);",
@@ -32,6 +34,7 @@ public class BooksDbContract {
                 BOOKS_COLUMN_TITLE,
                 BOOKS_COLUMN_BOOK_DESC,
                 BOOKS_COLUMN_IMAGE_URL,
+                BOOKS_COLUMN_SALE_LINK,
                 BOOKS_COLUMN_USER_REVIEW,
                 BOOKS_COLUMN_AUTHORS,
                 BOOKS_COLUMN_PUBLISHED_DATE,

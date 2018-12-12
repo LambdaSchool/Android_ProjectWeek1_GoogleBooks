@@ -24,6 +24,7 @@ public class BooksDbDao {
             values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_TITLE, bookVolume.getTitle());
             values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_BOOK_DESC, bookVolume.getDesc());
             values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_IMAGE_URL, bookVolume.getImageUrl());
+            values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_SALE_LINK, bookVolume.getSaleLink());
             values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_USER_REVIEW, bookVolume.getUserReview());
             values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_AUTHORS, bookVolume.getAuthors());
             values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_PUBLISHED_DATE, bookVolume.getPublishedDate());
@@ -183,6 +184,8 @@ public class BooksDbDao {
         String desc = cursor.getString(index);
         index = cursor.getColumnIndexOrThrow(BooksDbContract.BookEntry.BOOKS_COLUMN_IMAGE_URL);
         String imageUrl = cursor.getString(index);
+        index = cursor.getColumnIndexOrThrow(BooksDbContract.BookEntry.BOOKS_COLUMN_SALE_LINK);
+        String saleLink = cursor.getString(index);
         index = cursor.getColumnIndexOrThrow(BooksDbContract.BookEntry.BOOKS_COLUMN_USER_REVIEW);
         String userReview = cursor.getString(index);
         index = cursor.getColumnIndexOrThrow(BooksDbContract.BookEntry.BOOKS_COLUMN_AUTHORS);
@@ -195,7 +198,7 @@ public class BooksDbDao {
         int hasRead = cursor.getInt(index);
         index = cursor.getColumnIndexOrThrow(BooksDbContract.BookEntry.BOOKS_COLUMN_IS_FAVORITE);
         int isFavorite = cursor.getInt(index);
-        return new BookVolume(title, desc, imageUrl, userReview, authors, publishedDate, pages, hasRead, isFavorite);
+        return new BookVolume(title, desc, imageUrl, saleLink, userReview, authors, publishedDate, pages, hasRead, isFavorite);
     }
 
     private static Bookshelf getBookshelfData(Cursor cursor){
@@ -203,12 +206,5 @@ public class BooksDbDao {
         index = cursor.getColumnIndexOrThrow(BooksDbContract.BookEntry.BOOKSHELVES_COLUMN_TITLE);
         String name = cursor.getString(index);
         return new Bookshelf(name);
-    }
-
-    private static String getBookTitlesInBookshelfData(Cursor cursor){
-        int index;
-        index = cursor.getColumnIndexOrThrow(BooksDbContract.BookEntry.BOOKSHELVES_BOOKS_TABLE_COLUMN_BOOK_ID);
-        String title = cursor.getString(index);
-        return title;
     }
 }

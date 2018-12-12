@@ -19,6 +19,7 @@ public class GoogleBooksApiDao {
             for(int i = 0; i < booksArray.length(); i++){
                 JSONObject bookObject = booksArray.getJSONObject(i);
                 JSONObject volumeInfo = bookObject.getJSONObject("volumeInfo");
+                JSONObject saleInfo = bookObject.getJSONObject("saleInfo");
                 JSONObject imageUrls = volumeInfo.getJSONObject("imageLinks");
                 String authors = "";
                 if(volumeInfo.has("authors")){
@@ -32,12 +33,16 @@ public class GoogleBooksApiDao {
                 String title = volumeInfo.getString("title");
                 String desc = volumeInfo.getString("description");
                 String imageUrl = imageUrls.getString("thumbnail");
+                String saleLink = "";
+                if(saleInfo.has("buyLink")){
+                    saleLink = saleInfo.getString("buyLink");
+                }
                 String publishedDate = volumeInfo.getString("publishedDate");
                 int pages = 0;
                 if(volumeInfo.has("pageCount")){
                     pages = volumeInfo.getInt("pageCount");
                 }
-                BookVolume book = new BookVolume(title, desc, imageUrl, null, authors, publishedDate, pages, 0, 0);
+                BookVolume book = new BookVolume(title, desc, imageUrl, saleLink, null, authors, publishedDate, pages, 0, 0);
                 books.add(book);
             }
         } catch (JSONException e) {

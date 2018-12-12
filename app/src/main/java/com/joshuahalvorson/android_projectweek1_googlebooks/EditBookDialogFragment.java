@@ -16,7 +16,7 @@ import android.widget.CheckBox;
 import java.util.ArrayList;
 
 public class EditBookDialogFragment extends Fragment {
-    private Button deleteButton, addToBookshelfButton, writeReviewButton;
+    private Button deleteButton, addToBookshelfButton, writeReviewButton, getQrCodeButton;
     private CheckBox setHasReadCheckBox, setFavoriteCheckBox;
     private BookVolume bookVolume;
     private ArrayList<Bookshelf> bookshelves;
@@ -50,6 +50,7 @@ public class EditBookDialogFragment extends Fragment {
         setHasReadCheckBox = view.findViewById(R.id.set_has_read);
         setFavoriteCheckBox = view.findViewById(R.id.set_favorite);
         writeReviewButton = view.findViewById(R.id.write_review_button);
+        getQrCodeButton = view.findViewById(R.id.get_qr_code_button);
     }
 
     @Override
@@ -123,6 +124,19 @@ public class EditBookDialogFragment extends Fragment {
                 bundle.putParcelable("book", bookVolume);
                 addBookToBookshelfDialogFragment.setArguments(bundle);
                 ft.add(R.id.dialog_container, addBookToBookshelfDialogFragment, "edit_review_fragment");
+                ft.addToBackStack(null);
+                ft.commit();
+            }
+        });
+        getQrCodeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                QrCodeDialogFragment qrCodeDialogFragment = new QrCodeDialogFragment();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("book", bookVolume);
+                qrCodeDialogFragment.setArguments(bundle);
+                ft.add(R.id.dialog_container, qrCodeDialogFragment, "qr_code_fragment");
                 ft.addToBackStack(null);
                 ft.commit();
             }

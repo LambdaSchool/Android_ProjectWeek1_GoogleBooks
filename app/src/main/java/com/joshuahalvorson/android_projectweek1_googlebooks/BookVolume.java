@@ -4,15 +4,16 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class BookVolume implements Parcelable {
-    private String title, desc, imageUrl, userReview, authors, publishedDate;
+    private String title, desc, imageUrl, saleLink, userReview, authors, publishedDate;
     private int pages;
     private int hasRead;
     private int isFavorite;
 
-    public BookVolume(String title, String desc, String imageUrl, String userReview, String authors, String publishedDate, int pages, int hasRead, int isFavorite) {
+    public BookVolume(String title, String desc, String imageUrl, String saleLink,String userReview, String authors, String publishedDate, int pages, int hasRead, int isFavorite) {
         this.title = title;
         this.desc = desc;
         this.imageUrl = imageUrl;
+        this.saleLink = saleLink;
         this.userReview = userReview;
         this.authors = authors;
         this.publishedDate = publishedDate;
@@ -25,6 +26,7 @@ public class BookVolume implements Parcelable {
         title = in.readString();
         desc = in.readString();
         imageUrl = in.readString();
+        saleLink = in.readString();
         userReview = in.readString();
         authors = in.readString();
         publishedDate = in.readString();
@@ -44,6 +46,14 @@ public class BookVolume implements Parcelable {
             return new BookVolume[size];
         }
     };
+
+    public String getSaleLink() {
+        return saleLink;
+    }
+
+    public void setSaleLink(String saleLink) {
+        this.saleLink = saleLink;
+    }
 
     public int getIsFavorite() {
         return isFavorite;
@@ -127,6 +137,7 @@ public class BookVolume implements Parcelable {
         dest.writeString(title);
         dest.writeString(desc);
         dest.writeString(imageUrl);
+        dest.writeString(saleLink);
         dest.writeString(userReview);
         dest.writeString(authors);
         dest.writeString(publishedDate);
