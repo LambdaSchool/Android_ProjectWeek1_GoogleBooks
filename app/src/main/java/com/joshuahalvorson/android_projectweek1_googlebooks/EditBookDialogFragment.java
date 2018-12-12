@@ -96,7 +96,7 @@ public class EditBookDialogFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ReviewBookFragment  reviewBookFragment = new ReviewBookFragment();
+                EditBookReviewFragment reviewBookFragment = new EditBookReviewFragment();
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("bookreview", bookVolume);
                 reviewBookFragment.setArguments(bundle);

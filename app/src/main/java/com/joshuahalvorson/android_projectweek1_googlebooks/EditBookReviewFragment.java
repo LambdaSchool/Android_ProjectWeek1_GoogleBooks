@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,12 +13,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class ReviewBookFragment extends Fragment{
+public class EditBookReviewFragment extends Fragment{
     private Button submitReview;
     private EditText reviewContent;
     private BookVolume bookVolume;
 
-    public ReviewBookFragment(){
+    public EditBookReviewFragment(){
 
     }
 
@@ -55,7 +56,14 @@ public class ReviewBookFragment extends Fragment{
                 String reviewText = reviewContent.getText().toString();
                 bookVolume.setUserReview(reviewText);
                 BooksViewModel.updateBookUserReview(bookVolume);
-                getFragmentManager().popBackStack();
+                Fragment currentFragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                if (currentFragment instanceof UsersBooksFragment) {
+                    FragmentTransaction ft = (getActivity()).getSupportFragmentManager().beginTransaction();
+                    ft.detach(currentFragment);
+                    ft.attach(currentFragment);
+                    ft.commit();
+                    getFragmentManager().popBackStack();
+                }
                 Log.i("onClickSubmitReview", "review was saved to sql db");
             }
         });
