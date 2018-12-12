@@ -61,7 +61,6 @@ public class AddBookToBookshelfDialogFragment extends Fragment {
         addBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //add book to bookshelf
                 String bookshelfName = selectShelf.getSelectedItem().toString();
                 for(Bookshelf b : bookshelves){
                     if(b.getName().equals(bookshelfName)){

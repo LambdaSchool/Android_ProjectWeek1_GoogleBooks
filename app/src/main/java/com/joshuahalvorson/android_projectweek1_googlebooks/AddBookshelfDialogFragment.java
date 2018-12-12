@@ -1,7 +1,6 @@
 package com.joshuahalvorson.android_projectweek1_googlebooks;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,10 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ScrollView;
-import android.widget.TextView;
-
-import java.util.ArrayList;
 
 public class AddBookshelfDialogFragment extends Fragment {
     private Button addBookshelfButton;
@@ -55,7 +50,6 @@ public class AddBookshelfDialogFragment extends Fragment {
         addBookshelfButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //add bookshelf to db with name of bookshelfName.getText().toString();
                 Bookshelf bookshelf = new Bookshelf(bookshelfName.getText().toString());
                 BooksViewModel.addBookshelf(bookshelf);
                 Fragment currentFragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container);

@@ -13,8 +13,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 
-import java.util.ArrayList;
-
 public class EditBookDialogFragment extends Fragment {
     private Button deleteButton, addToBookshelfButton, writeReviewButton;
     private CheckBox setHasReadCheckBox, setFavoriteCheckBox;
