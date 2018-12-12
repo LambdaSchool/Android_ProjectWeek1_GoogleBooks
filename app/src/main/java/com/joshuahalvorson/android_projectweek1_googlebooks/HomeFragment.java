@@ -1,6 +1,5 @@
 package com.joshuahalvorson.android_projectweek1_googlebooks;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,7 +22,6 @@ public class HomeFragment extends Fragment {
     private Button searchButton;
     private BookSearchListAdapter adapter;
     ArrayList<BookVolume> bookVolumes;
-    private Activity activity;
 
     public HomeFragment(){
 
@@ -51,11 +49,10 @@ public class HomeFragment extends Fragment {
         searchText = view.findViewById(R.id.search_for_book_edit_text);
         bookVolumes = new ArrayList<>();
         searchButton = view.findViewById(R.id.search_button);
-        activity = getActivity();
         recyclerView = view.findViewById(R.id.search_results_list_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new BookSearchListAdapter(activity, bookVolumes);
+        adapter = new BookSearchListAdapter(getActivity(), bookVolumes);
         recyclerView.setAdapter(adapter);
         BooksDbDao.initializeInstance(getContext());
     }
