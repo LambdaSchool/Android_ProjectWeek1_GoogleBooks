@@ -8,9 +8,10 @@ public class Tag {
         this.tagId = tagId;
     }
 
-    public Tag(int tagId, String tagName) {
+    public Tag(){}
 
-        this.tagId = tagId;
+    public Tag( String tagName) {
+
         this.tagName = tagName;
     }
 

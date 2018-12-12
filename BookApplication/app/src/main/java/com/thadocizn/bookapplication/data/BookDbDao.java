@@ -9,12 +9,12 @@ import com.thadocizn.bookapplication.classes.Book;
 import com.thadocizn.bookapplication.classes.Tag;
 
 import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.List;
 
 public class BookDbDao {
 
     private static SQLiteDatabase db;
-
-    //TODO work on the table joins
 
     public static void initializeInstance(Context context){
         if (db == null){
@@ -39,12 +39,14 @@ public class BookDbDao {
         }
     }
 
-    public static void createTag(Tag tag){
+    public static int createTag(Tag tag){
+        int row = 0;
         if (db != null){
             ContentValues values = new ContentValues();
             values.put(BookDbContract.BookEntry.COLUMN_NAME_TAG, tag.getTagName());
-            db.insert(BookDbContract.BookEntry.TABLE_NAME_TAG, null, values);
+            row = (int) db.insert(BookDbContract.BookEntry.TABLE_NAME_TAG, null, values);
         }
+        return row;
     }
 
     private static void createBookTag(int bookId, int tag_id) {
@@ -55,6 +57,24 @@ public class BookDbDao {
 
             long id = db.insert(BookDbContract.BookEntry.TABLE_NAME_BOOKSHELF, null, values);
         }
+    }
+
+    public static ArrayList<Tag> getAllTags() {
+        ArrayList<Tag> tags = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + BookDbContract.BookEntry.TABLE_NAME_TAG;
+
+        if (db != null){
+            Cursor cursor = db.rawQuery(selectQuery, null);
+            if (cursor.moveToFirst()){
+                while (cursor.moveToNext()){
+                    Tag tag = new Tag();
+                    tag.setTagId(cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.COLUMN_NAME_TAG_KEY_ID));
+                    tag.setTagName(String.valueOf(cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.COLUMN_NAME_TAG)));
+                    tags.add(tag);
+                }
+            }
+        }
+        return tags;
     }
 
     public Book getBook(int bookId){
