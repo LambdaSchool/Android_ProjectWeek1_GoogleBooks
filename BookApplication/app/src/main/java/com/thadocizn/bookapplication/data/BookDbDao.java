@@ -111,6 +111,17 @@ public class BookDbDao {
 
         }
     }
+
+    public static void  deleteBook(Book book){
+        if (db != null){
+            String whereClause = String.format("%s = '%s'",
+                    BookDbContract.BookEntry.COLUMN_BOOK_ID,
+                    book.getBookId());
+
+            int affectedRows = db .delete(BookDbContract.BookEntry.TABLE_NAME_BOOK, whereClause, null);
+        }
+    }
+
     private static Book getBookFromCursor(Cursor cursor) {
         int index;
         Book book;
