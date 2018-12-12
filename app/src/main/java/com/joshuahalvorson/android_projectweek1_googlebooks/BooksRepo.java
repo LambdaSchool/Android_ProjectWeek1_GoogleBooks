@@ -46,7 +46,11 @@ public class BooksRepo {
         BooksDbDao.createBookshelfBookRelationship(bookshelf, bookVolume);
     }
 
-    public ArrayList<String> readBooksInBookshelf(Bookshelf bookshelf){
+    public void removeBookshelfBookRelation(Bookshelf bookshelf, BookVolume bookVolume){
+        BooksDbDao.deleteBookshelfBookRelationship(bookshelf, bookVolume);
+    }
+
+    public ArrayList<BookVolume> readBooksInBookshelf(Bookshelf bookshelf){
         return BooksDbDao.readBooksInBookshelf(bookshelf);
     }
 }

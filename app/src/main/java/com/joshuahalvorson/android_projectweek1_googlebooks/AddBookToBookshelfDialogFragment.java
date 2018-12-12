@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class AddBookToBookshelfDialogFragment extends Fragment {
     private ArrayList<Bookshelf> bookshelves;
@@ -53,8 +54,13 @@ public class AddBookToBookshelfDialogFragment extends Fragment {
         bookVolume = getArguments().getParcelable("book");
         ArrayList<String> bookshelvesNames = new ArrayList<>();
         for(Bookshelf b : bookshelves){
-            bookshelvesNames.add(b.getName());
+            if(b.getName().equals("Favorites") || b.getName().equals("Already read")){
+                //dont add to spinner
+            }else{
+                bookshelvesNames.add(b.getName());
+            }
         }
+        Collections.sort(bookshelvesNames, String.CASE_INSENSITIVE_ORDER);
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(mContext, android.R.layout.simple_spinner_item, bookshelvesNames);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         selectShelf.setAdapter(dataAdapter);

@@ -40,7 +40,11 @@ public class BooksViewModel {
         repo.addBookshelfBookRelation(bookshelf, bookVolume);
     }
 
-    public static ArrayList<String> readBooksInBookshelf(Bookshelf bookshelf){
+    public static void removeBookshelfBookRelation(Bookshelf bookshelf, BookVolume bookVolume){
+        repo.removeBookshelfBookRelation(bookshelf, bookVolume);
+    }
+
+    public static ArrayList<BookVolume> readBooksInBookshelf(Bookshelf bookshelf){
         return repo.readBooksInBookshelf(bookshelf);
     }
 }

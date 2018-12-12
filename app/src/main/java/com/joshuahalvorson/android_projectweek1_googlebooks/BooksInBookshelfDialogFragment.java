@@ -14,7 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class BooksInBookshelfDialogFragment extends Fragment {
-    ArrayList<String> bookTitles;
+    ArrayList<BookVolume> bookVolumes;
     private Bookshelf bookshelf;
     private LinearLayout scrollView;
 
@@ -37,13 +37,22 @@ public class BooksInBookshelfDialogFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         bookshelf = getArguments().getParcelable("bookshelf");
-        bookTitles = BooksViewModel.readBooksInBookshelf(bookshelf);
+        bookVolumes = BooksViewModel.readBooksInBookshelf(bookshelf);
         scrollView.removeAllViews();
-        for(int i = 0; i < bookTitles.size(); i++){
+        for(int i = 0; i < bookVolumes.size(); i++){
             TextView tv = new TextView(getContext());
-            tv.setText(bookTitles.get(i));
+            final BookVolume bookVolume = bookVolumes.get(i);
+            tv.setText(bookVolume.getTitle());
             tv.setTextSize(20);
             tv.setTextColor(Color.BLACK);
+            tv.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    BooksViewModel.removeBookshelfBookRelation(bookshelf, bookVolume);
+                    getFragmentManager().popBackStack();
+                    return false;
+                }
+            });
             scrollView.addView(tv);
         }
     }

@@ -13,10 +13,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 
+import java.util.ArrayList;
+
 public class EditBookDialogFragment extends Fragment {
     private Button deleteButton, addToBookshelfButton, writeReviewButton;
     private CheckBox setHasReadCheckBox, setFavoriteCheckBox;
     private BookVolume bookVolume;
+    private ArrayList<Bookshelf> bookshelves;
 
 
     public EditBookDialogFragment(){
@@ -47,13 +50,15 @@ public class EditBookDialogFragment extends Fragment {
         setHasReadCheckBox = view.findViewById(R.id.set_has_read);
         setFavoriteCheckBox = view.findViewById(R.id.set_favorite);
         writeReviewButton = view.findViewById(R.id.write_review_button);
-        bookVolume = getArguments().getParcelable("book");
-
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        bookVolume = getArguments().getParcelable("book");
+        bookshelves = BooksViewModel.readBookshelves();
+        final Bookshelf favorites = bookshelves.get(0);
+        final Bookshelf hasRead = bookshelves.get(1);
         if(bookVolume.isHasRead() == 1){
             setHasReadCheckBox.setChecked(true);
         }else{
@@ -70,10 +75,12 @@ public class EditBookDialogFragment extends Fragment {
                 if(setFavoriteCheckBox.isChecked()){
                     bookVolume.setIsFavorite(1);
                     BooksViewModel.updateBookIsFavorite(bookVolume);
+                    BooksViewModel.addBookshelfBookRelation(favorites, bookVolume);
                     Log.i("onClickCheckBock", "book fav update to true");
                 }else{
                     bookVolume.setIsFavorite(0);
                     BooksViewModel.updateBookIsFavorite(bookVolume);
+                    BooksViewModel.removeBookshelfBookRelation(favorites, bookVolume);
                     Log.i("onClickCheckBock", "book fav update to false");
                 }
             }
@@ -84,10 +91,12 @@ public class EditBookDialogFragment extends Fragment {
                 if(setHasReadCheckBox.isChecked()){
                     bookVolume.setHasRead(1);
                     BooksViewModel.updateBookHasRead(bookVolume);
+                    BooksViewModel.addBookshelfBookRelation(hasRead, bookVolume);
                     Log.i("onClickCheckBock", "book read update to true");
                 }else{
                     bookVolume.setHasRead(0);
                     BooksViewModel.updateBookHasRead(bookVolume);
+                    BooksViewModel.removeBookshelfBookRelation(hasRead, bookVolume);
                     Log.i("onClickCheckBock", "book read update to false");
                 }
             }

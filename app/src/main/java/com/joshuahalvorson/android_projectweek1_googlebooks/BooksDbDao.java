@@ -51,7 +51,16 @@ public class BooksDbDao {
         }
     }
 
-    public static ArrayList<String> readBooksInBookshelf(Bookshelf bookshelf){
+    public static void deleteBookshelfBookRelationship(Bookshelf bookshelf, BookVolume bookVolume){
+        if(db != null){
+            String where = String.format("%s = '%s' AND %s='%s'",
+                    BooksDbContract.BookEntry.BOOKSHELVES_BOOKS_TABLE_COLUMN_BOOKSHELF_ID, bookshelf.getName(),
+                    BooksDbContract.BookEntry.BOOKSHELVES_BOOKS_TABLE_COLUMN_BOOK_ID, bookVolume.getTitle());
+            db.delete(BooksDbContract.BookEntry.BOOKSHELVES_BOOKS_TABLE_NAME, where, null);
+        }
+    }
+
+    public static ArrayList<BookVolume> readBooksInBookshelf(Bookshelf bookshelf){
         if(db != null){
             Cursor cursor = db.rawQuery(String.format("SELECT %s.%s FROM %s JOIN %s ON %s.%s = %s.%s WHERE %s.%s='%s'",
                     BooksDbContract.BookEntry.BOOKS_TABLE_NAME, BooksDbContract.BookEntry.BOOKS_COLUMN_TITLE,
@@ -69,7 +78,18 @@ public class BooksDbDao {
                 bookTitles.add(title);
             }
             cursor.close();
-            return bookTitles;
+            ArrayList<BookVolume> volumes = new ArrayList<>();
+            for(String title : bookTitles){
+                cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE %s='%s'",
+                        BooksDbContract.BookEntry.BOOKS_TABLE_NAME,
+                        BooksDbContract.BookEntry.BOOKS_COLUMN_TITLE, title),
+                        null);
+                while(cursor.moveToNext()){
+                   BookVolume volume = getBookVolumeData(cursor);
+                   volumes.add(volume);
+                }
+            }
+            return volumes;
         }else{
             return new ArrayList<>();
         }
