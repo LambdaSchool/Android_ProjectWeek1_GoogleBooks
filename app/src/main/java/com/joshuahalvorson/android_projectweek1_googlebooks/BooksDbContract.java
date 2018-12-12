@@ -89,7 +89,7 @@ public class BooksDbContract {
 
         public static final String CREATE_DEFAULT_SHELF_HAS_READ =
                 String.format("INSERT INTO %s (%s) VALUES ('%s');",
-                        BOOKSHELVES_TABLE_NAME, BOOKSHELVES_COLUMN_TITLE, "Books youve read");
+                        BOOKSHELVES_TABLE_NAME, BOOKSHELVES_COLUMN_TITLE, "Already read");
 
 
     }
