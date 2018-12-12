@@ -17,6 +17,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.facebook.stetho.Stetho;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -57,8 +59,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Stetho.initializeWithDefaults(this);
         context = this;
+
+        BooksDbDao.initializeInstance(context);//TODO move this to a repo
 
         editTextSearch = findViewById(R.id.edit_text_search);
         progressBar = findViewById(R.id.progress_bar);

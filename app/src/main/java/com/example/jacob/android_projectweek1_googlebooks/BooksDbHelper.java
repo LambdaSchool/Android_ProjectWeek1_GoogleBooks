@@ -15,13 +15,15 @@ public class BooksDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(BooksDbContract.BookEntry.SQL_CREATE_TABLE);
+        db.execSQL(BooksDbContract.BookEntry.SQL_BOOK_TABLE);
+        db.execSQL(BooksDbContract.BookEntry.SQL_BOOKSHELF_TABLE);
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(BooksDbContract.BookEntry.SQL_DELETE_TABLE);
+        db.execSQL(BooksDbContract.BookEntry.SQL_DELETE_BOOKS_TABLE);
+        db.execSQL(BooksDbContract.BookEntry.SQL_DELETE_BOOKSHELF_TABLE);
         this.onCreate(db);
     }
 }

@@ -24,17 +24,18 @@ public class BooksDbContract {
                 COLUMN_NAME_AUTHOR + " STRING, " +
                 COLUMN_NAME_PUBLISHED_DATE + " STRING, " +
                 COLUMN_NAME_IMAGE_URL + " STRING, " +
-                COLUMN_NAME_REVIEW + " STRING, " +
+                COLUMN_NAME_REVIEW + " TEXT, " +
                 COLUMN_NAME_HAS_BEEN_READ + " INTEGER, " +
-                COLUMN_NAME_BOOKSHELVES +" STRING);";
+                COLUMN_NAME_BOOKSHELVES + " STRING);";
 
         static final String SQL_BOOKSHELF_TABLE = "CREATE TABLE " + BOOKSHELF_TABLE_NAME +
                 " (" +
-                _ID + " STRING, " +
-                COLUMN_NAME_TITLE +" STRING);";
+                _ID + " INTEGER PRIMARY KEY, " +
+                COLUMN_NAME_TITLE + " STRING);";
 
-        static final String SQL_CREATE_TABLE = SQL_BOOK_TABLE + " " + SQL_BOOKSHELF_TABLE;
+//        static final String SQL_CREATE_TABLE = SQL_BOOK_TABLE + " " + SQL_BOOKSHELF_TABLE;
 
-        static final String SQL_DELETE_TABLE = "DROP TABLE IF EXISTS " + BOOK_TABLE_NAME + ";";
+        static final String SQL_DELETE_BOOKS_TABLE = "DROP TABLE IF EXISTS " + BOOK_TABLE_NAME + ";";
+        static final String SQL_DELETE_BOOKSHELF_TABLE = "DROP TABLE IF EXISTS " + BOOKSHELF_TABLE_NAME + ";";
     }
 }

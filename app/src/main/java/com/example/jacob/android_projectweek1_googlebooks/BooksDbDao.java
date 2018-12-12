@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 public class BooksDbDao {
 
-    private static SQLiteDatabase db;
+    static SQLiteDatabase db;
 
     static void initializeInstance(Context context) {
         if (db == null) {

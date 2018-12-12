@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class BookshelvesActivity extends AppCompatActivity {
 
     Context context;
-    private ArrayList<Bookshelf> booksList = new ArrayList<>();
+    private ArrayList<Bookshelf> bookshelves = new ArrayList<>();
     private LinearLayoutManager layoutManager;
     private RecyclerView recyclerView;
     private BookshelvesListAdapter listAdapter;
@@ -44,13 +44,13 @@ public class BookshelvesActivity extends AppCompatActivity {
             }
         });
 
-
+        bookshelves = BookshelfDbDao.readAllBookshelves();
 
         recyclerView = findViewById(R.id.recycler_view_bookshelves);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
-        listAdapter = new BookshelvesListAdapter(booksList, this);
+        listAdapter = new BookshelvesListAdapter(bookshelves, this);
         recyclerView.setAdapter(listAdapter);
     }
 
@@ -62,20 +62,19 @@ public class BookshelvesActivity extends AppCompatActivity {
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(true);
 
-        EditText editText = dialog.findViewById(R.id.edit_text_dialog);
+        final EditText editText = dialog.findViewById(R.id.edit_text_dialog);
         Button saveButton = dialog.findViewById(R.id.button_dialog_save);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                BookshelfDbDao.addBookshelf(editText.getText().toString());
+                listAdapter.notifyDataSetChanged();
                 dialog.dismiss();
             }
         });
         dialog.show();
     }
-
-
-
 
 
 }

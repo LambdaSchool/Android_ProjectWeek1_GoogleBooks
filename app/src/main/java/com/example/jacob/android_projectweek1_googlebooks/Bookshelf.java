@@ -3,20 +3,21 @@ package com.example.jacob.android_projectweek1_googlebooks;
 import java.util.ArrayList;
 
 public class Bookshelf {
-    private String id, title;
+    private String title;
+    int id;
     private ArrayList<Book> books;
 
-    public Bookshelf(String id, String title, ArrayList<Book> books) {
+    public Bookshelf(int id, String title, ArrayList<Book> books) {
         this.id = id;
         this.title = title;
         this.books = books;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

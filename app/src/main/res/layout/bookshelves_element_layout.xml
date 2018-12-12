@@ -28,27 +28,15 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:visibility="visible"
-            card_view:layout_constraintStart_toEndOf="@id/image_bookshelves_element"
             card_view:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/text_bookshelves_element_content"
+        <ImageButton
+            android:id="@+id/button_bookshelf_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="Book Content ..."
-            android:textSize="12sp"
-            android:visibility="visible"
-            card_view:layout_constraintStart_toEndOf="@id/image_bookshelves_element"
-            card_view:layout_constraintTop_toBottomOf="@id/text_bookshelves_element_title" />
-
-        <ImageView
-            android:id="@+id/image_bookshelves_element"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@color/colorPrimaryDark"
-            android:scaleType="centerCrop"
-            card_view:layout_constraintStart_toStartOf="parent" />
+            card_view:layout_constraintEnd_toEndOf="parent"
+            android:src="@android:drawable/ic_delete"
+            />
 
     </android.support.constraint.ConstraintLayout>
 
