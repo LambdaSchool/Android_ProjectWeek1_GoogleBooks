@@ -32,7 +32,13 @@
                 android:id="@+id/set_has_read"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Set book to read?" />
+                android:text="Have you read this book?" />
+
+            <CheckBox
+                android:id="@+id/set_favorite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Set as favorite" />
 
             <Button
                 android:id="@+id/write_review_button"

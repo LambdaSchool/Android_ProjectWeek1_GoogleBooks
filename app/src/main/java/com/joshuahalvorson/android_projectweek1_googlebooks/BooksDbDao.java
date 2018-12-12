@@ -28,6 +28,7 @@ public class BooksDbDao {
             values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_PUBLISHED_DATE, bookVolume.getPublishedDate());
             values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_PAGES, bookVolume.getPages());
             values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_HAS_READ, bookVolume.isHasRead());
+            values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_IS_FAVORITE, bookVolume.getIsFavorite());
             db.insert(BooksDbContract.BookEntry.BOOKS_TABLE_NAME, null, values);
         }
     }
@@ -84,6 +85,20 @@ public class BooksDbDao {
         }
     }
 
+    public static void updateBookEntryIsFavorite(BookVolume bookVolume){
+        if (db != null) {
+            String whereClause = String.format("%s = '%s'", BooksDbContract.BookEntry.BOOKS_COLUMN_TITLE,
+                    bookVolume.getTitle());
+            final Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE %s",
+                   BooksDbContract.BookEntry.BOOKS_TABLE_NAME, whereClause), null);
+            if(cursor.getCount() == 1) {
+                ContentValues values = new ContentValues();
+                values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_IS_FAVORITE, bookVolume.getIsFavorite());
+                db.update(BooksDbContract.BookEntry.BOOKS_TABLE_NAME, values, whereClause, null);
+            }
+        }
+    }
+
     public static void updateBookEntryReview(BookVolume bookVolume){
         if (db != null) {
             String whereClause = String.format("%s = '%s'", BooksDbContract.BookEntry.BOOKS_COLUMN_TITLE,
@@ -122,7 +137,9 @@ public class BooksDbDao {
         int pages = cursor.getInt(index);
         index = cursor.getColumnIndexOrThrow(BooksDbContract.BookEntry.BOOKS_COLUMN_HAS_READ);
         int hasRead = cursor.getInt(index);
-        return new BookVolume(title, imageUrl, userReview, authors, publishedDate, pages, hasRead);
+        index = cursor.getColumnIndexOrThrow(BooksDbContract.BookEntry.BOOKS_COLUMN_IS_FAVORITE);
+        int isFavorite = cursor.getInt(index);
+        return new BookVolume(title, imageUrl, userReview, authors, publishedDate, pages, hasRead, isFavorite);
     }
 
     private static Bookshelf getBookshelfData(Cursor cursor){

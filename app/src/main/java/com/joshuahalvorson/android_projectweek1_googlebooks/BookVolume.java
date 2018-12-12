@@ -7,8 +7,9 @@ public class BookVolume implements Parcelable {
     private String title, imageUrl, userReview, authors, publishedDate;
     private int pages;
     private int hasRead;
+    private int isFavorite;
 
-    public BookVolume(String title, String imageUrl, String userReview, String authors, String publishedDate, int pages, int hasRead) {
+    public BookVolume(String title, String imageUrl, String userReview, String authors, String publishedDate, int pages, int hasRead, int isFavorite) {
         this.title = title;
         this.imageUrl = imageUrl;
         this.userReview = userReview;
@@ -16,6 +17,7 @@ public class BookVolume implements Parcelable {
         this.publishedDate = publishedDate;
         this.pages = pages;
         this.hasRead = hasRead;
+        this.isFavorite = isFavorite;
     }
 
     protected BookVolume(Parcel in) {
@@ -26,6 +28,7 @@ public class BookVolume implements Parcelable {
         publishedDate = in.readString();
         pages = in.readInt();
         hasRead = in.readInt();
+        isFavorite = in.readInt();
     }
 
     public static final Creator<BookVolume> CREATOR = new Creator<BookVolume>() {
@@ -39,6 +42,14 @@ public class BookVolume implements Parcelable {
             return new BookVolume[size];
         }
     };
+
+    public int getIsFavorite() {
+        return isFavorite;
+    }
+
+    public void setIsFavorite(int isFavorite) {
+        this.isFavorite = isFavorite;
+    }
 
     public String getAuthors() {
         return authors;
@@ -110,5 +121,6 @@ public class BookVolume implements Parcelable {
         dest.writeString(publishedDate);
         dest.writeInt(pages);
         dest.writeInt(hasRead);
+        dest.writeInt(isFavorite);
     }
 }

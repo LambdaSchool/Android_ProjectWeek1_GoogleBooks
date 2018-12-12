@@ -15,7 +15,7 @@ import android.widget.CheckBox;
 
 public class EditBookDialogFragment extends Fragment {
     private Button deleteButton, addToBookshelfButton, writeReviewButton;
-    private CheckBox setHasReadCheckBox;
+    private CheckBox setHasReadCheckBox, setFavoriteCheckBox;
     private BookVolume bookVolume;
 
     public EditBookDialogFragment(){
@@ -44,6 +44,7 @@ public class EditBookDialogFragment extends Fragment {
         deleteButton = view.findViewById(R.id.delete_book_button);
         addToBookshelfButton = view.findViewById(R.id.start_add_bookshelf_button);
         setHasReadCheckBox = view.findViewById(R.id.set_has_read);
+        setFavoriteCheckBox = view.findViewById(R.id.set_favorite);
         writeReviewButton = view.findViewById(R.id.write_review_button);
         bookVolume = getArguments().getParcelable("book");
     }
@@ -56,6 +57,25 @@ public class EditBookDialogFragment extends Fragment {
         }else{
             setHasReadCheckBox.setChecked(false);
         }
+        if(bookVolume.getIsFavorite() == 1){
+            setFavoriteCheckBox.setChecked(true);
+        }else{
+            setFavoriteCheckBox.setChecked(false);
+        }
+        setFavoriteCheckBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(setFavoriteCheckBox.isChecked()){
+                    bookVolume.setIsFavorite(1);
+                    BooksViewModel.updateBookIsFavorite(bookVolume);
+                    Log.i("onClickCheckBock", "book fav update to true");
+                }else{
+                    bookVolume.setIsFavorite(0);
+                    BooksViewModel.updateBookIsFavorite(bookVolume);
+                    Log.i("onClickCheckBock", "book fav update to false");
+                }
+            }
+        });
         setHasReadCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

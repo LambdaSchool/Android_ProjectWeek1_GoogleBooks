@@ -16,6 +16,10 @@ public class BooksViewModel {
         repo.updateBookHasRead(bookVolume);
     }
 
+    public static void updateBookIsFavorite(BookVolume bookVolume){
+        repo.updateBookIsFavorite(bookVolume);
+    }
+
     public static void updateBookUserReview(BookVolume bookVolume){
         repo.updateBookUserReview(bookVolume);
     }

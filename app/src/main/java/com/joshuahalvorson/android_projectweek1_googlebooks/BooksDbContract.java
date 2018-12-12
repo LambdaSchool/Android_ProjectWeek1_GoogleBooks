@@ -12,6 +12,7 @@ public class BooksDbContract {
         public static final String BOOKS_COLUMN_PUBLISHED_DATE = "published_date";
         public static final String BOOKS_COLUMN_PAGES = "pages";
         public static final String BOOKS_COLUMN_HAS_READ = "has_read";
+        public static final String BOOKS_COLUMN_IS_FAVORITE = "is_favorite";
 
         public static final String SQL_CREATE_BOOKS_TABLE = String.format(
                 "CREATE TABLE IF NOT EXISTS %s (" +
@@ -22,6 +23,7 @@ public class BooksDbContract {
                         "%s TEXT, " +
                         "%s TEXT, " +
                         "%s INTEGER, " +
+                        "%s INTEGER, " +
                         "%s INTEGER);",
                 BOOKS_TABLE_NAME,
                 _ID,
@@ -31,7 +33,8 @@ public class BooksDbContract {
                 BOOKS_COLUMN_AUTHORS,
                 BOOKS_COLUMN_PUBLISHED_DATE,
                 BOOKS_COLUMN_PAGES,
-                BOOKS_COLUMN_HAS_READ);
+                BOOKS_COLUMN_HAS_READ,
+                BOOKS_COLUMN_IS_FAVORITE);
 
         public static final String SQL_DELETE_BOOKS_TABLE = "DROP TABLE IF EXISTS "
                 + BOOKS_TABLE_NAME + ";";

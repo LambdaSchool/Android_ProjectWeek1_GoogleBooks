@@ -22,6 +22,10 @@ public class BooksRepo {
         BooksDbDao.updateBookEntryHasRead(bookVolume);
     }
 
+    public void updateBookIsFavorite(BookVolume bookVolume){
+        BooksDbDao.updateBookEntryIsFavorite(bookVolume);
+    }
+
     public void updateBookUserReview(BookVolume bookVolume){
         BooksDbDao.updateBookEntryReview(bookVolume);
     }
