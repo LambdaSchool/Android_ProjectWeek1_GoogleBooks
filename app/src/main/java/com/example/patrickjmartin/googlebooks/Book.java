@@ -7,7 +7,7 @@ import org.json.JSONObject;
 //Should I make this parcelable?
 public class Book {
 
-    private String title, author, review, publishDate, googleBooksID, image;
+    private String title, author, review, publishDate, googleBooksID, image, bookshelfHomes;
     private Boolean isRead;
 
     public Book(String title, String author, String review, String publishDate, String googleBooksID, String image) {
@@ -18,6 +18,8 @@ public class Book {
         this.googleBooksID = googleBooksID;
         this.image = image;
     }
+
+    public Book(JS)
 
     public String getTitle() {
         return title;
@@ -43,8 +45,16 @@ public class Book {
         return image;
     }
 
+    public String getBookshelfHomes() {
+        return bookshelfHomes;
+    }
+
     public Boolean getRead() {
         return isRead;
+    }
+
+    public void setBookshelfHomes(String bookshelfHomes) {
+        this.bookshelfHomes = bookshelfHomes;
     }
 
     public void setRead(Boolean read) {
