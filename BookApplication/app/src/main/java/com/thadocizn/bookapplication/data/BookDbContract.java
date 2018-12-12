@@ -20,7 +20,7 @@ public class BookDbContract {
 
         public static final String TABLE_NAME_BOOK = "books";
 
-        public static final String COLUMN_BOOK_ID = BaseColumns._ID;
+        public static final String COLUMN_BOOK_ID                     = "id";
         public static final String COLUMN_NAME_BOOK_TITLE             = "title";
         public static final String COLUMN_NAME_BOOK_IMAGE_URL         = "image";
         public static final String COLUMN_NAME_BOOK_REVIEW            = "review";
@@ -28,7 +28,8 @@ public class BookDbContract {
 
         public static final String  SQL_CREATE_TABLE_BOOK = "CREATE TABLE " + TABLE_NAME_BOOK +
                 " ( " +
-                COLUMN_BOOK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_BOOK_ID + " INTEGER, " +
                 COLUMN_NAME_BOOK_TITLE + " TEXT, " +
                 COLUMN_NAME_BOOK_IMAGE_URL + " TEXT, " +
                 COLUMN_NAME_BOOK_REVIEW + " TEXT, " +
@@ -37,13 +38,13 @@ public class BookDbContract {
         public static final String TABLE_NAME_BOOKSHELF  = "bookshelf";
 
         public static final String COLUMN_NAME_BOOKSHELF_ID = BaseColumns._ID;
-        public static final String COLUMN_NAME_BOOK_ID   = "book_id";
-        public static final String COLUMN_NAME_TAG_ID    = "tag_id";
+        public static final String COLUMN_NAME_BOOK_KEY_ID = _ID;
+        public static final String COLUMN_NAME_TAG_KEY_ID = "tag_id";
 
         public static final String SQL_CREATE_TABLE_BOOKSHELF = "CREATE TABLE " + TABLE_NAME_BOOKSHELF +
                 " ( " +
                 COLUMN_NAME_BOOKSHELF_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_NAME_BOOK_ID + " INTEGER, " +
+                COLUMN_NAME_BOOK_KEY_ID + " INTEGER, " +
                 COLUMN_TAG_ID + " INTEGER, " +
                 "FOREIGN KEY(book_id) REFERENCES books(_ID)," +
                 "FOREIGN KEY(tag_id) REFERENCES tags(_ID)";
