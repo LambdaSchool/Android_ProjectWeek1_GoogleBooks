@@ -17,7 +17,7 @@ public class BookDbContract {
         public static final String  SQL_CREATE_TABLE_BOOK = "CREATE TABLE " + TABLE_NAME_BOOK +
                 " ( " +
                 _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_BOOK_ID + " INTEGER, " +
+                COLUMN_BOOK_ID + " STRING, " +
                 COLUMN_NAME_BOOK_TITLE + " TEXT, " +
                 COLUMN_NAME_BOOK_IMAGE_URL + " TEXT, " +
                 COLUMN_NAME_BOOK_REVIEW + " TEXT, " +

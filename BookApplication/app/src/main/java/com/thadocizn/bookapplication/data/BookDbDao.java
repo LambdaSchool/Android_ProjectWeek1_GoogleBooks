@@ -33,7 +33,7 @@ public class BookDbDao {
         }
     }
 
-    public Book getBook(int bookId) {
+    public Book getBook(String bookId) {
 
         int index;
         Cursor cursor = null;
@@ -41,7 +41,7 @@ public class BookDbDao {
         if (db != null) {
             cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE %s = '%s'",
                     BookDbContract.BookEntry.TABLE_NAME_BOOK,
-                    BookDbContract.BookEntry.COLUMN_NAME_BOOK_KEY_ID,
+                    BookDbContract.BookEntry.COLUMN_NAME_BOOK_TITLE,
                     bookId), null);
 
             if (cursor.moveToNext()) {
