@@ -23,7 +23,7 @@ public class BooksDbDao {
     static void addBook(Book book) {
         if (db != null) {
             ContentValues values = getContentValues(book);
-            db.insert(BooksDbContract.BookEntry.TABLE_NAME, null, values);
+            db.insert(BooksDbContract.BookEntry.BOOK_TABLE_NAME, null, values);
         }
     }
 
@@ -45,7 +45,7 @@ public class BooksDbDao {
     static Book readBook(String id) {
         if (db != null) {
             Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE %s = '%s'",
-                    BooksDbContract.BookEntry.TABLE_NAME,
+                    BooksDbContract.BookEntry.BOOK_TABLE_NAME,
                     BooksDbContract.BookEntry._ID,
                     id),
                     null);
@@ -64,12 +64,12 @@ public class BooksDbDao {
         if (db != null) {
             String whereClause = String.format("%s = %s", BooksDbContract.BookEntry._ID, book.getId());
             final Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE %s",
-                    BooksDbContract.BookEntry.TABLE_NAME,
+                    BooksDbContract.BookEntry.BOOK_TABLE_NAME,
                     whereClause),
                     null);
             if (cursor.getCount() == 1) {
                 ContentValues values = getContentValues(book);
-                db.update(BooksDbContract.BookEntry.TABLE_NAME, values, whereClause, null);
+                db.update(BooksDbContract.BookEntry.BOOK_TABLE_NAME, values, whereClause, null);
             }
             cursor.close();
         }
@@ -82,11 +82,11 @@ public class BooksDbDao {
                     BooksDbContract.BookEntry._ID,
                     id);
             final Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE %s",
-                    BooksDbContract.BookEntry.TABLE_NAME,
+                    BooksDbContract.BookEntry.BOOK_TABLE_NAME,
                     whereClause),
                     null);
             if (cursor.getCount() == 1) {
-                db.delete(BooksDbContract.BookEntry.TABLE_NAME, whereClause, null);
+                db.delete(BooksDbContract.BookEntry.BOOK_TABLE_NAME, whereClause, null);
             }
             cursor.close();
         }
@@ -97,7 +97,7 @@ public class BooksDbDao {
 
         if (db != null) {
             Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s",
-                    BooksDbContract.BookEntry.TABLE_NAME), null);
+                    BooksDbContract.BookEntry.BOOK_TABLE_NAME), null);
             while (cursor.moveToNext()) {
                 books.add(getBookFromCursor(cursor));
             }

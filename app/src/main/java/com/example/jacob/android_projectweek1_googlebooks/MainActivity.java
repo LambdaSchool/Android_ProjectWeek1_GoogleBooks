@@ -1,6 +1,7 @@
 package com.example.jacob.android_projectweek1_googlebooks;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -37,7 +38,9 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+//                    mTextMessage.setText(R.string.title_home);
+                    Intent intent = new Intent(context, BookshelvesActivity.class);
+                    startActivity(intent);
                     return true;
                 case R.id.navigation_dashboard:
                     mTextMessage.setText(R.string.title_dashboard);
@@ -96,18 +99,20 @@ public class MainActivity extends AppCompatActivity {
             listAdapter.notifyDataSetChanged();
             for (int i = 0; i < books.size(); ++i) {
                 String imageUrl = books.get(i).getImageUrl();
-                String[] urlParts = imageUrl.substring(imageUrl.indexOf("id=") + 3).split("&");
-                String searchText = urlParts[0];
-                File[] items = context.getCacheDir().listFiles();
-                Boolean fileFound = false;
-                for (File item : items) {
-                    if (item.getName().contains(searchText)) {
-                        fileFound = true;
-                        break;
+                if (imageUrl!=null) {
+                    String[] urlParts = imageUrl.substring(imageUrl.indexOf("id=") + 3).split("&");
+                    String searchText = urlParts[0];
+                    File[] items = context.getCacheDir().listFiles();
+                    Boolean fileFound = false;
+                    for (File item : items) {
+                        if (item.getName().contains(searchText)) {
+                            fileFound = true;
+                            break;
+                        }
                     }
-                }
-                if (!fileFound) {
-                    new getBookImageTask().execute(imageUrl, String.valueOf(i));
+                    if (!fileFound) {
+                        new getBookImageTask().execute(imageUrl, String.valueOf(i));
+                    }
                 }
             }
         }

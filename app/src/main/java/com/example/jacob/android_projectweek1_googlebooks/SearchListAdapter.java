@@ -76,6 +76,8 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
             } catch (NullPointerException e) {
                 viewHolder.imageView.setImageResource(R.color.colorPrimaryDark);
             }
+        } else {
+            viewHolder.imageView.setImageResource(R.color.colorPrimaryDark);
         }
     }
 
