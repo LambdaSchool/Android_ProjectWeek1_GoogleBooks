@@ -58,6 +58,20 @@ public class BookshelvesFragment extends Fragment {
             tv.setText(bookshelf.getName());
             tv.setTextColor(Color.BLACK);
             tv.setTextSize(25);
+            tv.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    BooksInBookshelfDialogFragment  booksInBookshelfDialogFragment= new BooksInBookshelfDialogFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("bookshelf", bookshelf);
+                    booksInBookshelfDialogFragment.setArguments(bundle);
+                    ft.add(R.id.dialog_container, booksInBookshelfDialogFragment, "books_in_bookshelf_fragment");
+                    ft.addToBackStack(null);
+                    ft.commit();
+                    return false;
+                }
+            });
             scrollView.addView(tv);
         }
         addBookshelfButton.setOnClickListener(new View.OnClickListener() {

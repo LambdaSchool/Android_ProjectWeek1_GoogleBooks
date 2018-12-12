@@ -61,8 +61,10 @@ public class BooksDbDao {
                     BooksDbContract.BookEntry.BOOKSHELVES_BOOKS_TABLE_NAME, BooksDbContract.BookEntry.BOOKSHELVES_BOOKS_TABLE_COLUMN_BOOKSHELF_ID,
                     bookshelf.getName()), null);
             ArrayList<String> bookTitles = new ArrayList<>();
+            int index;
             while(cursor.moveToNext()){
-                String title = getBookTitlesInBookshelfData(cursor);
+                index = cursor.getColumnIndexOrThrow(BooksDbContract.BookEntry.BOOKS_COLUMN_TITLE);
+                String title = cursor.getString(index);
                 bookTitles.add(title);
             }
             cursor.close();
