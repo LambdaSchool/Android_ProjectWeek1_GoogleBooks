@@ -94,6 +94,23 @@ public class BookDbDao {
 
     }
 
+    public static void updateBook(Book book){
+        if (db != null){
+
+            String whereClause = String.format("%s = '%s'",
+                    BookDbContract.BookEntry.COLUMN_NAME_BOOK_ID,
+                    book.getBookId());
+            //TODO finish after stand up
+            Cursor cursor;
+            ContentValues values = new ContentValues();
+            values.put(BookDbContract.BookEntry.COLUMN_NAME_BOOK_TITLE, book.getBookTitle());
+            values.put(BookDbContract.BookEntry.COLUMN_NAME_BOOK_IMAGE_URL, book.getBookImageUrl());
+            values.put(BookDbContract.BookEntry.COLUMN_NAME_BOOK_REVIEW, book.getBookReview());
+            values.put(BookDbContract.BookEntry.COLUMN_NAME_READ_BOOK, book.isReadBook());
+
+
+        }
+    }
     private static Book getBookFromCursor(Cursor cursor) {
         int index;
         Book book;
