@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 
 public class EditBookDialogFragment extends Fragment {
-    private Button deleteButton, addToBookshelfButton;
+    private Button deleteButton, addToBookshelfButton, writeReviewButton;
     private CheckBox setHasReadCheckBox;
     private BookVolume bookVolume;
 
@@ -44,6 +44,7 @@ public class EditBookDialogFragment extends Fragment {
         deleteButton = view.findViewById(R.id.delete_book_button);
         addToBookshelfButton = view.findViewById(R.id.start_add_bookshelf_button);
         setHasReadCheckBox = view.findViewById(R.id.set_has_read);
+        writeReviewButton = view.findViewById(R.id.write_review_button);
         bookVolume = getArguments().getParcelable("book");
     }
 
@@ -60,13 +61,26 @@ public class EditBookDialogFragment extends Fragment {
             public void onClick(View v) {
                 if(setHasReadCheckBox.isChecked()){
                     bookVolume.setHasRead(1);
-                    BookVolumeViewModel.updateBook(bookVolume);
+                    BookVolumeViewModel.updateBookHasRead(bookVolume);
                     Log.i("onClickCheckBock", "book read update to true");
                 }else{
                     bookVolume.setHasRead(0);
-                    BookVolumeViewModel.updateBook(bookVolume);
+                    BookVolumeViewModel.updateBookHasRead(bookVolume);
                     Log.i("onClickCheckBock", "book read update to false");
                 }
+            }
+        });
+        writeReviewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ReviewBookFragment  reviewBookFragment= new ReviewBookFragment();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("bookreview", bookVolume);
+                reviewBookFragment.setArguments(bundle);
+                ft.add(R.id.dialog_container, reviewBookFragment, "edit_review_fragment");
+                ft.addToBackStack(null);
+                ft.commit();
             }
         });
         deleteButton.setOnClickListener(new View.OnClickListener() {

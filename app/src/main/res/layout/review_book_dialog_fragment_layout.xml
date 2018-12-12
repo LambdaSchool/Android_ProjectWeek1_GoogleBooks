@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -11,7 +12,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,34 +25,23 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
-                android:text="Edit Book"
+                android:text="Write a review!"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <CheckBox
-                android:id="@+id/set_has_read"
+            <EditText
+                android:id="@+id/review_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Set book to read?" />
+                android:ems="10"
+                android:inputType="textMultiLine" />
 
             <Button
-                android:id="@+id/write_review_button"
+                android:id="@+id/submit_review_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Write a review" />
-
-            <Button
-                android:id="@+id/start_add_bookshelf_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Add Book to Bookshelf" />
-
-            <Button
-                android:id="@+id/delete_book_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@android:color/holo_red_light"
-                android:text="Delete Book" />
+                android:backgroundTint="@android:color/holo_green_dark"
+                android:text="Submit Review" />
 
         </LinearLayout>
     </android.support.v7.widget.CardView>

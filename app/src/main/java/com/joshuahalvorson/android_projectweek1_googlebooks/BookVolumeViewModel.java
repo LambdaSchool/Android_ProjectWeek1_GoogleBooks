@@ -12,8 +12,12 @@ public class BookVolumeViewModel {
         return repo.readBooks();
     }
 
-    public static void updateBook(BookVolume bookVolume){
-        repo.updateBook(bookVolume);
+    public static void updateBookHasRead(BookVolume bookVolume){
+        repo.updateBookHasRead(bookVolume);
+    }
+
+    public static void updateBookUserReview(BookVolume bookVolume){
+        repo.updateBookUserReview(bookVolume);
     }
 
     public static void deleteBook(BookVolume bookVolume){

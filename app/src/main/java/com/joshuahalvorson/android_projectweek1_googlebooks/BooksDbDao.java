@@ -47,7 +47,7 @@ public class BooksDbDao {
         }
     }
 
-    public static void updateBookEntry(BookVolume bookVolume){
+    public static void updateBookEntryHasRead(BookVolume bookVolume){
         if (db != null) {
             String whereClause = String.format("%s = '%s'", BooksDbContract.BookEntry.BOOKS_COLUMN_TITLE,
                     bookVolume.getTitle());
@@ -56,6 +56,20 @@ public class BooksDbDao {
             if(cursor.getCount() == 1) {
                 ContentValues values = new ContentValues();
                 values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_HAS_READ, bookVolume.isHasRead());
+                db.update(BooksDbContract.BookEntry.BOOKS_TABLE_NAME, values, whereClause, null);
+            }
+        }
+    }
+
+    public static void updateBookEntryReview(BookVolume bookVolume){
+        if (db != null) {
+            String whereClause = String.format("%s = '%s'", BooksDbContract.BookEntry.BOOKS_COLUMN_TITLE,
+                    bookVolume.getTitle());
+            final Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE %s",
+                    BooksDbContract.BookEntry.BOOKS_TABLE_NAME, whereClause), null);
+            if(cursor.getCount() == 1) {
+                ContentValues values = new ContentValues();
+                values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_USER_REVIEW, bookVolume.getUserReview());
                 db.update(BooksDbContract.BookEntry.BOOKS_TABLE_NAME, values, whereClause, null);
             }
         }
