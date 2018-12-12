@@ -1,35 +1,27 @@
 package com.thadocizn.bookapplication.classes;
 
 public class Bookshelf {
-    private int shelfId;
-    private int tagId;
     private int bookId;
-    private String shelfName;
+    private String shelf_name;
 
-    public Bookshelf(int shelfId, int tagId, int bookId) {
-        this.shelfId   = shelfId;
-        this.tagId     = tagId;
+    public Bookshelf(int bookId, String shelfName) {
         this.bookId    = bookId;
+        this.shelf_name = shelfName;
     }
 
-    public Bookshelf(int shelfId) {
-        this.shelfId = shelfId;
+    public int getBookId() {
+        return bookId;
     }
 
-    public int getTagId() {
-        return tagId;
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
     }
 
-    public void setTagId(int tagId) {
-        this.tagId = tagId;
+    public String getShelf_name() {
+        return shelf_name;
     }
 
-    public int getShelfId() {
-        return shelfId;
+    public void setShelf_name(String shelf_name) {
+        this.shelf_name = shelf_name;
     }
-
-    public void setShelfId(int shelfId) {
-        this.shelfId = shelfId;
-    }
-
 }

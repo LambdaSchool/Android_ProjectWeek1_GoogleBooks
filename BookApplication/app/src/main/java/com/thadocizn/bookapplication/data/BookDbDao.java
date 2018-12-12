@@ -6,25 +6,22 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.thadocizn.bookapplication.classes.Book;
-import com.thadocizn.bookapplication.classes.Tag;
 
 import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.List;
 
 public class BookDbDao {
 
     private static SQLiteDatabase db;
 
-    public static void initializeInstance(Context context){
-        if (db == null){
+    public static void initializeInstance(Context context) {
+        if (db == null) {
             BookDbHelper helper = new BookDbHelper(context);
             db = helper.getWritableDatabase();
         }
     }
 
-    public static void createBook(Book book, int[] tagIds){
-        if (db != null){
+    public static void createBook(Book book) {
+        if (db != null) {
             ContentValues values = new ContentValues();
             values.put(BookDbContract.BookEntry.COLUMN_NAME_BOOK_TITLE, book.getBookTitle());
             values.put(BookDbContract.BookEntry.COLUMN_NAME_BOOK_IMAGE_URL, book.getBookImageUrl());
@@ -33,137 +30,55 @@ public class BookDbDao {
 
             int bookId = (int) db.insert(BookDbContract.BookEntry.TABLE_NAME_BOOK, null, values);
 
-            for (int tag_id: tagIds) {
-                createBookTag(bookId, tag_id);
-            }
         }
     }
 
-    public static int createTag(Tag tag){
-        int row = 0;
-        if (db != null){
-            ContentValues values = new ContentValues();
-            values.put(BookDbContract.BookEntry.COLUMN_NAME_TAG, tag.getTagName());
-            row = (int) db.insert(BookDbContract.BookEntry.TABLE_NAME_TAG, null, values);
-        }
-        return row;
-    }
-
-    private static void createBookTag(int bookId, int tag_id) {
-            if (db != null){
-            ContentValues values = new ContentValues();
-            values.put(BookDbContract.BookEntry.COLUMN_NAME_BOOK_KEY_ID, bookId);
-            values.put(BookDbContract.BookEntry.COLUMN_NAME_TAG_KEY_ID, tag_id);
-
-            long id = db.insert(BookDbContract.BookEntry.TABLE_NAME_BOOKSHELF, null, values);
-        }
-    }
-
-    public static ArrayList<Tag> getAllTags() {
-        ArrayList<Tag> tags = new ArrayList<>();
-        String selectQuery = "SELECT  * FROM " + BookDbContract.BookEntry.TABLE_NAME_TAG;
-
-        if (db != null){
-            Cursor cursor = db.rawQuery(selectQuery, null);
-            if (cursor.moveToFirst()){
-                while (cursor.moveToNext()){
-                    Tag tag = new Tag();
-                    tag.setTagId(cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.COLUMN_NAME_TAG_KEY_ID));
-                    tag.setTagName(String.valueOf(cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.COLUMN_NAME_TAG)));
-                    tags.add(tag);
-                }
-            }
-        }
-        return tags;
-    }
-
-    public Book getBook(int bookId){
+    public Book getBook(int bookId) {
 
         int index;
         Cursor cursor = null;
 
-        if (db != null){
-                cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE %s = '%s'",
-                        BookDbContract.BookEntry.TABLE_NAME_BOOK,
-                        BookDbContract.BookEntry.COLUMN_NAME_BOOK_KEY_ID,
-                        bookId), null);
+        if (db != null) {
+            cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE %s = '%s'",
+                    BookDbContract.BookEntry.TABLE_NAME_BOOK,
+                    BookDbContract.BookEntry.COLUMN_NAME_BOOK_KEY_ID,
+                    bookId), null);
 
-                if (cursor.moveToNext()){
-                    Book book;
+            if (cursor.moveToNext()) {
+                Book book;
 
-                    book = getBookFromCursor(cursor);
+                book = getBookFromCursor(cursor);
 
-                    return book;
-                }
+                return book;
+            }
         }
 
-        if (cursor != null){
+        if (cursor != null) {
             cursor.close();
         }
         return null;
     }
 
-    public ArrayList<Book> getAllBooks(){
+    public ArrayList<Book> getAllBooks() {
         ArrayList<Book> books = new ArrayList<>();
 
-        if (db != null){
+        if (db != null) {
             Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s;",
-                    BookDbContract.BookEntry.TABLE_NAME_BOOK),null);
+                    BookDbContract.BookEntry.TABLE_NAME_BOOK), null);
 
-            while (cursor.moveToNext()){
-                books.add(getBookFromCursor(cursor));
-            }
-            cursor.close();
-            return  books;
-        }else {
-            return new ArrayList<>();
-        }
-
-    }
-
-    public ArrayList<Book>getBooksWithSameTag(Tag tag){
-
-        ArrayList<Book> books = new ArrayList<>();
-        if (db != null){
-            String whereClause = String.format("%s = '%s'",
-                    BookDbContract.BookEntry.COLUMN_TAG_ID,
-                    tag.getTagId());
-            Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE %s",
-                    BookDbContract.BookEntry.TABLE_NAME_BOOKSHELF,
-                    whereClause),null);
-            while (cursor.moveToNext()){
+            while (cursor.moveToNext()) {
                 books.add(getBookFromCursor(cursor));
             }
             cursor.close();
             return books;
-        }else {
+        } else {
             return new ArrayList<>();
         }
+
     }
 
-    public static void updateTag(Tag tag) {
-
-        if (db != null){
-
-
-            String whereClause = String.format("%s = '%s'",
-                    BookDbContract.BookEntry.COLUMN_TAG_ID,
-                    tag.getTagId());
-            Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE %s",
-                    BookDbContract.BookEntry.TABLE_NAME_TAG, whereClause),
-                    null);
-
-            if (cursor.getCount() == 1){
-                ContentValues values = new ContentValues();
-                values.put(BookDbContract.BookEntry.COLUMN_NAME_TAG, tag.getTagName());
-                int row = db.update(BookDbContract.BookEntry.TABLE_NAME_TAG, values, whereClause, null);
-            }
-
-        }
-    }
-
-    public static void updateBook(Book book){
-        if (db != null){
+    public static void updateBook(Book book) {
+        if (db != null) {
 
             String whereClause = String.format("%s = '%s'",
                     BookDbContract.BookEntry.COLUMN_NAME_BOOK_KEY_ID,
@@ -173,7 +88,7 @@ public class BookDbDao {
                     BookDbContract.BookEntry.TABLE_NAME_BOOK, whereClause),
                     null);
 
-            if (cursor.getCount() == 1){
+            if (cursor.getCount() == 1) {
                 ContentValues values = new ContentValues();
                 values.put(BookDbContract.BookEntry.COLUMN_NAME_BOOK_TITLE, book.getBookTitle());
                 values.put(BookDbContract.BookEntry.COLUMN_NAME_BOOK_IMAGE_URL, book.getBookImageUrl());
@@ -187,13 +102,13 @@ public class BookDbDao {
         }
     }
 
-    public static void  deleteBook(Book book){
-        if (db != null){
+    public static void deleteBook(Book book) {
+        if (db != null) {
             String whereClause = String.format("%s = '%s'",
                     BookDbContract.BookEntry.COLUMN_BOOK_ID,
                     book.getBookId());
 
-            int rows = db .delete(BookDbContract.BookEntry.TABLE_NAME_BOOK, whereClause, null);
+            int rows = db.delete(BookDbContract.BookEntry.TABLE_NAME_BOOK, whereClause, null);
         }
     }
 
@@ -222,6 +137,6 @@ public class BookDbDao {
         book.setBookReview(bookReview);
         book.setReadBook(readBook);
         book.setBookId(idBook);
-         return book;
+        return book;
     }
 }

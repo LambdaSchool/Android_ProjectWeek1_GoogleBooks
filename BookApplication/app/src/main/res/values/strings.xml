@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">BookApplication</string>
+    <string name="find_a_book">Find a book</string>
+    <string name="book_name">Book Name</string>
+    <string name="book_review">Book Review</string>
+    <string name="read_book">Read Book</string>
 </resources>
