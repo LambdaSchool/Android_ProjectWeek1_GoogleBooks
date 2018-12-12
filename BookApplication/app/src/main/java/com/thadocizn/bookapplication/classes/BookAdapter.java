@@ -13,6 +13,9 @@ import com.thadocizn.bookapplication.R;
 import java.util.ArrayList;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> {
+    public BookAdapter(ArrayList<Book> bookList) {
+        this.bookList = bookList;
+    }
 
     private ArrayList<Book> bookList;
     @NonNull
