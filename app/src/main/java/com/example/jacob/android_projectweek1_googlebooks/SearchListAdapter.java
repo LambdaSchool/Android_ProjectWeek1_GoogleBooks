@@ -62,6 +62,7 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
     public void onBindViewHolder(@NonNull SearchListAdapter.ViewHolder viewHolder, int i) {
         final Book data = dataList.get(i);
         viewHolder.bookTitle.setText(data.getTitle());
+        viewHolder.bookContent.setText(data.getAuthor());
         String imageUrl = data.getImageUrl();
         if (imageUrl != null) {
             String[] urlParts = imageUrl.substring(imageUrl.indexOf("id=") + 3).split("&");

@@ -25,9 +25,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:text="NoteTitleHere"
-            android:textColor="@android:color/white"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:visibility="visible"
             card_view:layout_constraintStart_toEndOf="@id/image_search_element"
             card_view:layout_constraintTop_toTopOf="parent" />
 
@@ -37,8 +37,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:text="Book Content ..."
-            android:textColor="@android:color/white"
             android:textSize="12sp"
+            android:visibility="visible"
             card_view:layout_constraintStart_toEndOf="@id/image_search_element"
             card_view:layout_constraintTop_toBottomOf="@id/text_search_element_title" />
 

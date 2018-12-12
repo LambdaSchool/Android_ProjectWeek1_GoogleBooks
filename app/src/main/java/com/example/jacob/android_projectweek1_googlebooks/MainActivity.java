@@ -1,8 +1,6 @@
 package com.example.jacob.android_projectweek1_googlebooks;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
