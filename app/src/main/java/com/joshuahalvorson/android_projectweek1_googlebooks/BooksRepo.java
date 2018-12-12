@@ -2,7 +2,7 @@ package com.joshuahalvorson.android_projectweek1_googlebooks;
 
 import java.util.ArrayList;
 
-public class BookVolumeRepo {
+public class BooksRepo {
     ArrayList<BookVolume> booksList;
     public void addBook(final BookVolume bookVolume){
         new Thread(new Runnable() {
@@ -28,5 +28,13 @@ public class BookVolumeRepo {
 
     public void deleteBook(BookVolume bookVolume){
         BooksDbDao.deleteBookEntry(bookVolume);
+    }
+
+    public void addBookshelf(Bookshelf bookshelf){
+        BooksDbDao.createBookshelf(bookshelf);
+    }
+
+    public ArrayList<Bookshelf> readBookshelves(){
+        return BooksDbDao.readAllBookshelves();
     }
 }

@@ -1,6 +1,7 @@
 package com.joshuahalvorson.android_projectweek1_googlebooks;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,11 +11,17 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import java.security.PrivateKey;
+import java.util.ArrayList;
 
 public class BookshelvesFragment extends Fragment {
     private FloatingActionButton addBookshelfButton;
+    private ArrayList<Bookshelf> bookShelves;
+    private LinearLayout scrollView;
 
     public BookshelvesFragment(){
 
@@ -40,11 +47,21 @@ public class BookshelvesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         addBookshelfButton = view.findViewById(R.id.add_bookshelf_button);
+        scrollView = view.findViewById(R.id.scroll_view);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        bookShelves = BooksViewModel.readBookshelves();
+        for(int i = 0; i < bookShelves.size(); i++){
+            final TextView tv = new TextView(getContext());
+            final Bookshelf bookshelf = bookShelves.get(i);
+            tv.setText(bookshelf.getName());
+            tv.setTextColor(Color.BLACK);
+            tv.setTextSize(25);
+            scrollView.addView(tv);
+        }
         addBookshelfButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

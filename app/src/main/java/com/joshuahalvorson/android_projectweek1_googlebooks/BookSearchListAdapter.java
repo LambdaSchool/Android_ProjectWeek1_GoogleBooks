@@ -1,7 +1,6 @@
 package com.joshuahalvorson.android_projectweek1_googlebooks;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -54,7 +53,7 @@ public class BookSearchListAdapter extends RecyclerView.Adapter<BookSearchListAd
         viewHolder.parentView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                BookVolumeViewModel.addBook(bookVolume);
+                BooksViewModel.addBook(bookVolume);
                 viewHolder.titleText.setTextColor(Color.YELLOW);
                 return false;
             }

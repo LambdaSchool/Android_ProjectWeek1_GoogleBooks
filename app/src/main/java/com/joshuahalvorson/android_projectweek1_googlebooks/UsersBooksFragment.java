@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -49,7 +48,7 @@ public class UsersBooksFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        bookVolumes = BookVolumeViewModel.readBooks();
+        bookVolumes = BooksViewModel.readBooks();
         for(int i = 0; i < bookVolumes.size(); i++){
             final TextView tv = new TextView(getContext());
             final BookVolume bookVolume = bookVolumes.get(i);

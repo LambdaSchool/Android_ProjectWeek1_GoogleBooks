@@ -54,7 +54,7 @@ public class ReviewBookFragment extends Fragment{
             public void onClick(View v) {
                 String reviewText = reviewContent.getText().toString();
                 bookVolume.setUserReview(reviewText);
-                BookVolumeViewModel.updateBookUserReview(bookVolume);
+                BooksViewModel.updateBookUserReview(bookVolume);
                 getFragmentManager().popBackStack();
                 Log.i("onClickSubmitReview", "review was saved to sql db");
             }

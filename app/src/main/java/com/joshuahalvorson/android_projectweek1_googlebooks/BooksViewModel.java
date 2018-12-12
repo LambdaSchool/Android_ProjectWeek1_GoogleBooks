@@ -2,8 +2,8 @@ package com.joshuahalvorson.android_projectweek1_googlebooks;
 
 import java.util.ArrayList;
 
-public class BookVolumeViewModel {
-    private static BookVolumeRepo repo = new BookVolumeRepo();;
+public class BooksViewModel {
+    private static BooksRepo repo = new BooksRepo();;
     public static void addBook(BookVolume bookVolume){
         repo.addBook(bookVolume);
     }
@@ -22,5 +22,13 @@ public class BookVolumeViewModel {
 
     public static void deleteBook(BookVolume bookVolume){
         repo.deleteBook(bookVolume);
+    }
+
+    public static void addBookshelf(Bookshelf bookshelf){
+        repo.addBookshelf(bookshelf);
+    }
+
+    public static ArrayList<Bookshelf> readBookshelves(){
+        return repo.readBookshelves();
     }
 }

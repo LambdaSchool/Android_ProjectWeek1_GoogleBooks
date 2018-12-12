@@ -3,7 +3,7 @@ package com.joshuahalvorson.android_projectweek1_googlebooks;
 import android.provider.BaseColumns;
 
 public class BooksDbContract {
-    public static class BookEntry implements BaseColumns{
+    public static class BookEntry implements BaseColumns {
         public static final String BOOKS_TABLE_NAME = "books";
         public static final String BOOKS_COLUMN_TITLE = "title";
         public static final String BOOKS_COLUMN_IMAGE_URL = "image";
@@ -15,7 +15,7 @@ public class BooksDbContract {
 
         public static final String SQL_CREATE_BOOKS_TABLE = String.format(
                 "CREATE TABLE IF NOT EXISTS %s (" +
-                        "%s TEXT PRIMARY KEY, " +
+                        "%s INTEGER PRIMARY KEY, " +
                         "%s TEXT, " +
                         "%s TEXT, " +
                         "%s TEXT, " +
@@ -36,19 +36,15 @@ public class BooksDbContract {
         public static final String SQL_DELETE_BOOKS_TABLE = "DROP TABLE IF EXISTS "
                 + BOOKS_TABLE_NAME + ";";
 
+        /////////////////////////////////////////////////////////////////////////////
+
         public static final String BOOKSHELVES_TABLE_NAME = "bookshelves";
         public static final String BOOKSHELVES_COLUMN_TITLE = "bookshelf_name";
 
         public static final String SQL_CREATE_BOOKSHELVES_TABLE = String.format(
                 "CREATE TABLE IF NOT EXISTS %s (" +
-                        "%s TEXT PRIMARY KEY, " +
-                        "%s TEXT, " +
-                        "%s TEXT, " +
-                        "%s TEXT, " +
-                        "%s TEXT, " +
-                        "%s TEXT, " +
-                        "%s INTEGER, " +
-                        "%s INTEGER);",
+                        "%s INTEGER PRIMARY KEY, " +
+                        "%s TEXT);",
                 BOOKSHELVES_TABLE_NAME,
                 _ID,
                 BOOKSHELVES_COLUMN_TITLE);
@@ -56,5 +52,28 @@ public class BooksDbContract {
         public static final String SQL_DELETE_BOOKSHELVES_TABLE = "DROP TABLE IF EXISTS "
                 + BOOKSHELVES_TABLE_NAME + ";";
 
+
+        /////////////////////////////////////////////////////////////////////////////
+
+        public static final String BOOKSHELVES_BOOKS_TABLE_NAME = "bookshelves_books";
+        public static final String BOOKSHELVES_BOOKS_TABLE_COLUMN_BOOKSHELF_ID = "bookshelf_id";
+        public static final String BOOKSHELVES_BOOKS_TABLE_COLUMN_BOOK_ID = "book_id";
+
+        public static final String SQL_CREATE_BOOKSHELVES_BOOKS_TABLE = String.format(
+                "CREATE TABLE IF NOT EXISTS %s (" +
+                        "%s INTEGER PRIMARY KEY, " +
+                        "%s INTEGER, " +
+                        "%s INTEGER, " +
+                        "FOREIGN KEY (%s) REFERENCES %s(%s), " +
+                        "FOREIGN KEY (%s) REFERENCES %s(%s));",
+                BOOKSHELVES_BOOKS_TABLE_NAME,
+                _ID,
+                BOOKSHELVES_BOOKS_TABLE_COLUMN_BOOKSHELF_ID,
+                BOOKSHELVES_BOOKS_TABLE_COLUMN_BOOK_ID,
+                BOOKSHELVES_BOOKS_TABLE_COLUMN_BOOKSHELF_ID, BOOKSHELVES_TABLE_NAME, _ID,
+                BOOKSHELVES_BOOKS_TABLE_COLUMN_BOOK_ID, BOOKS_TABLE_NAME, _ID);
+
+        public static final String SQL_DELETE_BOOKSHELVES_BOOKS_TABLE = "DROP TABLE IF EXISTS "
+                + BOOKSHELVES_TABLE_NAME + ";";
     }
 }

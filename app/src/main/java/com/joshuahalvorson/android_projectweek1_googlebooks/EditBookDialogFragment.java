@@ -61,11 +61,11 @@ public class EditBookDialogFragment extends Fragment {
             public void onClick(View v) {
                 if(setHasReadCheckBox.isChecked()){
                     bookVolume.setHasRead(1);
-                    BookVolumeViewModel.updateBookHasRead(bookVolume);
+                    BooksViewModel.updateBookHasRead(bookVolume);
                     Log.i("onClickCheckBock", "book read update to true");
                 }else{
                     bookVolume.setHasRead(0);
-                    BookVolumeViewModel.updateBookHasRead(bookVolume);
+                    BooksViewModel.updateBookHasRead(bookVolume);
                     Log.i("onClickCheckBock", "book read update to false");
                 }
             }
@@ -86,7 +86,7 @@ public class EditBookDialogFragment extends Fragment {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BookVolumeViewModel.deleteBook(bookVolume);
+                BooksViewModel.deleteBook(bookVolume);
                 Fragment currentFragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container);
                 if (currentFragment instanceof UsersBooksFragment) {
                     FragmentTransaction ft = (getActivity()).getSupportFragmentManager().beginTransaction();
