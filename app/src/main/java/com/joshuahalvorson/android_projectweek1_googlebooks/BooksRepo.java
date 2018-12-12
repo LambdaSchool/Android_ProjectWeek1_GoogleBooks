@@ -41,4 +41,12 @@ public class BooksRepo {
     public ArrayList<Bookshelf> readBookshelves(){
         return BooksDbDao.readAllBookshelves();
     }
+
+    public void addBookshelfBookRelation(Bookshelf bookshelf, BookVolume bookVolume){
+        BooksDbDao.createBookshelfBookRelationship(bookshelf, bookVolume);
+    }
+
+    public ArrayList<String> readBooksInBookshelf(Bookshelf bookshelf){
+        return BooksDbDao.readBooksInBookshelf(bookshelf);
+    }
 }

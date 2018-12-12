@@ -41,6 +41,37 @@ public class BooksDbDao {
         }
     }
 
+    public static void createBookshelfBookRelationship(Bookshelf bookshelf, BookVolume bookVolume){
+        if(db != null){
+            ContentValues values = new ContentValues();
+            values.put(BooksDbContract.BookEntry.BOOKSHELVES_BOOKS_TABLE_COLUMN_BOOKSHELF_ID, bookshelf.getName());
+            values.put(BooksDbContract.BookEntry.BOOKSHELVES_BOOKS_TABLE_COLUMN_BOOK_ID, bookVolume.getTitle());
+            db.insert(BooksDbContract.BookEntry.BOOKSHELVES_BOOKS_TABLE_NAME, null, values);
+        }
+    }
+
+    public static ArrayList<String> readBooksInBookshelf(Bookshelf bookshelf){
+        if(db != null){
+            Cursor cursor = db.rawQuery(String.format("SELECT %s.%s FROM %s JOIN %s ON %s.%s = %s.%s WHERE %s.%s='%s'",
+                    BooksDbContract.BookEntry.BOOKS_TABLE_NAME, BooksDbContract.BookEntry.BOOKS_COLUMN_TITLE,
+                    BooksDbContract.BookEntry.BOOKS_TABLE_NAME,
+                    BooksDbContract.BookEntry.BOOKSHELVES_BOOKS_TABLE_NAME,
+                    BooksDbContract.BookEntry.BOOKS_TABLE_NAME, BooksDbContract.BookEntry.BOOKS_COLUMN_TITLE,
+                    BooksDbContract.BookEntry.BOOKSHELVES_BOOKS_TABLE_NAME, BooksDbContract.BookEntry.BOOKSHELVES_BOOKS_TABLE_COLUMN_BOOK_ID,
+                    BooksDbContract.BookEntry.BOOKSHELVES_BOOKS_TABLE_NAME, BooksDbContract.BookEntry.BOOKSHELVES_BOOKS_TABLE_COLUMN_BOOKSHELF_ID,
+                    bookshelf.getName()), null);
+            ArrayList<String> bookTitles = new ArrayList<>();
+            while(cursor.moveToNext()){
+                String title = getBookTitlesInBookshelfData(cursor);
+                bookTitles.add(title);
+            }
+            cursor.close();
+            return bookTitles;
+        }else{
+            return new ArrayList<>();
+        }
+    }
+
     public static ArrayList<Bookshelf> readAllBookshelves(){
         if(db != null){
             Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s;", BooksDbContract.BookEntry.BOOKSHELVES_TABLE_NAME), null);
@@ -147,5 +178,12 @@ public class BooksDbDao {
         index = cursor.getColumnIndexOrThrow(BooksDbContract.BookEntry.BOOKSHELVES_COLUMN_TITLE);
         String name = cursor.getString(index);
         return new Bookshelf(name);
+    }
+
+    private static String getBookTitlesInBookshelfData(Cursor cursor){
+        int index;
+        index = cursor.getColumnIndexOrThrow(BooksDbContract.BookEntry.BOOKSHELVES_BOOKS_TABLE_COLUMN_BOOK_ID);
+        String title = cursor.getString(index);
+        return title;
     }
 }

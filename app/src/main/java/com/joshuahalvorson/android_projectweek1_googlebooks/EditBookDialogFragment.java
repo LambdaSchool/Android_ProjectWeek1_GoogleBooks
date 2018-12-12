@@ -13,10 +13,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 
+import java.util.ArrayList;
+
 public class EditBookDialogFragment extends Fragment {
     private Button deleteButton, addToBookshelfButton, writeReviewButton;
     private CheckBox setHasReadCheckBox, setFavoriteCheckBox;
     private BookVolume bookVolume;
+
 
     public EditBookDialogFragment(){
 
@@ -47,6 +50,7 @@ public class EditBookDialogFragment extends Fragment {
         setFavoriteCheckBox = view.findViewById(R.id.set_favorite);
         writeReviewButton = view.findViewById(R.id.write_review_button);
         bookVolume = getArguments().getParcelable("book");
+
     }
 
     @Override
@@ -94,11 +98,24 @@ public class EditBookDialogFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ReviewBookFragment  reviewBookFragment= new ReviewBookFragment();
+                ReviewBookFragment  reviewBookFragment = new ReviewBookFragment();
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("bookreview", bookVolume);
                 reviewBookFragment.setArguments(bundle);
                 ft.add(R.id.dialog_container, reviewBookFragment, "edit_review_fragment");
+                ft.addToBackStack(null);
+                ft.commit();
+            }
+        });
+        addToBookshelfButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                AddBookToBookshelfDialogFragment addBookToBookshelfDialogFragment = new AddBookToBookshelfDialogFragment();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("book", bookVolume);
+                addBookToBookshelfDialogFragment.setArguments(bundle);
+                ft.add(R.id.dialog_container, addBookToBookshelfDialogFragment, "edit_review_fragment");
                 ft.addToBackStack(null);
                 ft.commit();
             }

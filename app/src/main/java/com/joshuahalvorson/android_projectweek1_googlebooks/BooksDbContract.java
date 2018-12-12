@@ -65,16 +65,16 @@ public class BooksDbContract {
         public static final String SQL_CREATE_BOOKSHELVES_BOOKS_TABLE = String.format(
                 "CREATE TABLE IF NOT EXISTS %s (" +
                         "%s INTEGER PRIMARY KEY, " +
-                        "%s INTEGER, " +
-                        "%s INTEGER, " +
+                        "%s TEXT, " +
+                        "%s TEXT, " +
                         "FOREIGN KEY (%s) REFERENCES %s(%s), " +
                         "FOREIGN KEY (%s) REFERENCES %s(%s));",
                 BOOKSHELVES_BOOKS_TABLE_NAME,
                 _ID,
                 BOOKSHELVES_BOOKS_TABLE_COLUMN_BOOKSHELF_ID,
                 BOOKSHELVES_BOOKS_TABLE_COLUMN_BOOK_ID,
-                BOOKSHELVES_BOOKS_TABLE_COLUMN_BOOKSHELF_ID, BOOKSHELVES_TABLE_NAME, _ID,
-                BOOKSHELVES_BOOKS_TABLE_COLUMN_BOOK_ID, BOOKS_TABLE_NAME, _ID);
+                BOOKSHELVES_BOOKS_TABLE_COLUMN_BOOKSHELF_ID, BOOKSHELVES_TABLE_NAME, BOOKSHELVES_COLUMN_TITLE,
+                BOOKSHELVES_BOOKS_TABLE_COLUMN_BOOK_ID, BOOKS_TABLE_NAME, BOOKS_COLUMN_TITLE);
 
         public static final String SQL_DELETE_BOOKSHELVES_BOOKS_TABLE = "DROP TABLE IF EXISTS "
                 + BOOKSHELVES_TABLE_NAME + ";";
