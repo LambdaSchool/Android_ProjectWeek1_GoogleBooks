@@ -24,19 +24,22 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final int BOOK_LOADER_ID = 1;
     public EditText search;
     private RecyclerView recyclerView;
     private ImageButton searchButton;
     private View loadingIndicator;
     private BookAdapter adapter;
-    private List<Book> bookList = new ArrayList<>();
+    private ArrayList<Book> bookList;
+    private LinearLayoutManager linearLayoutManager;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        context = this;
         BookDbDao.initializeInstance(this);
+
 
         search =findViewById(R.id.etSearch);
         recyclerView = findViewById(R.id.recycleViewer);
@@ -47,27 +50,24 @@ public class MainActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new getBooks().execute(search.getText().toString());
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        bookList = BookDao.findBooks(search.getText().toString());
+                    }
+                }).start();
             }
         });
 
         adapter = new BookAdapter(bookList);
-        recyclerView.setAdapter(adapter);
+        recyclerView.setHasFixedSize(true);
+        linearLayoutManager = new LinearLayoutManager(context);
+        recyclerView.setLayoutManager(linearLayoutManager);
         RecyclerView.ItemDecoration itemDecoration =
                 new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
         recyclerView.addItemDecoration(itemDecoration);
+        recyclerView.setAdapter(adapter);
+
     }
 
-    public static class getBooks extends AsyncTask<String, Integer, ArrayList<Book>>{
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-        }
-
-        @Override
-        protected ArrayList<Book> doInBackground(String... strings) {
-            return BookDao.findBooks(strings[0]);
-        }
-    }
 }

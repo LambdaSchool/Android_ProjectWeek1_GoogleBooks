@@ -129,7 +129,7 @@ public class BookDbDao {
         int readBook = cursor.getInt(index);
 
         index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.COLUMN_NAME_BOOK_KEY_ID);
-        int idBook = cursor.getInt(index);
+        String idBook = cursor.getString(index);
 
         book = new Book();
         book.setBookTitle(title);

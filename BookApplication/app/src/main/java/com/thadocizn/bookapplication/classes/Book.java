@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 public class Book implements Parcelable {
 
-    private int bookId;
+    private String bookId;
     private String bookTitle;
     private String bookImageUrl;
     private String bookReview;
@@ -17,20 +17,22 @@ public class Book implements Parcelable {
     public Book(JSONObject json) {
 
         try {
-            this.bookId = json.getInt("id");
+            this.bookId = json.getString("id");
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
         try {
-            this.bookTitle = json.getString("title");
+            JSONObject js = json.getJSONObject("volumeInfo");
+            this.bookTitle = js.getString("title");
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
         try {
-            JSONObject links = json.getJSONObject("imageLinks");
-            this.bookImageUrl = links.getString("smallThumbnail");
+            JSONObject js = json.getJSONObject("volumeInfo");
+            JSONObject links = js.getJSONObject("imageLinks");
+            this.bookImageUrl = links.getString("thumbnail");
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -38,7 +40,7 @@ public class Book implements Parcelable {
         }
     }
 
-    public Book(String bookTitle, String bookImageUrl, String bookReview, int bookId) {
+    public Book(String bookTitle, String bookImageUrl, String bookReview, String bookId) {
         this.bookTitle = bookTitle;
         this.bookImageUrl = bookImageUrl;
         this.bookReview = bookReview;
@@ -50,7 +52,7 @@ public class Book implements Parcelable {
         bookImageUrl = in.readString();
         bookReview = in.readString();
         readBook = in.readInt();
-        bookId = in.readInt();
+        bookId = in.readString();
     }
 
     public static final Creator<Book> CREATOR = new Creator<Book>() {
@@ -69,11 +71,11 @@ public class Book implements Parcelable {
 
     }
 
-    public int getBookId() {
+    public String getBookId() {
         return bookId;
     }
 
-    public void setBookId(int bookId) {
+    public void setBookId(String bookId) {
         this.bookId = bookId;
     }
 
@@ -120,7 +122,7 @@ public class Book implements Parcelable {
         dest.writeString(bookImageUrl);
         dest.writeString(bookReview);
         dest.writeInt(readBook);
-        dest.writeInt(bookId);
+        dest.writeString(bookId);
     }
 
 }

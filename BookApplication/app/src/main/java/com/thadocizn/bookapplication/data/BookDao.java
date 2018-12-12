@@ -25,10 +25,10 @@ public class BookDao {
         try {
 
             JSONObject topLevel = new JSONObject(result);
-            JSONArray jsonArray = topLevel.getJSONArray("items");
+            JSONArray json = topLevel.getJSONArray("items");
 
-            for (int i = 0; i < jsonArray.length(); ++i) {
-                book = new Book(jsonArray.getJSONObject(i));
+            for (int i = 0; i < json.length(); ++i) {
+                book = new Book(json.getJSONObject(i));
                 books.add(book);
             }
 
