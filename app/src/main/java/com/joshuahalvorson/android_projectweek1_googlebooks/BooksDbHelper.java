@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class BooksDbHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "Lambdabooks.db";
 
     public BooksDbHelper(Context context){
@@ -18,6 +18,9 @@ public class BooksDbHelper extends SQLiteOpenHelper {
         db.execSQL(BooksDbContract.BookEntry.SQL_CREATE_BOOKS_TABLE);
         db.execSQL(BooksDbContract.BookEntry.SQL_CREATE_BOOKSHELVES_TABLE);
         db.execSQL(BooksDbContract.BookEntry.SQL_CREATE_BOOKSHELVES_BOOKS_TABLE);
+
+        db.execSQL(BooksDbContract.BookEntry.CREATE_DEFAULT_SHELF_FAVORITES);
+        db.execSQL(BooksDbContract.BookEntry.CREATE_DEFAULT_SHELF_HAS_READ);
     }
 
     @Override

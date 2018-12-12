@@ -55,7 +55,6 @@ public class BooksDbContract {
         public static final String SQL_DELETE_BOOKSHELVES_TABLE = "DROP TABLE IF EXISTS "
                 + BOOKSHELVES_TABLE_NAME + ";";
 
-
         /////////////////////////////////////////////////////////////////////////////
 
         public static final String BOOKSHELVES_BOOKS_TABLE_NAME = "bookshelves_books";
@@ -78,5 +77,17 @@ public class BooksDbContract {
 
         public static final String SQL_DELETE_BOOKSHELVES_BOOKS_TABLE = "DROP TABLE IF EXISTS "
                 + BOOKSHELVES_TABLE_NAME + ";";
+
+        /////////////////////////////////////////////////////////////////////////////
+
+        public static final String CREATE_DEFAULT_SHELF_FAVORITES =
+                String.format("INSERT INTO %s (%s) VALUES ('%s');",
+                        BOOKSHELVES_TABLE_NAME, BOOKSHELVES_COLUMN_TITLE, "Favorites");
+
+        public static final String CREATE_DEFAULT_SHELF_HAS_READ =
+                String.format("INSERT INTO %s (%s) VALUES ('%s');",
+                        BOOKSHELVES_TABLE_NAME, BOOKSHELVES_COLUMN_TITLE, "Books youve read");
+
+
     }
 }
