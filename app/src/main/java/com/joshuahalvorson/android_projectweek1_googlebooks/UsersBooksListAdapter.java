@@ -68,7 +68,7 @@ public class UsersBooksListAdapter extends RecyclerView.Adapter<BookSearchListAd
                 bundle.putParcelable("book", bookVolume);
                 editBookDialogFragment.setArguments(bundle);
                 activity.getSupportFragmentManager().beginTransaction()
-                        .add(R.id.dialog_container, editBookDialogFragment)
+                        .add(R.id.dialog_container, editBookDialogFragment, "edit_book_dialog_fragment")
                         .addToBackStack(null)
                         .commit();
                 return false;
