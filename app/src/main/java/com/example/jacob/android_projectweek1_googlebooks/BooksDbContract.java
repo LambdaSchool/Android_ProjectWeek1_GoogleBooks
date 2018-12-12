@@ -11,8 +11,9 @@ public class BooksDbContract {
         static final String COLUMN_NAME_IMAGE_URL = "image_url";
         static final String COLUMN_NAME_REVIEW = "review";
         static final String COLUMN_NAME_HAS_BEEN_READ = "has_been_read";
+        static final String COLUMN_NAME_BOOKSHELVES = "bookshelves";
 
-
+        //TODO use a separate table for bookshelves.
 
         static final String SQL_CREATE_TABLE = "CREATE TABLE " + TABLE_NAME +
                 " (" +
@@ -22,7 +23,8 @@ public class BooksDbContract {
                 COLUMN_NAME_PUBLISHED_DATE + " STRING, " +
                 COLUMN_NAME_IMAGE_URL + " STRING, " +
                 COLUMN_NAME_REVIEW + " STRING, " +
-                COLUMN_NAME_HAS_BEEN_READ + " INTEGER);";
+                COLUMN_NAME_HAS_BEEN_READ + " INTEGER, " +
+                COLUMN_NAME_BOOKSHELVES +" STRING);";
 
         static final String SQL_DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
     }

@@ -4,11 +4,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class Book {
     private String id, title, author, publishedDate, imageUrl, review;
     private boolean hasBeenRead;
+    private ArrayList<String> bookshelfIds;
 
-    public Book(String id, String title, String author, String publishedDate, String imageUrl, String review, boolean hasBeenRead) {
+    public Book(String id, String title, String author, String publishedDate, String imageUrl, String review, boolean hasBeenRead, ArrayList<String> bookshelfIds) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -16,6 +19,7 @@ public class Book {
         this.imageUrl = imageUrl;
         this.review = review;
         this.hasBeenRead = hasBeenRead;
+        this.bookshelfIds = bookshelfIds;
     }
 
     public Book(JSONObject inputJson) {
@@ -65,6 +69,7 @@ public class Book {
         }
         this.review = "";
         this.hasBeenRead = false;
+        this.bookshelfIds = null;
     }
 
     public String getId() {
@@ -115,11 +120,19 @@ public class Book {
         this.review = review;
     }
 
-    public boolean isHasBeenRead() {
+    public boolean getHasBeenRead() {
         return hasBeenRead;
     }
 
     public void setHasBeenRead(boolean hasBeenRead) {
         this.hasBeenRead = hasBeenRead;
+    }
+
+    public ArrayList<String> getBookshelves() {
+        return bookshelfIds;
+    }
+
+    public void setBookshelves(ArrayList<String> bookshelves) {
+        this.bookshelfIds = bookshelfIds;
     }
 }
