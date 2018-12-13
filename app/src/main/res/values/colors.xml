@@ -5,4 +5,12 @@
     <color name="colorAccent">#d81b60</color>
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
+    <color name="lightGreen">#c8e6c9</color>
+    <color name="darkGreen">#29524a</color>
+    <color name="red">#A72608</color>
+    <color name="pink">#a1887f</color>
+    <color name="offWhite">#DFE0E2</color>
+    <color name="faintGreen">#78909c</color>
+    <color name="purple">#455a64</color>
+    <color name="lightPurple">#807B96</color>
 </resources>

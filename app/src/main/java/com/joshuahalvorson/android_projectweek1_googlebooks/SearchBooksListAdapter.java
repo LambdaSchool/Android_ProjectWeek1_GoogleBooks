@@ -40,12 +40,16 @@ public class SearchBooksListAdapter extends RecyclerView.Adapter<SearchBooksList
     public void onBindViewHolder(@NonNull final SearchBooksListAdapter.ViewHolder viewHolder, int i) {
         final BookVolume bookVolume = bookVolumes.get(i);
         String title = bookVolume.getTitle();
+        String titleCut = title;
+        if(title.length() > 25){
+            titleCut = title.substring(0, 22) + "...";
+        }
         String authors = bookVolume.getAuthors().replaceAll(", $", "");
         String descFull = bookVolume.getDesc();
         String descCut = "";
         if(descFull.length() > 100)
             descCut = descFull.substring(0,75) + "...";
-        viewHolder.titleText.setText(title + '\n' + authors + '\n' + descCut);
+        viewHolder.titleText.setText(titleCut + '\n' + authors + '\n' + descCut);
         new Thread(new Runnable() {
             @Override
             public void run() {

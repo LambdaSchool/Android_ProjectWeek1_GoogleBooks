@@ -37,6 +37,10 @@ public class UsersBooksListAdapter extends RecyclerView.Adapter<UsersBooksListAd
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         final BookVolume bookVolume = bookVolumes.get(i);
         String title = bookVolume.getTitle();
+        String titleCut = title;
+        if(title.length() > 25){
+            titleCut = title.substring(0, 22) + "...";
+        }
         String review = bookVolume.getUserReview();
         String authors = bookVolume.getAuthors().replaceAll(", $", "");
         String descFull = bookVolume.getDesc();
@@ -46,7 +50,7 @@ public class UsersBooksListAdapter extends RecyclerView.Adapter<UsersBooksListAd
         if(review == null){
             review = "No review yet.";
         }
-        viewHolder.titleText.setText(title + ", " + authors + '\n' + descCut + '\n' + "Your review: " + review);
+        viewHolder.titleText.setText(titleCut + ", " + authors + '\n' + descCut + '\n' + "Your review: " + review);
         new Thread(new Runnable() {
             @Override
             public void run() {

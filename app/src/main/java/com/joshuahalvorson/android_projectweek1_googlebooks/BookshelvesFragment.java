@@ -53,7 +53,7 @@ public class BookshelvesFragment extends Fragment {
         addBookshelfButton = view.findViewById(R.id.add_bookshelf_button);
         recyclerView = view.findViewById(R.id.bookshelves_list_recycler_view);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         adapter = new BookshelvesListAdapter(getActivity(), bookShelves);
         recyclerView.setAdapter(adapter);
     }

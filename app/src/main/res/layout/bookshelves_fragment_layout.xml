@@ -2,9 +2,10 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_gravity="center"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/white">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/bookshelves_list_recycler_view"
@@ -16,11 +17,14 @@
         android:id="@+id/add_bookshelf_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="508dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="105dp"
         android:clickable="true"
         android:src="@drawable/ic_add_black_24dp"
-        android:tint="@color/design_default_color_primary_dark"
-        app:backgroundTint="@color/colorPrimary"
-        app:layout_constraintTop_toTopOf="parent"
+        android:tint="@color/pink"
+        app:backgroundTint="@color/lightGreen"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
