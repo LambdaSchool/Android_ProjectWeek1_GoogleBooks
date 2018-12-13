@@ -1,8 +1,12 @@
 package com.example.jacob.android_projectweek1_googlebooks;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +28,8 @@ public class BookshelvesActivity extends AppCompatActivity {
     private LinearLayoutManager layoutManager;
     private RecyclerView recyclerView;
     private BookshelvesListAdapter listAdapter;
+    private BookshelvesViewModel viewModel;
+    Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +39,7 @@ public class BookshelvesActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         context = this;
+        activity = this;
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -50,8 +57,25 @@ public class BookshelvesActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
-        listAdapter = new BookshelvesListAdapter(bookshelves, this);
-        recyclerView.setAdapter(listAdapter);
+//        listAdapter = new BookshelvesListAdapter(bookshelves, this);
+//        recyclerView.setAdapter(listAdapter);
+
+
+        viewModel = ViewModelProviders.of(this).get(BookshelvesViewModel.class);
+        final Observer<ArrayList<Bookshelf>> observer = new Observer<ArrayList<Bookshelf>>() {
+            @Override
+            public void onChanged(@Nullable ArrayList<Bookshelf> bookshelvesList) {
+                if (bookshelvesList != null) {
+//                    refreshListView(notes);
+                    listAdapter = new BookshelvesListAdapter(bookshelvesList, activity);
+                    recyclerView.setAdapter(listAdapter);
+                }
+            }
+        };
+        viewModel.getBookshelvesList().observe(this, observer);
+
+
+
     }
 
 
@@ -71,8 +95,7 @@ public class BookshelvesActivity extends AppCompatActivity {
                 String bookshelfName = editText.getText().toString();
                 bookshelfName = bookshelfName.replace(',',' ');
                 bookshelfName = bookshelfName.replace("'","");
-                BookshelfDbDao.addBookshelf(bookshelfName);
-                listAdapter.notifyDataSetChanged();
+                viewModel.addBookshelf(bookshelfName);
                 dialog.dismiss();
             }
         });
