@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.thadocizn.bookapplication.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> {
@@ -34,16 +33,17 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> 
 
         myViewHolder.bookTitle.setText(currentBook.getBookTitle());
         myViewHolder.bookReview.setText(currentBook.getBookReview());
-        myViewHolder.readBook.setText(currentBook.isReadBook());
-       // myViewHolder.bookImage.setImageBitmap(currentBook.getBookImageUrl());
+        // TODO bug
+//        myViewHolder.readBook.setText(currentBook.isReadBook());
+        // myViewHolder.bookImage.setImageBitmap(currentBook.getBookImageUrl());
     }
 
     @Override
     public int getItemCount() {
-        if (bookList == null){
+        if (bookList == null) {
             return 0;
 
-        }else {
+        } else {
             return bookList.size();
         }
     }
@@ -56,10 +56,10 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> 
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            bookTitle= itemView.findViewById(R.id.tvBook);
-            bookReview= itemView.findViewById(R.id.tvReview);
-            readBook= itemView.findViewById(R.id.tvReadBook);
-            bookImage= itemView.findViewById(R.id.ivBookImage);
+            bookTitle = itemView.findViewById(R.id.tvBook);
+            bookReview = itemView.findViewById(R.id.tvReview);
+            readBook = itemView.findViewById(R.id.tvReadBook);
+            bookImage = itemView.findViewById(R.id.ivBookImage);
         }
     }
 }

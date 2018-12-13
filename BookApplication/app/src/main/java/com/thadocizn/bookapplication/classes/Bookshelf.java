@@ -5,7 +5,7 @@ public class Bookshelf {
     private String shelf_name;
 
     public Bookshelf(int bookId, String shelfName) {
-        this.bookId    = bookId;
+        this.bookId = bookId;
         this.shelf_name = shelfName;
     }
 

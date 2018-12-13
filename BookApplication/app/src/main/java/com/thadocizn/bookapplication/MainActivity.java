@@ -1,13 +1,8 @@
 package com.thadocizn.bookapplication;
 
 import android.content.Context;
-import android.content.Loader;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -20,14 +15,12 @@ import com.thadocizn.bookapplication.data.BookDao;
 import com.thadocizn.bookapplication.data.BookDbDao;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     public EditText search;
     private RecyclerView recyclerView;
     private ImageButton searchButton;
-    private View loadingIndicator;
     private BookAdapter adapter;
     private ArrayList<Book> bookList;
     private LinearLayoutManager linearLayoutManager;
@@ -41,10 +34,9 @@ public class MainActivity extends AppCompatActivity {
         BookDbDao.initializeInstance(this);
 
 
-        search =findViewById(R.id.etSearch);
+        search = findViewById(R.id.etSearch);
         recyclerView = findViewById(R.id.recycleViewer);
         searchButton = findViewById(R.id.imageButton);
-        loadingIndicator = findViewById(R.id.progressBar);
         bookList = new ArrayList<>();
 
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -54,19 +46,21 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         bookList = BookDao.findBooks(search.getText().toString());
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                adapter = new BookAdapter(bookList);
+                                recyclerView.setHasFixedSize(true);
+                                linearLayoutManager = new LinearLayoutManager(context);
+                                recyclerView.setLayoutManager(linearLayoutManager);
+                                recyclerView.setAdapter(adapter);
+                            }
+                        });
                     }
                 }).start();
             }
         });
 
-        adapter = new BookAdapter(bookList);
-        recyclerView.setHasFixedSize(true);
-        linearLayoutManager = new LinearLayoutManager(context);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        RecyclerView.ItemDecoration itemDecoration =
-                new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
-        recyclerView.addItemDecoration(itemDecoration);
-        recyclerView.setAdapter(adapter);
 
     }
 
