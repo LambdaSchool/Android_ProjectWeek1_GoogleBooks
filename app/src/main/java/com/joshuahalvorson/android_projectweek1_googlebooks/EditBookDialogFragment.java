@@ -19,7 +19,6 @@ public class EditBookDialogFragment extends Fragment {
     private Button deleteButton, addToBookshelfButton, writeReviewButton, getQrCodeButton;
     private CheckBox setHasReadCheckBox, setFavoriteCheckBox;
     private BookVolume bookVolume;
-    private ArrayList<Bookshelf> bookshelves;
 
 
     public EditBookDialogFragment(){
@@ -56,8 +55,10 @@ public class EditBookDialogFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        bookVolume = getArguments().getParcelable("book");
-        bookshelves = BooksViewModel.readBookshelves();
+        if (getArguments() != null) {
+            bookVolume = getArguments().getParcelable("book");
+        }
+        ArrayList<Bookshelf> bookshelves = BooksViewModel.readBookshelves();
         final Bookshelf favorites = bookshelves.get(0);
         final Bookshelf hasRead = bookshelves.get(1);
         if(bookVolume.isHasRead() == 1){
@@ -105,12 +106,17 @@ public class EditBookDialogFragment extends Fragment {
         writeReviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                FragmentTransaction ft = null;
+                if (getFragmentManager() != null) {
+                    ft = getFragmentManager().beginTransaction();
+                }
                 EditBookReviewFragment reviewBookFragment = new EditBookReviewFragment();
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("bookreview", bookVolume);
                 reviewBookFragment.setArguments(bundle);
-                ft.add(R.id.dialog_container, reviewBookFragment, "edit_review_fragment");
+                if (ft != null) {
+                    ft.add(R.id.dialog_container, reviewBookFragment, "edit_review_fragment");
+                }
                 ft.addToBackStack(null);
                 ft.commit();
             }
@@ -118,12 +124,17 @@ public class EditBookDialogFragment extends Fragment {
         addToBookshelfButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                FragmentTransaction ft = null;
+                if (getFragmentManager() != null) {
+                    ft = getFragmentManager().beginTransaction();
+                }
                 AddBookToBookshelfDialogFragment addBookToBookshelfDialogFragment = new AddBookToBookshelfDialogFragment();
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("book", bookVolume);
                 addBookToBookshelfDialogFragment.setArguments(bundle);
-                ft.add(R.id.dialog_container, addBookToBookshelfDialogFragment, "edit_review_fragment");
+                if (ft != null) {
+                    ft.add(R.id.dialog_container, addBookToBookshelfDialogFragment, "edit_review_fragment");
+                }
                 ft.addToBackStack(null);
                 ft.commit();
             }
@@ -131,12 +142,17 @@ public class EditBookDialogFragment extends Fragment {
         getQrCodeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                FragmentTransaction ft = null;
+                if (getFragmentManager() != null) {
+                    ft = getFragmentManager().beginTransaction();
+                }
                 QrCodeDialogFragment qrCodeDialogFragment = new QrCodeDialogFragment();
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("book", bookVolume);
                 qrCodeDialogFragment.setArguments(bundle);
-                ft.add(R.id.dialog_container, qrCodeDialogFragment, "qr_code_fragment");
+                if (ft != null) {
+                    ft.add(R.id.dialog_container, qrCodeDialogFragment, "qr_code_fragment");
+                }
                 ft.addToBackStack(null);
                 ft.commit();
             }

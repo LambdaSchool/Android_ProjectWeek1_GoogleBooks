@@ -19,7 +19,6 @@ import java.util.ArrayList;
 public class BooksInBookshelfDialogFragment extends Fragment {
     ArrayList<BookVolume> bookVolumes;
     private Bookshelf bookshelf;
-    private LinearLayout scrollView;
     private RecyclerView recyclerView;
     private BooksInBookshelfAdapter adapter;
 
@@ -35,7 +34,6 @@ public class BooksInBookshelfDialogFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        scrollView = view.findViewById(R.id.scroll_view);
         recyclerView = view.findViewById(R.id.books_in_shelf_recycler_view);
     }
 

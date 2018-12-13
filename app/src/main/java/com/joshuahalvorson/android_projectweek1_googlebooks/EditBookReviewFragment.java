@@ -2,8 +2,6 @@ package com.joshuahalvorson.android_projectweek1_googlebooks;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -46,7 +44,9 @@ public class EditBookReviewFragment extends Fragment{
         super.onViewCreated(view, savedInstanceState);
         submitReview = view.findViewById(R.id.submit_review_button);
         reviewContent = view.findViewById(R.id.review_content);
-        bookVolume = getArguments().getParcelable("bookreview");
+        if (getArguments() != null) {
+            bookVolume = getArguments().getParcelable("bookreview");
+        }
         tweetButton = view.findViewById(R.id.send_button);
     }
 
@@ -63,7 +63,9 @@ public class EditBookReviewFragment extends Fragment{
                         bookVolume.getTitle() + ": "  +
                         reviewContent.getText().toString());
                 startActivity(intent);
-                getFragmentManager().popBackStack();
+                if (getFragmentManager() != null) {
+                    getFragmentManager().popBackStack();
+                }
 
             }
         });

@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 public class UsersBooksFragment extends Fragment {
     ArrayList<BookVolume> bookVolumes;
-    private RecyclerView recyclerView;
     private UsersBooksListAdapter adapter;
 
     public UsersBooksFragment(){
@@ -43,7 +42,7 @@ public class UsersBooksFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         bookVolumes = new ArrayList<>();
-        recyclerView = view.findViewById(R.id.search_results_list_recycler_view);
+        RecyclerView recyclerView = view.findViewById(R.id.search_results_list_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new UsersBooksListAdapter(getActivity(), bookVolumes);

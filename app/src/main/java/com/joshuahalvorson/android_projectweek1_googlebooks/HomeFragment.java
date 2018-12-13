@@ -18,7 +18,6 @@ import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
     private EditText searchText;
-    private RecyclerView recyclerView;
     private Button searchButton;
     private BookSearchListAdapter adapter;
     ArrayList<BookVolume> bookVolumes;
@@ -49,7 +48,7 @@ public class HomeFragment extends Fragment {
         searchText = view.findViewById(R.id.search_for_book_edit_text);
         bookVolumes = new ArrayList<>();
         searchButton = view.findViewById(R.id.search_button);
-        recyclerView = view.findViewById(R.id.search_results_list_recycler_view);
+        RecyclerView recyclerView = view.findViewById(R.id.search_results_list_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new BookSearchListAdapter(getActivity(), bookVolumes);
