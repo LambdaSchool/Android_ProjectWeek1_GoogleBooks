@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -72,6 +73,22 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         viewHolder.spinner.setAdapter(arrayAdapter);
         viewHolder.spinner.setSelection(0, false);
+        viewHolder.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = (String) parent.getItemAtPosition(position);
+                if (!selectedItem.equals("")) {
+                    BooksDbDao.addBook(data);
+                    BookshelfDbDao.addBooktoBookshelf(selectedItem, data);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
         String imageUrl = data.getImageUrl();
         if (imageUrl != null) {

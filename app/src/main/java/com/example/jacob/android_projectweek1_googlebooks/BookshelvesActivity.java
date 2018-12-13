@@ -68,7 +68,10 @@ public class BookshelvesActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BookshelfDbDao.addBookshelf(editText.getText().toString());
+                String bookshelfName = editText.getText().toString();
+                bookshelfName = bookshelfName.replace(',',' ');
+                bookshelfName = bookshelfName.replace("'","");
+                BookshelfDbDao.addBookshelf(bookshelfName);
                 listAdapter.notifyDataSetChanged();
                 dialog.dismiss();
             }

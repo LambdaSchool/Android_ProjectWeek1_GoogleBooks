@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayoutManager layoutManager;
     private RecyclerView recyclerView;
     private SearchListAdapter listAdapter;
+    ArrayList<String> bookshelfTitles;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -77,12 +78,9 @@ public class MainActivity extends AppCompatActivity {
         mTextMessage = findViewById(R.id.message);
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        bookshelfTitles = new ArrayList<>();
 
-        ArrayList<Bookshelf> bookshelves = BookshelfDbDao.readAllBookshelves();
-        ArrayList<String> bookshelfTitles = new ArrayList<>();
-        for (Bookshelf bookshelf : bookshelves) {
-            bookshelfTitles.add(bookshelf.getTitle());
-        }
+        updateSpinnerList();
 
         recyclerView = findViewById(R.id.search_recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -145,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Wrapper wrapper) {
             super.onPostExecute(wrapper);
             File imageFile = wrapper.getFile();
-            //TODO get rid of wrapper.
+            //TODO get rid of wrapper since file si not being used.
             int index = wrapper.getIndex();
             listAdapter.notifyItemChanged(index);
         }
@@ -160,6 +158,22 @@ public class MainActivity extends AppCompatActivity {
             return wrapper;
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateSpinnerList();
+    }
+
+    private void updateSpinnerList() {
+        ArrayList<Bookshelf> bookshelves = BookshelfDbDao.readAllBookshelves();
+        bookshelfTitles.clear();
+        bookshelfTitles.add("");
+        for (Bookshelf bookshelf : bookshelves) {
+            bookshelfTitles.add(bookshelf.getTitle());
+        }
+    }
+
 
     private class Wrapper {
         public File file;

@@ -49,7 +49,9 @@ public class BooksDbDao {
                     id),
                     null);
             Book book = null;
+//            int temp = cursor.getCount();
             if (cursor.moveToNext() && (cursor.getCount() == 1)) {
+//            if (cursor.getCount() == 1) {
                 book = getBookFromCursor(cursor);
             }
             cursor.close();
@@ -122,7 +124,7 @@ public class BooksDbDao {
 
     private static Book getBookFromCursor(Cursor cursor) {
         int index;
-        Book book = null;
+        Book book = new Book(null,null,null,null,null,null,false);
         index = cursor.getColumnIndexOrThrow(BooksDbContract.BookEntry._ID);
         book.setId(cursor.getString(index));
         index = cursor.getColumnIndexOrThrow(BooksDbContract.BookEntry.COLUMN_NAME_TITLE);
