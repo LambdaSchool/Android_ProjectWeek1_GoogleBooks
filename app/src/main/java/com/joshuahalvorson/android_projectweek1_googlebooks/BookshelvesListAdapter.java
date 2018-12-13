@@ -38,9 +38,9 @@ public class BookshelvesListAdapter extends RecyclerView.Adapter<BookshelvesList
         final Bookshelf bookshelf = bookShelves.get(i);
         String name = bookshelf.getName();
         viewHolder.titleText.setText(name);
-        viewHolder.parentView.setOnLongClickListener(new View.OnLongClickListener() {
+        viewHolder.parentView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View v) {
+            public void onClick(View v) {
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();
                 BooksInBookshelfDialogFragment  booksInBookshelfDialogFragment= new BooksInBookshelfDialogFragment();
                 Bundle bundle = new Bundle();
@@ -50,7 +50,6 @@ public class BookshelvesListAdapter extends RecyclerView.Adapter<BookshelvesList
                         .add(R.id.dialog_container, booksInBookshelfDialogFragment, "books_in_bookshelf_fragment")
                         .addToBackStack(null)
                         .commit();
-                return false;
             }
         });
     }

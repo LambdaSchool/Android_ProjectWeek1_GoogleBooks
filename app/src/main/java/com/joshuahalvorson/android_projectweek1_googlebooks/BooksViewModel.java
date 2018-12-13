@@ -36,6 +36,10 @@ public class BooksViewModel {
         return repo.readBookshelves();
     }
 
+    public static void deleteBookshelf(Bookshelf bookshelf, ArrayList<BookVolume> bookVolumes){
+        repo.deleteBookshelf(bookshelf, bookVolumes);
+    }
+
     public static void addBookshelfBookRelation(Bookshelf bookshelf, BookVolume bookVolume){
         repo.addBookshelfBookRelation(bookshelf, bookVolume);
     }

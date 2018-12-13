@@ -43,6 +43,20 @@ public class BooksDbDao {
         }
     }
 
+    public static void deleteBookshelf(Bookshelf bookshelf, ArrayList<BookVolume> bookVolumes){
+        if(db != null){
+            if(bookVolumes == null){
+                for(BookVolume b : bookVolumes){
+                    deleteBookshelfBookRelationship(bookshelf, b);
+                }
+            }
+            String where = String.format("%s = '%s'",
+                    BooksDbContract.BookEntry.BOOKSHELVES_COLUMN_TITLE,
+                    bookshelf.getName());
+            db.delete(BooksDbContract.BookEntry.BOOKSHELVES_TABLE_NAME, where, null);
+        }
+    }
+
     public static void createBookshelfBookRelationship(Bookshelf bookshelf, BookVolume bookVolume){
         if(db != null){
             ContentValues values = new ContentValues();

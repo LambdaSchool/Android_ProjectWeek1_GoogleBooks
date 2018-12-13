@@ -42,6 +42,10 @@ public class BooksRepo {
         return BooksDbDao.readAllBookshelves();
     }
 
+    public void deleteBookshelf(Bookshelf bookshelf, ArrayList<BookVolume> bookVolumes){
+        BooksDbDao.deleteBookshelf(bookshelf, bookVolumes);
+    }
+
     public void addBookshelfBookRelation(Bookshelf bookshelf, BookVolume bookVolume){
         BooksDbDao.createBookshelfBookRelationship(bookshelf, bookVolume);
     }
