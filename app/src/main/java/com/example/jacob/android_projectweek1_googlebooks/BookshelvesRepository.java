@@ -16,4 +16,9 @@ public class BookshelvesRepository {
         BookshelfDbDao.addBookshelf(bookshelfName);
         return BookshelfDbDao.readAllBookshelves();
     }
+
+    public static ArrayList<Bookshelf> deleteBookshelf(int bookshelfId) {
+        BookshelfDbDao.deleteBookshelf(bookshelfId);
+        return BookshelfDbDao.readAllBookshelves();
+    }
 }

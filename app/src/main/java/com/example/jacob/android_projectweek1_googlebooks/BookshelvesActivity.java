@@ -67,13 +67,12 @@ public class BookshelvesActivity extends AppCompatActivity {
             public void onChanged(@Nullable ArrayList<Bookshelf> bookshelvesList) {
                 if (bookshelvesList != null) {
 //                    refreshListView(notes);
-                    listAdapter = new BookshelvesListAdapter(bookshelvesList, activity);
+                    listAdapter = new BookshelvesListAdapter(bookshelvesList, activity, viewModel);
                     recyclerView.setAdapter(listAdapter);
                 }
             }
         };
         viewModel.getBookshelvesList().observe(this, observer);
-
 
 
     }
@@ -93,14 +92,18 @@ public class BookshelvesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String bookshelfName = editText.getText().toString();
-                bookshelfName = bookshelfName.replace(',',' ');
-                bookshelfName = bookshelfName.replace("'","");
+                bookshelfName = bookshelfName.replace(',', ' ');
+                bookshelfName = bookshelfName.replace("'", "");
                 viewModel.addBookshelf(bookshelfName);
                 dialog.dismiss();
             }
         });
         dialog.show();
     }
+
+/*    public static void deleteBookshelf(int bookshelfId) {
+        viewModel.deleteBookshelf(bookshelfId);
+    }*/
 
 
 }

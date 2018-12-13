@@ -35,10 +35,12 @@ public class BookshelvesListAdapter extends RecyclerView.Adapter<BookshelvesList
         private ArrayList<Bookshelf> dataList;
         private Context context;
         private Activity activity;
+        private BookshelvesViewModel viewModel;
 
-    BookshelvesListAdapter(ArrayList<Bookshelf> dataList, Activity activity) {
+    BookshelvesListAdapter(ArrayList<Bookshelf> dataList, Activity activity,BookshelvesViewModel viewModel) {
             this.dataList = dataList;
             this.activity = activity;
+            this.viewModel = viewModel;
         }
 
         @NonNull
@@ -61,7 +63,8 @@ public class BookshelvesListAdapter extends RecyclerView.Adapter<BookshelvesList
             viewHolder.buttonDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    BookshelfDbDao.deleteBookshelf(data.getId());
+                    viewModel.deleteBookshelf(data.getId());
+//                    BookshelfDbDao.deleteBookshelf(data.getId());
                 }
             });
             viewHolder.view.setOnClickListener(new View.OnClickListener() {

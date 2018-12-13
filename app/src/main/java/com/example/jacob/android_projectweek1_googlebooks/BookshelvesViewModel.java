@@ -27,4 +27,10 @@ public class BookshelvesViewModel extends ViewModel {
             bookshelfList.setValue(repo.addBookshelf(bookshelfName));
         }
     }
+
+    public void deleteBookshelf(int bookshelfId) {
+        if(bookshelfList != null) {
+            bookshelfList.setValue(repo.deleteBookshelf(bookshelfId));
+        }
+    }
 }
