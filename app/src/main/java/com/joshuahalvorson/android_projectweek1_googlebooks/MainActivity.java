@@ -24,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragment(new SearchBooksFragment(), "Search Books");
-        viewPagerAdapter.addFragment(new UsersBooksFragment(), "Library");
         viewPagerAdapter.addFragment(new BookshelvesFragment(), "Bookshelves");
+        viewPagerAdapter.addFragment(new UsersBooksFragment(), "Library");
 
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);

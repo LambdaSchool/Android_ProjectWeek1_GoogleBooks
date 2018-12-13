@@ -20,7 +20,7 @@ public class BooksDbDao {
 
     public static void createBookEntry(BookVolume bookVolume){
         if(db != null){
-            Cursor cursor = db.rawQuery(String.format("SELECT * FROM books WHERE title='%s' AND authors='%s'", bookVolume.getTitle(), bookVolume.getAuthors()), null);
+            Cursor cursor = db.rawQuery(String.format("SELECT * FROM books WHERE title=\"%s\" AND authors=\"%s\"", bookVolume.getTitle(), bookVolume.getAuthors()), null);
             if(cursor.getCount() == 0){
                 ContentValues values = new ContentValues();
                 values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_TITLE, bookVolume.getTitle());
@@ -54,7 +54,7 @@ public class BooksDbDao {
                     deleteBookshelfBookRelationship(bookshelf, b);
                 }
             }
-            String where = String.format("%s = '%s'",
+            String where = String.format("%s = \"%s\"",
                     BooksDbContract.BookEntry.BOOKSHELVES_COLUMN_TITLE,
                     bookshelf.getName());
             db.delete(BooksDbContract.BookEntry.BOOKSHELVES_TABLE_NAME, where, null);
@@ -72,7 +72,7 @@ public class BooksDbDao {
 
     public static void deleteBookshelfBookRelationship(Bookshelf bookshelf, BookVolume bookVolume){
         if(db != null){
-            String where = String.format("%s = '%s' AND %s='%s'",
+            String where = String.format("%s = \"%s\" AND %s=\"%s\"",
                     BooksDbContract.BookEntry.BOOKSHELVES_BOOKS_TABLE_COLUMN_BOOKSHELF_ID, bookshelf.getName(),
                     BooksDbContract.BookEntry.BOOKSHELVES_BOOKS_TABLE_COLUMN_BOOK_ID, bookVolume.getTitle());
             db.delete(BooksDbContract.BookEntry.BOOKSHELVES_BOOKS_TABLE_NAME, where, null);
@@ -81,7 +81,7 @@ public class BooksDbDao {
 
     public static ArrayList<BookVolume> readBooksInBookshelf(Bookshelf bookshelf){
         if(db != null){
-            Cursor cursor = db.rawQuery(String.format("SELECT %s.%s FROM %s JOIN %s ON %s.%s = %s.%s WHERE %s.%s='%s'",
+            Cursor cursor = db.rawQuery(String.format("SELECT %s.%s FROM %s JOIN %s ON %s.%s = %s.%s WHERE %s.%s=\"%s\"",
                     BooksDbContract.BookEntry.BOOKS_TABLE_NAME, BooksDbContract.BookEntry.BOOKS_COLUMN_TITLE,
                     BooksDbContract.BookEntry.BOOKS_TABLE_NAME,
                     BooksDbContract.BookEntry.BOOKSHELVES_BOOKS_TABLE_NAME,
@@ -99,7 +99,7 @@ public class BooksDbDao {
             cursor.close();
             ArrayList<BookVolume> volumes = new ArrayList<>();
             for(String title : bookTitles){
-                cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE %s='%s'",
+                cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE %s=\"%s\"",
                         BooksDbContract.BookEntry.BOOKS_TABLE_NAME,
                         BooksDbContract.BookEntry.BOOKS_COLUMN_TITLE, title),
                         null);
@@ -146,7 +146,7 @@ public class BooksDbDao {
 
     public static void updateBookEntryHasRead(BookVolume bookVolume){
         if (db != null) {
-            String whereClause = String.format("%s = '%s'", BooksDbContract.BookEntry.BOOKS_COLUMN_TITLE,
+            String whereClause = String.format("%s = \"%s\"", BooksDbContract.BookEntry.BOOKS_COLUMN_TITLE,
                     bookVolume.getTitle());
             final Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE %s",
                    BooksDbContract.BookEntry.BOOKS_TABLE_NAME, whereClause), null);
@@ -160,7 +160,7 @@ public class BooksDbDao {
 
     public static void updateBookEntryIsFavorite(BookVolume bookVolume){
         if (db != null) {
-            String whereClause = String.format("%s = '%s'", BooksDbContract.BookEntry.BOOKS_COLUMN_TITLE,
+            String whereClause = String.format("%s = \"%s\"", BooksDbContract.BookEntry.BOOKS_COLUMN_TITLE,
                     bookVolume.getTitle());
             final Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE %s",
                    BooksDbContract.BookEntry.BOOKS_TABLE_NAME, whereClause), null);
@@ -174,7 +174,7 @@ public class BooksDbDao {
 
     public static void updateBookEntryReview(BookVolume bookVolume){
         if (db != null) {
-            String whereClause = String.format("%s = '%s'", BooksDbContract.BookEntry.BOOKS_COLUMN_TITLE,
+            String whereClause = String.format("%s = \"%s\"", BooksDbContract.BookEntry.BOOKS_COLUMN_TITLE,
                     bookVolume.getTitle());
             final Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE %s",
                     BooksDbContract.BookEntry.BOOKS_TABLE_NAME, whereClause), null);
