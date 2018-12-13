@@ -37,6 +37,12 @@
                 android:inputType="textMultiLine" />
 
             <Button
+                android:id="@+id/send_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Send Your Review!" />
+
+            <Button
                 android:id="@+id/submit_review_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

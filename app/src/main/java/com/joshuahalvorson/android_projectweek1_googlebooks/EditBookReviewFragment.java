@@ -1,6 +1,9 @@
 package com.joshuahalvorson.android_projectweek1_googlebooks;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,7 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class EditBookReviewFragment extends Fragment{
-    private Button submitReview;
+    private Button submitReview, tweetButton;
     private EditText reviewContent;
     private BookVolume bookVolume;
 
@@ -44,12 +47,26 @@ public class EditBookReviewFragment extends Fragment{
         submitReview = view.findViewById(R.id.submit_review_button);
         reviewContent = view.findViewById(R.id.review_content);
         bookVolume = getArguments().getParcelable("bookreview");
+        tweetButton = view.findViewById(R.id.send_button);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         reviewContent.setText(bookVolume.getUserReview());
+        tweetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, "Here is my review of " +
+                        bookVolume.getTitle() + ": "  +
+                        reviewContent.getText().toString());
+                startActivity(intent);
+                getFragmentManager().popBackStack();
+
+            }
+        });
         submitReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
