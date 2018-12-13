@@ -63,7 +63,7 @@ public class BooksDbDao {
 
     static void updateBook(Book book) {
         if (db != null) {
-            String whereClause = String.format("%s = %s", BooksDbContract.BookEntry._ID, book.getId());
+            String whereClause = String.format("%s = '%s'", BooksDbContract.BookEntry._ID, book.getId());
             final Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE %s",
                     BooksDbContract.BookEntry.BOOK_TABLE_NAME,
                     whereClause),

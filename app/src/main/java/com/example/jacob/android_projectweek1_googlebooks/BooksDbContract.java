@@ -20,7 +20,7 @@ public class BooksDbContract {
 
         static final String SQL_BOOK_TABLE = "CREATE TABLE " + BOOK_TABLE_NAME +
                 " (" +
-                _ID + " STRING, " +
+                _ID + " STRING PRIMARY KEY, " +
                 COLUMN_NAME_TITLE + " STRING, " +
                 COLUMN_NAME_AUTHOR + " STRING, " +
                 COLUMN_NAME_PUBLISHED_DATE + " STRING, " +
