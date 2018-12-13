@@ -161,14 +161,8 @@ public class EditBookDialogFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 BooksViewModel.deleteBook(bookVolume);
-                Fragment currentFragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-                if (currentFragment instanceof UsersBooksFragment) {
-                    FragmentTransaction ft = (getActivity()).getSupportFragmentManager().beginTransaction();
-                    ft.detach(currentFragment);
-                    ft.attach(currentFragment);
-                    ft.commit();
-                    getFragmentManager().popBackStack();
-                }
+                new UsersBooksFragment.getBooksFromDb().execute();
+                getFragmentManager().popBackStack();
                 Log.i("onClickDeleteButton", "book deleted from sql db");
             }
         });

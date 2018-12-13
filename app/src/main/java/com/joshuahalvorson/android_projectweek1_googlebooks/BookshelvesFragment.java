@@ -22,9 +22,9 @@ import java.util.ArrayList;
 
 public class BookshelvesFragment extends Fragment {
     private FloatingActionButton addBookshelfButton;
-    private ArrayList<Bookshelf> bookShelves;
+    private static ArrayList<Bookshelf> bookShelves;
     private RecyclerView recyclerView;
-    private BookshelvesListAdapter adapter;
+    private static BookshelvesListAdapter adapter;
 
     public BookshelvesFragment(){
 
@@ -65,7 +65,10 @@ public class BookshelvesFragment extends Fragment {
         addBookshelfButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                FragmentTransaction ft = null;
+                if (getFragmentManager() != null) {
+                    ft = getFragmentManager().beginTransaction();
+                }
                 AddBookshelfDialogFragment  addBookshelfDialogFragment = new AddBookshelfDialogFragment();
                 ft.replace(R.id.dialog_container, addBookshelfDialogFragment, "add_bookshelf_fragment");
                 ft.addToBackStack(null);
@@ -84,7 +87,7 @@ public class BookshelvesFragment extends Fragment {
         super.onDestroyView();
     }
 
-    public class getShelvesFromDb extends AsyncTask<Void, Integer, ArrayList<Bookshelf>> {
+    public static class getShelvesFromDb extends AsyncTask<Void, Integer, ArrayList<Bookshelf>> {
 
         @Override
         protected ArrayList<Bookshelf> doInBackground(Void... voids) {

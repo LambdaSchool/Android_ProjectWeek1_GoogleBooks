@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -19,8 +20,8 @@ import java.util.ArrayList;
 public class SearchBooksFragment extends Fragment {
     private EditText searchText;
     private Button searchButton;
-    private BookSearchListAdapter adapter;
-    ArrayList<BookVolume> bookVolumes;
+    private static BookSearchListAdapter adapter;
+    static ArrayList<BookVolume> bookVolumes;
 
     public SearchBooksFragment(){
 
@@ -77,7 +78,7 @@ public class SearchBooksFragment extends Fragment {
         super.onDestroyView();
     }
 
-    public class getSearchResults extends AsyncTask<String, Integer, ArrayList<BookVolume>>{
+    public static class getSearchResults extends AsyncTask<String, Integer, ArrayList<BookVolume>>{
 
         @Override
         protected void onPreExecute() {

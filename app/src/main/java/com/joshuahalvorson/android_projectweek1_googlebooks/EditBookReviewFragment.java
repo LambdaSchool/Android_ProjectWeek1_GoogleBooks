@@ -75,12 +75,8 @@ public class EditBookReviewFragment extends Fragment{
                 String reviewText = reviewContent.getText().toString();
                 bookVolume.setUserReview(reviewText);
                 BooksViewModel.updateBookUserReview(bookVolume);
-                Fragment currentFragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-                if (currentFragment instanceof UsersBooksFragment) {
-                    FragmentTransaction ft = (getActivity()).getSupportFragmentManager().beginTransaction();
-                    ft.detach(currentFragment);
-                    ft.attach(currentFragment);
-                    ft.commit();
+                new UsersBooksFragment.getBooksFromDb().execute();
+                if (getFragmentManager() != null) {
                     getFragmentManager().popBackStack();
                 }
                 Log.i("onClickSubmitReview", "review was saved to sql db");

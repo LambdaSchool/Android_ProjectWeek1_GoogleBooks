@@ -15,8 +15,8 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 public class UsersBooksFragment extends Fragment {
-    ArrayList<BookVolume> bookVolumes;
-    private UsersBooksListAdapter adapter;
+    static ArrayList<BookVolume> bookVolumes;
+    private static UsersBooksListAdapter adapter;
 
     public UsersBooksFragment(){
 
@@ -65,7 +65,7 @@ public class UsersBooksFragment extends Fragment {
         super.onDestroyView();
     }
 
-    public class getBooksFromDb extends AsyncTask<Void, Integer, ArrayList<BookVolume>> {
+    public static class getBooksFromDb extends AsyncTask<Void, Integer, ArrayList<BookVolume>> {
 
         @Override
         protected ArrayList<BookVolume> doInBackground(Void... voids) {

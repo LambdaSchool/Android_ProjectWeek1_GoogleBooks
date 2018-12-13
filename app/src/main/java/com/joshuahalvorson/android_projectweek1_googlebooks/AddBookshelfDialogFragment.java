@@ -52,12 +52,8 @@ public class AddBookshelfDialogFragment extends Fragment {
             public void onClick(View v) {
                 Bookshelf bookshelf = new Bookshelf(bookshelfName.getText().toString());
                 BooksViewModel.addBookshelf(bookshelf);
-                Fragment currentFragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-                if (currentFragment instanceof BookshelvesFragment) {
-                    FragmentTransaction ft = (getActivity()).getSupportFragmentManager().beginTransaction();
-                    ft.detach(currentFragment);
-                    ft.attach(currentFragment);
-                    ft.commit();
+                new BookshelvesFragment.getShelvesFromDb().execute();
+                if (getFragmentManager() != null) {
                     getFragmentManager().popBackStack();
                 }
                 Log.i("addBookshelfOnClick", "bookshelf added to db");
