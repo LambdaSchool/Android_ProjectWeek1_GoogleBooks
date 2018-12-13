@@ -101,6 +101,36 @@ public class BookshelfDbDao extends BooksDbDao {
         }
     }
 
+    static void addBooktoBookshelf(int bookshelfId, Book book) {
+        if (db != null) {
+            Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE %s = '%s'",
+                    BooksDbContract.BookEntry.BOOKSHELF_TABLE_NAME,
+                    BooksDbContract.BookEntry._ID,
+                    bookshelfId),
+                    null);
+            Bookshelf bookshelf = null;
+            if (cursor.moveToNext() && (cursor.getCount() == 1)) {
+                bookshelf = getBookshelfFromCursor(cursor);
+            }
+            cursor.close();
+            ArrayList<Book> books = new ArrayList<>();
+            books = bookshelf.getBooks();
+            if (books != null) {
+                if (!books.contains(book)) {
+                    books.add(book);
+                    bookshelf.setBooks(books);
+                    updateBookshelf(bookshelf);
+                }
+            } else {
+                books = new ArrayList<>();
+                books.add(book);
+                bookshelf.setBooks(books);
+                updateBookshelf(bookshelf);
+            }
+        }
+    }
+
+
     static void removeBookfromBookshelf(int bookshelfId, String bookId) {
         if (db != null) {
             Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE %s = '%s'",

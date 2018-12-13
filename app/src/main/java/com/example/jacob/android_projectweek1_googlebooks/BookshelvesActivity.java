@@ -66,7 +66,6 @@ public class BookshelvesActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable ArrayList<Bookshelf> bookshelvesList) {
                 if (bookshelvesList != null) {
-//                    refreshListView(notes);
                     listAdapter = new BookshelvesListAdapter(bookshelvesList, activity, viewModel);
                     recyclerView.setAdapter(listAdapter);
                 }

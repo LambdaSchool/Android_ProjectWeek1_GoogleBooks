@@ -11,7 +11,7 @@ public class BookshelvesViewModel extends ViewModel {
     private BookshelvesRepository repo;
 
     public LiveData<ArrayList<Bookshelf>> getBookshelvesList() {
-        if(bookshelfList == null) {
+        if (bookshelfList == null) {
             loadList();
         }
         return bookshelfList;
@@ -23,13 +23,13 @@ public class BookshelvesViewModel extends ViewModel {
     }
 
     public void addBookshelf(String bookshelfName) {
-        if(bookshelfList != null) {
+        if (bookshelfList != null) {
             bookshelfList.setValue(repo.addBookshelf(bookshelfName));
         }
     }
 
     public void deleteBookshelf(int bookshelfId) {
-        if(bookshelfList != null) {
+        if (bookshelfList != null) {
             bookshelfList.setValue(repo.deleteBookshelf(bookshelfId));
         }
     }

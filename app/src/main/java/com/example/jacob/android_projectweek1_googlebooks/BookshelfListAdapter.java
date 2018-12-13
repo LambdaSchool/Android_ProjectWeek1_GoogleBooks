@@ -48,12 +48,14 @@ public class BookshelfListAdapter extends RecyclerView.Adapter<BookshelfListAdap
     private Context context;
     private Activity activity;
     private int bookshelfId;
+    private BookshelfViewModel viewModel;
 
 
-    BookshelfListAdapter(Bookshelf bookshelf, Activity activity) {
-        this.dataList = bookshelf.getBooks();
+    BookshelfListAdapter(ArrayList<Book> dataList, int bookshelfId, Activity activity, BookshelfViewModel viewModel) {
+        this.dataList = dataList;
         this.activity = activity;
-        this.bookshelfId = bookshelf.getId();
+        this.bookshelfId = bookshelfId;
+        this.viewModel = viewModel;
     }
 
     @NonNull
@@ -86,7 +88,8 @@ public class BookshelfListAdapter extends RecyclerView.Adapter<BookshelfListAdap
         viewHolder.imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BookshelfDbDao.removeBookfromBookshelf(bookshelfId, data.getId());
+                viewModel.deleteBook(bookshelfId, data.getId());
+//                BookshelfDbDao.removeBookfromBookshelf(bookshelfId, data.getId());
             }
         });
 
