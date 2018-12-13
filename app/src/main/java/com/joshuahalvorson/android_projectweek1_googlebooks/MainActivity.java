@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    startFragment(new HomeFragment());
+                    startFragment(new SearchBooksFragment());
                     break;
                 case R.id.navigation_bookshelves:
                     startFragment(new BookshelvesFragment());
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_container, new HomeFragment())
+                .replace(R.id.fragment_container, new SearchBooksFragment())
                 .commit();
 
     }

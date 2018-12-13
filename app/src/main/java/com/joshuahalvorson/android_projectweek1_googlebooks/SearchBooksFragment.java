@@ -16,13 +16,13 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment {
+public class SearchBooksFragment extends Fragment {
     private EditText searchText;
     private Button searchButton;
     private BookSearchListAdapter adapter;
     ArrayList<BookVolume> bookVolumes;
 
-    public HomeFragment(){
+    public SearchBooksFragment(){
 
     }
 
@@ -39,7 +39,7 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.home_fragment_layout, container, false);
+        return inflater.inflate(R.layout.search_books_fragment_layout, container, false);
     }
 
     @Override
