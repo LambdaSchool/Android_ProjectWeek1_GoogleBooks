@@ -20,18 +20,22 @@ public class BooksDbDao {
 
     public static void createBookEntry(BookVolume bookVolume){
         if(db != null){
-            ContentValues values = new ContentValues();
-            values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_TITLE, bookVolume.getTitle());
-            values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_BOOK_DESC, bookVolume.getDesc());
-            values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_IMAGE_URL, bookVolume.getImageUrl());
-            values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_SALE_LINK, bookVolume.getSaleLink());
-            values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_USER_REVIEW, bookVolume.getUserReview());
-            values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_AUTHORS, bookVolume.getAuthors());
-            values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_PUBLISHED_DATE, bookVolume.getPublishedDate());
-            values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_PAGES, bookVolume.getPages());
-            values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_HAS_READ, bookVolume.isHasRead());
-            values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_IS_FAVORITE, bookVolume.getIsFavorite());
-            db.insert(BooksDbContract.BookEntry.BOOKS_TABLE_NAME, null, values);
+            Cursor cursor = db.rawQuery(String.format("SELECT * FROM books WHERE title='%s' AND authors='%s'", bookVolume.getTitle(), bookVolume.getAuthors()), null);
+            if(cursor.getCount() == 0){
+                ContentValues values = new ContentValues();
+                values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_TITLE, bookVolume.getTitle());
+                values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_BOOK_DESC, bookVolume.getDesc());
+                values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_IMAGE_URL, bookVolume.getImageUrl());
+                values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_SALE_LINK, bookVolume.getSaleLink());
+                values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_USER_REVIEW, bookVolume.getUserReview());
+                values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_AUTHORS, bookVolume.getAuthors());
+                values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_PUBLISHED_DATE, bookVolume.getPublishedDate());
+                values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_PAGES, bookVolume.getPages());
+                values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_HAS_READ, bookVolume.isHasRead());
+                values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_IS_FAVORITE, bookVolume.getIsFavorite());
+                db.insert(BooksDbContract.BookEntry.BOOKS_TABLE_NAME, null, values);
+            }
+            cursor.close();
         }
     }
 
