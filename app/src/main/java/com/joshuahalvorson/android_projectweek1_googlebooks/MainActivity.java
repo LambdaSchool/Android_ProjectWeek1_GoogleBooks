@@ -1,5 +1,6 @@
 package com.joshuahalvorson.android_projectweek1_googlebooks;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -7,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 
 public class MainActivity extends AppCompatActivity {
     public Context context;
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
                 if (currentFragment != null) {
                     getSupportFragmentManager().beginTransaction().remove(currentFragment).commit();
                 }
+                InputMethodManager inputMethodManager = (InputMethodManager) MainActivity.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(MainActivity.this.getCurrentFocus().getWindowToken(), 0);
             }
 
             @Override
