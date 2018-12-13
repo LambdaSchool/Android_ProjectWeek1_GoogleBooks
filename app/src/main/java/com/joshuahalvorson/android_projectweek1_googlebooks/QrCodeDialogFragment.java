@@ -47,7 +47,8 @@ public class QrCodeDialogFragment extends Fragment {
             if (bookVolume != null) {
                 String url;
                 if(TextUtils.isEmpty(bookVolume.getSaleLink())){
-                    url = "https://www.amazon.com/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords=" + bookVolume.getTitle();
+                    url = "https://www.amazon.com/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords="
+                            + bookVolume.getTitle().replaceAll(" ", "+");
                 }else{
                     url = bookVolume.getSaleLink();
                 }
