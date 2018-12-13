@@ -52,6 +52,13 @@ public class BookshelvesActivity extends AppCompatActivity {
         });
 
         bookshelves = BookshelfDbDao.readAllBookshelves();
+        if (bookshelves.size()<Constants.DEFAULT_BOOKSHELVES.length) {
+            //Create 2 default tables
+            for (String shelfTitle: Constants.DEFAULT_BOOKSHELVES) {
+                BookshelfDbDao.addBookshelf(shelfTitle);
+            }
+            bookshelves = BookshelfDbDao.readAllBookshelves();
+        }
 
         recyclerView = findViewById(R.id.recycler_view_bookshelves);
         recyclerView.setHasFixedSize(true);

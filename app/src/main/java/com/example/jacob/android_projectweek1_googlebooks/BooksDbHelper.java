@@ -6,8 +6,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class BooksDbHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 6;
     private static final String DATABASE_NAME = "BooksDatabase.db";
+
 
     BooksDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -17,7 +18,6 @@ public class BooksDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(BooksDbContract.BookEntry.SQL_BOOK_TABLE);
         db.execSQL(BooksDbContract.BookEntry.SQL_BOOKSHELF_TABLE);
-
     }
 
     @Override

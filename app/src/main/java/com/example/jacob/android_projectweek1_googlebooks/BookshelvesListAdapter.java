@@ -60,13 +60,18 @@ public class BookshelvesListAdapter extends RecyclerView.Adapter<BookshelvesList
         public void onBindViewHolder(@NonNull final BookshelvesListAdapter.ViewHolder viewHolder, int i) {
             final Bookshelf data = dataList.get(i);
             viewHolder.bookshelfTitle.setText(data.getTitle());
-            viewHolder.buttonDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    viewModel.deleteBookshelf(data.getId());
-//                    BookshelfDbDao.deleteBookshelf(data.getId());
-                }
-            });
+            if (data.getId() <= Constants.DEFAULT_BOOKSHELVES.length) {
+                viewHolder.buttonDelete.setVisibility(View.GONE);
+            } else {
+                viewHolder.buttonDelete.setVisibility(View.VISIBLE);
+                viewHolder.buttonDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        viewModel.deleteBookshelf(data.getId());
+                    }
+                });
+            }
+
             viewHolder.view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -5,4 +5,5 @@ public class Constants {
     public static final String BOOK_EDIT_KEY = "book_edit_key";
     public static final String FIREBASE_BOOKS = "Books";
     public static final String FIREBASE_BOOKSHELVES = "Bookshelves";
+    public static final String[] DEFAULT_BOOKSHELVES = {"Unread Books", "Read Books"};
 }
