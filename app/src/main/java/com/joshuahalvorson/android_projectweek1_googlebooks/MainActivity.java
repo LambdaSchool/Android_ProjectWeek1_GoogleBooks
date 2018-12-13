@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
     public Context context;
 
@@ -41,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
                 if (currentFragment != null) {
                     getSupportFragmentManager().beginTransaction().remove(currentFragment).commit();
                 }
-                InputMethodManager inputMethodManager = (InputMethodManager) MainActivity.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(MainActivity.this.getCurrentFocus().getWindowToken(), 0);
             }
 
             @Override
