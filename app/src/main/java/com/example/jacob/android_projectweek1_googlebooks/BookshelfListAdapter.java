@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ public class BookshelfListAdapter extends RecyclerView.Adapter<BookshelfListAdap
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView bookTitle, bookContent;
         ImageView imageView;
+        ImageButton imageButton;
         View layoutView;
         ViewGroup parentView;
 //        Spinner spinner;
@@ -38,17 +40,20 @@ public class BookshelfListAdapter extends RecyclerView.Adapter<BookshelfListAdap
             bookContent = itemView.findViewById(R.id.text_bookshelf_element_content);
             layoutView = itemView.findViewById(R.id.layout_bookshelf);
             parentView = itemView.findViewById(R.id.bookshelf_element_parent_layout);
+            imageButton = itemView.findViewById(R.id.button_bookshelf_element_delete);
         }
     }
 
     private ArrayList<Book> dataList;
     private Context context;
     private Activity activity;
+    private int bookshelfId;
 
 
-    BookshelfListAdapter(ArrayList<Book> dataList, Activity activity) {
-        this.dataList = dataList;
+    BookshelfListAdapter(Bookshelf bookshelf, Activity activity) {
+        this.dataList = bookshelf.getBooks();
         this.activity = activity;
+        this.bookshelfId = bookshelf.getId();
     }
 
     @NonNull
@@ -78,6 +83,14 @@ public class BookshelfListAdapter extends RecyclerView.Adapter<BookshelfListAdap
             }
         });
 
+        viewHolder.imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BookshelfDbDao.removeBookfromBookshelf(bookshelfId, data.getId());
+            }
+        });
+
+
         String imageUrl = data.getImageUrl();
         if (imageUrl != null) {
             String[] urlParts = imageUrl.substring(imageUrl.indexOf("id=") + 3).split("&");
@@ -100,7 +113,11 @@ public class BookshelfListAdapter extends RecyclerView.Adapter<BookshelfListAdap
 
     @Override
     public int getItemCount() {
-        return dataList.size();
+        if (dataList == null) {
+            return 0;
+        } else {
+            return dataList.size();
+        }
     }
 
     private File getFileFromCache(String bookshelfText) {

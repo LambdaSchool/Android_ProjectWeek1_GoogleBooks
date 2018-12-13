@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class BookshelfViewActivity extends AppCompatActivity {
 
     Context context;
-    private ArrayList<Book> books = new ArrayList<>();
+//    private ArrayList<Book> books = new ArrayList<>();
     private LinearLayoutManager layoutManager;
     private RecyclerView recyclerView;
     private BookshelfListAdapter listAdapter;
@@ -23,22 +23,21 @@ public class BookshelfViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bookshelf_view);
 
         context = this;
-        int bookshelfId = getIntent().getIntExtra(Constants.VIEW_BOOKSHELF_KEY, -1);
-        if (bookshelfId != -1) {
-            Bookshelf bookshelf = BookshelfDbDao.readBookshelf(bookshelfId);
-            ArrayList<Book> shelfBooks = bookshelf.getBooks();
-            if (shelfBooks != null) {
-                books.addAll(bookshelf.getBooks());
-            }
-        }
-
-
         recyclerView = findViewById(R.id.recycler_view_bookshelf);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
-        listAdapter = new BookshelfListAdapter(books, this);
-        recyclerView.setAdapter(listAdapter);
 
+        int bookshelfId = getIntent().getIntExtra(Constants.VIEW_BOOKSHELF_KEY, -1);
+        Bookshelf bookshelf;
+        if (bookshelfId != -1) {
+            bookshelf = BookshelfDbDao.readBookshelf(bookshelfId);
+            listAdapter = new BookshelfListAdapter(bookshelf, this);
+            recyclerView.setAdapter(listAdapter);
+//            ArrayList<Book> shelfBooks = bookshelf.getBooks();
+//            if (shelfBooks != null) {
+//                books.addAll(bookshelf.getBooks());
+//            }
+        }
     }
 }

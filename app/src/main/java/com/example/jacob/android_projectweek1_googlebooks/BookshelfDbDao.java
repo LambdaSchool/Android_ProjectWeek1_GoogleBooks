@@ -64,7 +64,7 @@ public class BookshelfDbDao extends BooksDbDao {
                     bookIds.add(book.getId());
                 }
                 String idsToString = bookIds.toString();
-                idsToString = idsToString.substring(1,idsToString.length()-1);
+                idsToString = idsToString.substring(1, idsToString.length() - 1);
                 values.put(BooksDbContract.BookEntry.COLUMN_NAME_BOOK_IDS, idsToString);
                 db.update(BooksDbContract.BookEntry.BOOKSHELF_TABLE_NAME, values, whereClause, null);
             }
@@ -98,6 +98,40 @@ public class BookshelfDbDao extends BooksDbDao {
                 bookshelf.setBooks(books);
                 updateBookshelf(bookshelf);
             }
+        }
+    }
+
+    static void removeBookfromBookshelf(int bookshelfId, String bookId) {
+        if (db != null) {
+            Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE %s = '%s'",
+                    BooksDbContract.BookEntry.BOOKSHELF_TABLE_NAME,
+                    BooksDbContract.BookEntry._ID,
+                    bookshelfId),
+                    null);
+            Bookshelf bookshelf = new Bookshelf(bookshelfId, null, null);
+            if (cursor.moveToNext() && (cursor.getCount() == 1)) {
+//                bookshelf = getBookshelfFromCursor(cursor);
+                int index;
+                index = cursor.getColumnIndexOrThrow(BooksDbContract.BookEntry.COLUMN_NAME_BOOK_IDS);
+                String rawString = cursor.getString(index);
+                if (rawString != null) {
+                    String[] listOfIds = rawString.split(",");
+                    ArrayList<Book> books = new ArrayList<>();
+                    for (String id : listOfIds) {
+                        Book book = null;
+                        id = id.trim();
+                        if (!id.equals(bookId)) {
+                            book = BooksDbDao.readBook(id);
+                            if (book != null) {
+                                books.add(book);
+                            }
+                        }
+                    }
+                    bookshelf.setBooks(books);
+                }
+            }
+            cursor.close();
+            updateBookshelf(bookshelf);
         }
     }
 
@@ -140,5 +174,4 @@ public class BookshelfDbDao extends BooksDbDao {
         }
         return bookshelf;
     }
-
 }
