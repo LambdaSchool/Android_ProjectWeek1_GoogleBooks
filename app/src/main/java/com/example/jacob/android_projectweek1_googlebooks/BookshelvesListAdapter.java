@@ -2,6 +2,7 @@ package com.example.jacob.android_projectweek1_googlebooks;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,12 +20,15 @@ public class BookshelvesListAdapter extends RecyclerView.Adapter<BookshelvesList
             TextView bookshelfTitle;
             ViewGroup parentView;
             ImageButton buttonDelete;
+            View view;
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 bookshelfTitle = itemView.findViewById(R.id.text_bookshelves_element_title);
                 parentView = itemView.findViewById(R.id.bookshelves_element_parent_layout);
                 buttonDelete = itemView.findViewById(R.id.button_bookshelf_delete);
+                view = itemView.findViewById(R.id.layout_bookshelves);
+
             }
         }
 
@@ -58,6 +62,14 @@ public class BookshelvesListAdapter extends RecyclerView.Adapter<BookshelvesList
                 @Override
                 public void onClick(View v) {
                     BookshelfDbDao.deleteBookshelf(data.getId());
+                }
+            });
+            viewHolder.view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, BookshelfViewActivity.class);
+                    intent.putExtra(Constants.VIEW_BOOKSHELF_KEY, data.getId());
+                    activity.startActivity(intent);
                 }
             });
 

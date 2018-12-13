@@ -27,14 +27,14 @@ public class BookshelfListAdapter extends RecyclerView.Adapter<BookshelfListAdap
         TextView bookTitle, bookContent;
         ImageView imageView;
         ViewGroup parentView;
-        Spinner spinner;
+//        Spinner spinner;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.image_bookshelf_element);
             bookTitle = itemView.findViewById(R.id.text_bookshelf_element_title);
             bookContent = itemView.findViewById(R.id.text_bookshelf_element_content);
-            spinner = itemView.findViewById(R.id.spinner_bookshelf_element);
+//            spinner = itemView.findViewById(R.id.spinner_bookshelf_element);
             parentView = itemView.findViewById(R.id.bookshelf_element_parent_layout);
         }
     }
@@ -42,12 +42,11 @@ public class BookshelfListAdapter extends RecyclerView.Adapter<BookshelfListAdap
     private ArrayList<Book> dataList;
     private Context context;
     private Activity activity;
-    private ArrayList<String> spinnerArray;
 
-    BookshelfListAdapter(ArrayList<Book> dataList, Activity activity, ArrayList<String> spinnerArray) {
+
+    BookshelfListAdapter(ArrayList<Book> dataList, Activity activity) {
         this.dataList = dataList;
         this.activity = activity;
-        this.spinnerArray = spinnerArray;
     }
 
     @NonNull
@@ -68,27 +67,6 @@ public class BookshelfListAdapter extends RecyclerView.Adapter<BookshelfListAdap
         final Book data = dataList.get(i);
         viewHolder.bookTitle.setText(data.getTitle());
         viewHolder.bookContent.setText(data.getAuthor());
-
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, spinnerArray);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        viewHolder.spinner.setAdapter(arrayAdapter);
-        viewHolder.spinner.setSelection(0, false);
-        viewHolder.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedItem = (String) parent.getItemAtPosition(position);
-                if (!selectedItem.equals("")) {
-                    BooksDbDao.addBook(data);
-                    BookshelfDbDao.addBooktoBookshelf(selectedItem, data);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
 
         String imageUrl = data.getImageUrl();
         if (imageUrl != null) {
@@ -125,6 +103,7 @@ public class BookshelfListAdapter extends RecyclerView.Adapter<BookshelfListAdap
             }
         }
         return file;
+        //TODO download image if it has lost its cache.  Somehow should spin that whole thing off on its own somewhere so not repeating code.
     }
 
 

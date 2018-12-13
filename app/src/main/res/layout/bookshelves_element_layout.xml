@@ -14,6 +14,7 @@
     <!--card_view:cardBackgroundColor="@color/colorAccent"-->
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_bookshelves"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"

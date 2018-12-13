@@ -14,7 +14,7 @@ public class BookshelfViewActivity extends AppCompatActivity {
     private ArrayList<Book> books = new ArrayList<>();
     private LinearLayoutManager layoutManager;
     private RecyclerView recyclerView;
-    private BookshelvesListAdapter listAdapter;
+    private BookshelfListAdapter listAdapter;
 
 
     @Override
@@ -24,13 +24,16 @@ public class BookshelfViewActivity extends AppCompatActivity {
 
         context = this;
         int bookshelfId = getIntent().getIntExtra(Constants.VIEW_BOOKSHELF_KEY, -1);
-        if (bookshelfId!=-1) {
+        if (bookshelfId != -1) {
             Bookshelf bookshelf = BookshelfDbDao.readBookshelf(bookshelfId);
-            books.addAll(bookshelf.getBooks());
+            ArrayList<Book> shelfBooks = bookshelf.getBooks();
+            if (shelfBooks != null) {
+                books.addAll(bookshelf.getBooks());
+            }
         }
 
 
-        recyclerView = findViewById(R.id.recycler_view_bookshelves);
+        recyclerView = findViewById(R.id.recycler_view_bookshelf);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);

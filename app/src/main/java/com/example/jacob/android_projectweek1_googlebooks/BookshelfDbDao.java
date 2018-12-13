@@ -131,7 +131,7 @@ public class BookshelfDbDao extends BooksDbDao {
             ArrayList<Book> books = new ArrayList<>();
             for (String id : listOfIds) {
                 Book book = null;
-                book = BooksDbDao.readBook(id);
+                book = BooksDbDao.readBook(id.trim());
                 if (book != null) {
                     books.add(book);
                 }
