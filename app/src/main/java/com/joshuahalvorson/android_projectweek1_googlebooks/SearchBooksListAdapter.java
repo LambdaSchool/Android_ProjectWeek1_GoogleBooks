@@ -1,6 +1,7 @@
 package com.joshuahalvorson.android_projectweek1_googlebooks;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -11,21 +12,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class BookSearchListAdapter extends RecyclerView.Adapter<BookSearchListAdapter.ViewHolder> {
+public class SearchBooksListAdapter extends RecyclerView.Adapter<SearchBooksListAdapter.ViewHolder> {
     private ArrayList<BookVolume> bookVolumes;
-    Activity activity;
+    private Activity activity;
+    private Context context;
 
-    public BookSearchListAdapter(Activity activity, ArrayList<BookVolume> bookVolumes) {
+    public SearchBooksListAdapter(Activity activity, Context context, ArrayList<BookVolume> bookVolumes) {
         this.bookVolumes = bookVolumes;
         this.activity = activity;
+        this.context = context;
     }
 
     @NonNull
     @Override
-    public BookSearchListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public SearchBooksListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater
                 .from(viewGroup.getContext())
                 .inflate(R.layout.book_search_list_element_layout, viewGroup, false);
@@ -33,7 +37,7 @@ public class BookSearchListAdapter extends RecyclerView.Adapter<BookSearchListAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final BookSearchListAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final SearchBooksListAdapter.ViewHolder viewHolder, int i) {
         final BookVolume bookVolume = bookVolumes.get(i);
         String title = bookVolume.getTitle();
         String authors = bookVolume.getAuthors().replaceAll(", $", "");
@@ -58,7 +62,7 @@ public class BookSearchListAdapter extends RecyclerView.Adapter<BookSearchListAd
             @Override
             public boolean onLongClick(View v) {
                 BooksViewModel.addBook(bookVolume);
-                viewHolder.titleText.setTextColor(Color.YELLOW);
+                SearchBooksFragment.toastBookAdded(bookVolume.getTitle(), context);
                 return false;
             }
         });

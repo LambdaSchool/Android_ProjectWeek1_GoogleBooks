@@ -11,17 +11,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class SearchBooksFragment extends Fragment {
     private EditText searchText;
     private Button searchButton;
-    private static BookSearchListAdapter adapter;
+    private static SearchBooksListAdapter adapter;
     static ArrayList<BookVolume> bookVolumes;
+    private Context mContext;
 
     public SearchBooksFragment(){
 
@@ -30,6 +31,7 @@ public class SearchBooksFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        mContext = context;
     }
 
     @Override
@@ -52,7 +54,7 @@ public class SearchBooksFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.search_results_list_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new BookSearchListAdapter(getActivity(), bookVolumes);
+        adapter = new SearchBooksListAdapter(getActivity(), mContext, bookVolumes);
         recyclerView.setAdapter(adapter);
         BooksDbDao.initializeInstance(getContext());
     }
@@ -76,6 +78,12 @@ public class SearchBooksFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    public static void toastBookAdded(String title, Context context){
+        Toast.makeText(context,
+                title + " added to your library!",
+                Toast.LENGTH_SHORT).show();
     }
 
     public static class getSearchResults extends AsyncTask<String, Integer, ArrayList<BookVolume>>{
