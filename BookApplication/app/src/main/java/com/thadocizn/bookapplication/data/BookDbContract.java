@@ -32,9 +32,9 @@ public class BookDbContract {
         public static final String SQL_CREATE_TABLE_BOOKSHELF = "CREATE TABLE " + TABLE_NAME_BOOKSHELF +
                 " ( " +
                 COLUMN_NAME_BOOKSHELF_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_NAME_BOOKSHELF_CATEGORY + "TEXT, " +
-                COLUMN_NAME_BOOK_KEY_ID + " INTEGER);";
-
+                COLUMN_NAME_BOOKSHELF_CATEGORY + " TEXT, " +
+                COLUMN_NAME_BOOK_KEY_ID + " INTEGER, " +
+                "FOREIGN KEY (" + COLUMN_NAME_BOOK_KEY_ID + ")" + " REFERENCES " + TABLE_NAME_BOOK + "(" + COLUMN_BOOK_ID + ")";
 
         public static final String SQL_DELETE_TABLE_BOOK = "DROP TABLE IF EXISTS " + TABLE_NAME_BOOK + ";";
         public static final String SQL_DELETE_TABLE_BOOKSHELF = "DROP TABLE IF EXISTS " + TABLE_NAME_BOOKSHELF + ";";

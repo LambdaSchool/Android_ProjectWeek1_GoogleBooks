@@ -51,9 +51,49 @@ public class BookDbDao {
             values.put(BookDbContract.BookEntry.COLUMN_NAME_BOOKSHELF_ID, bookshelf.getShelf_name());
             values.put(BookDbContract.BookEntry.COLUMN_NAME_BOOK_KEY_ID, book.getBookTitle());
             long i = db.insert(BookDbContract.BookEntry.TABLE_NAME_BOOKSHELF, null, values);
-
         }
+    }
+    public static ArrayList<Book> readBooksInBookshelf(Bookshelf bookshelf){
 
+        if(db != null){
+
+            Cursor cursor = db.rawQuery(String.format("SELECT %s.%s FROM %s JOIN %s ON %s.%s = %s.%s WHERE %s.%s='%s'",
+
+                    BookDbContract.BookEntry.TABLE_NAME_BOOK, BookDbContract.BookEntry.COLUMN_NAME_BOOK_TITLE,
+                    BookDbContract.BookEntry.TABLE_NAME_BOOK,
+                    BookDbContract.BookEntry.TABLE_NAME_BOOKSHELF,
+                    BookDbContract.BookEntry.TABLE_NAME_BOOK, BookDbContract.BookEntry.COLUMN_NAME_BOOK_TITLE,
+                    BookDbContract.BookEntry.TABLE_NAME_BOOKSHELF, BookDbContract.BookEntry.COLUMN_NAME_BOOK_KEY_ID,
+                    BookDbContract.BookEntry.TABLE_NAME_BOOKSHELF, BookDbContract.BookEntry.COLUMN_NAME_BOOKSHELF_ID,
+                    bookshelf.getShelf_name()), null);
+
+            ArrayList<String> books = new ArrayList<>();
+
+            int index;
+            while(cursor.moveToNext()){
+                index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.COLUMN_NAME_BOOK_TITLE);
+                String title = cursor.getString(index);
+                books.add(title);
+            }
+            cursor.close();
+
+            ArrayList<Book> books1 = new ArrayList<>();
+
+            for(String title : books){
+                cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE %s='%s'",
+
+                        BookDbContract.BookEntry.TABLE_NAME_BOOK,
+                        BookDbContract.BookEntry.COLUMN_NAME_BOOK_TITLE, title),
+                        null);
+                while(cursor.moveToNext()){
+                    Book book = getBookFromCursor(cursor);
+                    books1.add(book);
+                    }
+            }
+            return books1;
+        }else{
+            return new ArrayList<>();
+        }
     }
     public Book getBook(String bookId) {
 
