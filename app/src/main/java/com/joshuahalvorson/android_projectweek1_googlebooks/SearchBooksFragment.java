@@ -80,12 +80,6 @@ public class SearchBooksFragment extends Fragment {
         super.onDestroyView();
     }
 
-    public static void toastBookAdded(String title, Context context){
-        Toast.makeText(context,
-                title + " added to your library!",
-                Toast.LENGTH_SHORT).show();
-    }
-
     public static class getSearchResults extends AsyncTask<String, Integer, ArrayList<BookVolume>>{
 
         @Override

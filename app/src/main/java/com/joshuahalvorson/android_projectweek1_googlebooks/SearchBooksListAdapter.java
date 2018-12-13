@@ -62,7 +62,9 @@ public class SearchBooksListAdapter extends RecyclerView.Adapter<SearchBooksList
             @Override
             public boolean onLongClick(View v) {
                 BooksViewModel.addBook(bookVolume);
-                SearchBooksFragment.toastBookAdded(bookVolume.getTitle(), context);
+                Toast.makeText(context,
+                        bookVolume.getTitle() + " added to your library!",
+                        Toast.LENGTH_SHORT).show();
                 return false;
             }
         });
