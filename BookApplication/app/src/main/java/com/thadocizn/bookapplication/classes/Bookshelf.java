@@ -9,6 +9,10 @@ public class Bookshelf {
         this.shelf_name = shelfName;
     }
 
+    public Bookshelf(String shelf_name) {
+        this.shelf_name = shelf_name;
+    }
+
     public int getBookId() {
         return bookId;
     }

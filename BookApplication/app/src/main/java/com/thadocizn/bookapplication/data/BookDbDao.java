@@ -95,6 +95,37 @@ public class BookDbDao {
             return new ArrayList<>();
         }
     }
+
+    public static ArrayList<Bookshelf> readAllCategories(){
+
+        if(db != null){
+            Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s;", BookDbContract.BookEntry.TABLE_NAME_BOOKSHELF), null);
+            ArrayList<Bookshelf> bookshelves = new ArrayList<>();
+
+            while(cursor.moveToNext()){
+                Bookshelf bookshelf = getBookshelf(cursor);
+                bookshelves.add(bookshelf);
+            }
+            cursor.close();
+            return bookshelves;
+        }else{
+
+            return new ArrayList<>();
+
+        }
+
+    }
+
+    private static Bookshelf getBookshelf(Cursor cursor){
+
+        int index;
+        index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.COLUMN_NAME_BOOKSHELF_CATEGORY);
+        String name = cursor.getString(index);
+
+        return new Bookshelf(name);
+
+    }
+
     public Book getBook(String bookId) {
 
         int index;
