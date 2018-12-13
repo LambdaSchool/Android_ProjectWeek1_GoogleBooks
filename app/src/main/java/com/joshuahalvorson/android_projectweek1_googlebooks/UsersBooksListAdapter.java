@@ -59,9 +59,9 @@ public class UsersBooksListAdapter extends RecyclerView.Adapter<BookSearchListAd
                 });
             }
         }).start();
-        viewHolder.parentView.setOnLongClickListener(new View.OnLongClickListener() {
+        viewHolder.parentView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View v) {
+            public void onClick(View v) {
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();
                 EditBookDialogFragment editBookDialogFragment = new EditBookDialogFragment();
                 Bundle bundle = new Bundle();
@@ -71,7 +71,6 @@ public class UsersBooksListAdapter extends RecyclerView.Adapter<BookSearchListAd
                         .add(R.id.dialog_container, editBookDialogFragment, "edit_book_dialog_fragment")
                         .addToBackStack(null)
                         .commit();
-                return false;
             }
         });
     }
