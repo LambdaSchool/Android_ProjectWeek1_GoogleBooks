@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class UsersBooksListAdapter extends RecyclerView.Adapter<UsersBooksListAdapter.ViewHolder> {
     private ArrayList<BookVolume> bookVolumes;
-    Activity activity;
+    private Activity activity;
 
     public UsersBooksListAdapter(Activity activity, ArrayList<BookVolume> bookVolumes) {
         this.bookVolumes = bookVolumes;
@@ -50,7 +50,7 @@ public class UsersBooksListAdapter extends RecyclerView.Adapter<UsersBooksListAd
         if(review == null){
             review = "No review yet.";
         }
-        viewHolder.titleText.setText(titleCut + ", " + authors + '\n' + descCut + '\n' + "Your review: " + review);
+        viewHolder.titleText.setText(String.format("%s, %s\n%s\nYour review: %s", titleCut, authors, descCut, review));
         new Thread(new Runnable() {
             @Override
             public void run() {

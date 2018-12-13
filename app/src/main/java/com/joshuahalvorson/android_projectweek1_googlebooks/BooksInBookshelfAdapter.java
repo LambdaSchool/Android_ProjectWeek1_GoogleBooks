@@ -15,12 +15,10 @@ import java.util.ArrayList;
 
 public class BooksInBookshelfAdapter extends RecyclerView.Adapter<BooksInBookshelfAdapter.ViewHolder>{
     private ArrayList<BookVolume> bookVolumes;
-    private Bookshelf bookshelf;
-    Activity activity;
+    private Activity activity;
 
-    public BooksInBookshelfAdapter(Activity activity, ArrayList<BookVolume> bookVolumes, Bookshelf bookshelf) {
+    public BooksInBookshelfAdapter(Activity activity, ArrayList<BookVolume> bookVolumes) {
         this.bookVolumes = bookVolumes;
-        this.bookshelf = bookshelf;
         this.activity = activity;
     }
 
@@ -46,7 +44,7 @@ public class BooksInBookshelfAdapter extends RecyclerView.Adapter<BooksInBookshe
         if(review == null){
             review = "No review yet.";
         }
-        viewHolder.titleText.setText(title + ", " + authors + '\n' + descCut + '\n' + "Your review: " + review);
+        viewHolder.titleText.setText(String.format("%s, %s\n%s\nYour review: %s", title, authors, descCut, review));
         new Thread(new Runnable() {
             @Override
             public void run() {

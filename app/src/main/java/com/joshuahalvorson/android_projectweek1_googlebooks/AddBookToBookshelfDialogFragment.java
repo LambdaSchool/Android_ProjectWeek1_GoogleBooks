@@ -51,7 +51,9 @@ public class AddBookToBookshelfDialogFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         bookshelves = BooksViewModel.readBookshelves();
-        bookVolume = getArguments().getParcelable("book");
+        if (getArguments() != null) {
+            bookVolume = getArguments().getParcelable("book");
+        }
         ArrayList<String> bookshelvesNames = new ArrayList<>();
         for(Bookshelf b : bookshelves){
             if(b.getName().equals("Favorites") || b.getName().equals("Already read")){
@@ -74,7 +76,9 @@ public class AddBookToBookshelfDialogFragment extends Fragment {
                         Log.i("onClickAddBook", "book added to bookshelf " + bookshelfName);
                     }
                 }
-                getFragmentManager().popBackStack();
+                if (getFragmentManager() != null) {
+                    getFragmentManager().popBackStack();
+                }
             }
         });
     }

@@ -14,8 +14,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 public class BooksInBookshelfDialogFragment extends Fragment {
@@ -52,9 +50,9 @@ public class BooksInBookshelfDialogFragment extends Fragment {
         bookVolumes = BooksViewModel.readBooksInBookshelf(bookshelf);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new BooksInBookshelfAdapter(getActivity(), bookVolumes, bookshelf);
+        adapter = new BooksInBookshelfAdapter(getActivity(), bookVolumes);
         recyclerView.setAdapter(adapter);
-        dialogTitle.setText("Books in your " + bookshelf.getName() + " bookshelf");
+        dialogTitle.setText(String.format("Books in your %s bookshelf", bookshelf.getName()));
         deleteShelfButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -155,6 +155,7 @@ public class BooksDbDao {
                 values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_HAS_READ, bookVolume.isHasRead());
                 db.update(BooksDbContract.BookEntry.BOOKS_TABLE_NAME, values, whereClause, null);
             }
+            cursor.close();
         }
     }
 
@@ -183,6 +184,7 @@ public class BooksDbDao {
                 values.put(BooksDbContract.BookEntry.BOOKS_COLUMN_USER_REVIEW, bookVolume.getUserReview());
                 db.update(BooksDbContract.BookEntry.BOOKS_TABLE_NAME, values, whereClause, null);
             }
+            cursor.close();
         }
     }
 

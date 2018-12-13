@@ -3,7 +3,6 @@ package com.joshuahalvorson.android_projectweek1_googlebooks;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -49,7 +48,7 @@ public class SearchBooksListAdapter extends RecyclerView.Adapter<SearchBooksList
         String descCut = "";
         if(descFull.length() > 100)
             descCut = descFull.substring(0,75) + "...";
-        viewHolder.titleText.setText(titleCut + '\n' + authors + '\n' + descCut);
+        viewHolder.titleText.setText(String.format("%s\n%s\n%s", titleCut, authors, descCut));
         new Thread(new Runnable() {
             @Override
             public void run() {

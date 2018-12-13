@@ -1,7 +1,6 @@
 package com.joshuahalvorson.android_projectweek1_googlebooks;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,20 +9,16 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class BookshelvesFragment extends Fragment {
     private FloatingActionButton addBookshelfButton;
     private static ArrayList<Bookshelf> bookShelves;
-    private RecyclerView recyclerView;
     private static BookshelvesListAdapter adapter;
 
     public BookshelvesFragment(){
@@ -51,7 +46,7 @@ public class BookshelvesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         bookShelves = new ArrayList<>();
         addBookshelfButton = view.findViewById(R.id.add_bookshelf_button);
-        recyclerView = view.findViewById(R.id.bookshelves_list_recycler_view);
+        RecyclerView recyclerView = view.findViewById(R.id.bookshelves_list_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         adapter = new BookshelvesListAdapter(getActivity(), bookShelves);
@@ -70,9 +65,11 @@ public class BookshelvesFragment extends Fragment {
                     ft = getFragmentManager().beginTransaction();
                 }
                 AddBookshelfDialogFragment  addBookshelfDialogFragment = new AddBookshelfDialogFragment();
-                ft.replace(R.id.dialog_container, addBookshelfDialogFragment, "add_bookshelf_fragment");
-                ft.addToBackStack(null);
-                ft.commit();
+                if (ft != null) {
+                    ft.replace(R.id.dialog_container, addBookshelfDialogFragment, "add_bookshelf_fragment");
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }
             }
         });
     }

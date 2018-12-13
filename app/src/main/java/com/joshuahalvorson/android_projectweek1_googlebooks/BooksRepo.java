@@ -3,7 +3,7 @@ package com.joshuahalvorson.android_projectweek1_googlebooks;
 import java.util.ArrayList;
 
 public class BooksRepo {
-    ArrayList<BookVolume> booksList;
+    private ArrayList<BookVolume> booksList;
     public void addBook(final BookVolume bookVolume){
         new Thread(new Runnable() {
             @Override
