@@ -12,7 +12,7 @@ public class GoogleBooksApiDao {
 
     public static ArrayList<BookVolume> getBooksFromSearch(final String search){
         final ArrayList<BookVolume> books = new ArrayList<>();
-        final String results = NetworkAdapter.httpRequest(SEARCH_URL + search + "&startIndex=0&maxResults=20", NetworkAdapter.GET);
+        final String results = NetworkAdapter.httpRequest(SEARCH_URL + search + "&maxResults=40&startIndex=0", NetworkAdapter.GET);
         try {
             JSONObject topLevel = new JSONObject(results);
             JSONArray booksArray = topLevel.getJSONArray(BOOKS_ARRAY_IN_API);
