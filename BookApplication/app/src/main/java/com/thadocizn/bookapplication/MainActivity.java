@@ -1,10 +1,13 @@
 package com.thadocizn.bookapplication;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -16,7 +19,7 @@ import com.thadocizn.bookapplication.data.BookDbDao;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ItemClickListener{
 
     public EditText search;
     private RecyclerView recyclerView;
@@ -38,6 +41,12 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycleViewer);
         searchButton = findViewById(R.id.imageButton);
         bookList = new ArrayList<>();
+        adapter = new BookAdapter(bookList);
+        recyclerView.setHasFixedSize(true);
+        linearLayoutManager = new LinearLayoutManager(context);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
+        adapter.setOnClickListener(this);
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,11 +66,17 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
                     }
+
                 }).start();
             }
         });
-
-
+        adapter.setOnClickListener(this);
     }
 
+    @Override
+    public void onClick(int id, int position) {
+        Intent intent = new Intent(this, EditBookActivity.class);
+        startActivity(intent);
+    }
 }
+
