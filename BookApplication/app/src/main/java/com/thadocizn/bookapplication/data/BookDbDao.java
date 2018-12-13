@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.thadocizn.bookapplication.classes.Book;
+import com.thadocizn.bookapplication.classes.Bookshelf;
 
 import java.util.ArrayList;
 
@@ -30,6 +31,14 @@ public class BookDbDao {
 
             int bookId = (int) db.insert(BookDbContract.BookEntry.TABLE_NAME_BOOK, null, values);
 
+        }
+    }
+
+    public  static void createBookshelf(Bookshelf bookshelf){
+        if (db != null){
+            ContentValues values = new ContentValues();
+            values.put(BookDbContract.BookEntry.COLUMN_NAME_BOOKSHELF_CATEGORY, bookshelf.getShelf_name());
+            db.insert(BookDbContract.BookEntry.TABLE_NAME_BOOKSHELF, null, values);
         }
     }
 
