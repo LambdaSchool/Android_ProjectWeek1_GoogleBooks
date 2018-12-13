@@ -5,12 +5,17 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 
 import com.thadocizn.bookapplication.classes.Book;
 import com.thadocizn.bookapplication.classes.BookAdapter;
@@ -28,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
     private ArrayList<Book> bookList;
     private LinearLayoutManager linearLayoutManager;
     Context context;
+    CardView cardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
         BookDbDao.initializeInstance(this);
 
 
+        cardView = findViewById(R.id.cardView);
         search = findViewById(R.id.etSearch);
         recyclerView = findViewById(R.id.recycleViewer);
         searchButton = findViewById(R.id.imageButton);
@@ -75,8 +82,18 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
 
     @Override
     public void onClick(int id, int position) {
+
         Intent intent = new Intent(this, EditBookActivity.class);
         startActivity(intent);
+
+        //TODO find out if there is another way
+       /* LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popup = inflater.inflate(R.layout.activity_edit_book, null);
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        boolean focusable = true;
+        PopupWindow popupWindow = new PopupWindow(popup, width, height, focusable);
+        popupWindow.showAtLocation(cardView, Gravity.CENTER, 0, 0);*/
     }
 }
 
