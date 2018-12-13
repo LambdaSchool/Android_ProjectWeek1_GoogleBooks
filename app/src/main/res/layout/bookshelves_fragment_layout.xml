@@ -10,8 +10,7 @@
         android:id="@+id/bookshelves_list_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        android:visibility="visible" />
+        android:layout_marginBottom="100dp" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_bookshelf_button"
