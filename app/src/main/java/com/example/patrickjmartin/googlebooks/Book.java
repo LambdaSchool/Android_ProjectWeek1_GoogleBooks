@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
@@ -18,7 +20,41 @@ public class Book implements Parcelable {
         this.review = review;
         this.publishDate = publishDate;
         this.googleBooksID = googleBooksID;
-        this.image = image;
+        this.image = image.replace("http:", "https:");
+
+    }
+
+    public Book (JSONObject json) {
+
+        try {
+            JSONObject volumeInfo = json.getJSONObject("volumeInfo");
+
+            this.title = volumeInfo.getString("title");
+
+            try {
+                JSONArray authorsJsonArray = volumeInfo.getJSONArray("authors");
+                this.author = parseAuthors(authorsJsonArray);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                this.author = "";
+            }
+
+
+            this.review = "";
+            this.publishDate = volumeInfo.optString("publishedDate");
+            this.googleBooksID = json.optString("id");
+            this.image = volumeInfo.getJSONObject("imageLinks").optString("thumbnail");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if(this.image != null && !this.image.isEmpty()) {
+            this.image = this.image
+                    .replace("http:", "https:")
+                    .replace("zoom=0", "zoom=1");
+
+        }
 
     }
 
@@ -109,5 +145,24 @@ public class Book implements Parcelable {
         dest.writeString(image);
         dest.writeString(bookshelfHomes);
         dest.writeInt(isRead);
+    }
+
+    private static String parseAuthors(JSONArray authorsAry) {
+
+        StringBuilder authorsString = new StringBuilder();
+
+        for (int i = 0; i < authorsAry.length(); i++) {
+            try {
+                if (i == 0) {
+                    authorsString.append(authorsAry.getString(i));
+                } else {
+                    authorsString.append(" - ").append(authorsAry.getString(i));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return authorsString.toString();
     }
 }

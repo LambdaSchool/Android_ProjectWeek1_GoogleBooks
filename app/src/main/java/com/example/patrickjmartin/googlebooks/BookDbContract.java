@@ -5,7 +5,7 @@ import android.provider.BaseColumns;
 public class BookDbContract {
 
     public static class BookEntry implements BaseColumns {
-        public static final String TABLE_NAME = "books";
+        public static final String BOOK_TABLE_NAME = "books";
 
         public static final String COLUMN_NAME_BOOK_TITLE = "title";
         public static final String COLUMN_NAME_BOOK_AUTHOR = "author";
@@ -15,7 +15,9 @@ public class BookDbContract {
         public static final String COLUMN_NAME_BOOK_IMAGE = "image";
         public static final String COLUMN_NAME_READ = "read";
 
-        public static final String SQL_CREATE_TABLE = "CREATE TABLE " + TABLE_NAME +
+        public static final String BOOKSHELF = null;
+
+        public static final String SQL_CREATE_TABLE = "CREATE TABLE " + BOOK_TABLE_NAME +
                 " ( " +
                 _ID + "INTEGER PRIMARY KEY," +
                 COLUMN_NAME_BOOK_TITLE  + " TEXT, " +
@@ -26,7 +28,9 @@ public class BookDbContract {
                 COLUMN_NAME_BOOK_IMAGE + " TEXT, " +
                 COLUMN_NAME_READ + " INTEGER);";
 
-        public static final String SQL_DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
+
+
+        public static final String SQL_DELETE_BOOKS_TABLE = "DROP TABLE IF EXISTS " + BOOK_TABLE_NAME + ";";
 
 
     }

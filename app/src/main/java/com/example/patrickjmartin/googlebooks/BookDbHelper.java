@@ -4,6 +4,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class BookDbHelper extends SQLiteOpenHelper {
@@ -28,5 +31,7 @@ public class BookDbHelper extends SQLiteOpenHelper {
     @Override
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         this.onUpgrade(db, oldVersion, newVersion);
+
     }
 }
+

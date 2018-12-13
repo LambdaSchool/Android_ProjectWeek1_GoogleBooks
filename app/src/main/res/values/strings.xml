@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">GoogleBooks</string>
+    <string name="search_button_text">Search</string>
+    <string name="view_selected_books_button_text">View Selected Book(s)</string>
+    <string name="view_bookshelf_button_text">View Bookshelf</string>
 </resources>

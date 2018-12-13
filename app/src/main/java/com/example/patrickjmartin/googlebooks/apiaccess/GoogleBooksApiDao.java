@@ -13,6 +13,7 @@ public class GoogleBooksApiDao {
     //Basic search, no fancy paramteters,
     private static final String BASE_URL = "https://www.googleapis.com/books/v1/volumes?q=";
     private static final String MAX_RESULTS = "&startIndex=0&maxResults=25";
+
     public static ArrayList<Book> searchGoogleBooks(final String searchTerm) {
         final ArrayList<Book> foundBooks = new ArrayList<>();
 
@@ -21,16 +22,9 @@ public class GoogleBooksApiDao {
             JSONObject toplevel = new JSONObject(results);
             JSONArray dataJsonArray = toplevel.getJSONArray("items");
             for(int i = 0; i < dataJsonArray.length(); i++) {
-                JSONObject volumeInfo = dataJsonArray.getJSONObject(i).getJSONObject("volumeInfo");
-                String title = volumeInfo.getString("title");
-                JSONArray authorsJsonArray = volumeInfo.getJSONArray("authors");
-                String author = (authorsJsonArray == null) ? "" : parseAuthors(authorsJsonArray);
-                String publishDate = volumeInfo.getString("publishedDate");
-                String googleBooksId = dataJsonArray.getJSONObject(i).getString("id");
-                String image = (volumeInfo.has("imageLinks")) ?
-                        volumeInfo.getJSONObject("imageLinks").getString("thumbnail") : "";
 
-                foundBooks.add(new Book(title, author, null, publishDate, googleBooksId, image));
+                Book bookJSON = new Book(dataJsonArray.getJSONObject(i));
+                foundBooks.add(bookJSON);
             }
         } catch (JSONException e) {
             e.printStackTrace();
