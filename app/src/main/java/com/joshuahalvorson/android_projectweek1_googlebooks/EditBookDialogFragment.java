@@ -118,7 +118,7 @@ public class EditBookDialogFragment extends Fragment {
                     bundle.putParcelable("bookreview", bookVolume);
                     reviewBookFragment.setArguments(bundle);
                     if (ft != null) {
-                        ft.add(R.id.dialog_container, reviewBookFragment, "edit_review_fragment");
+                        ft.replace(R.id.dialog_container, reviewBookFragment, "edit_review_fragment");
                         ft.addToBackStack(null);
                         ft.commit();
                     }
@@ -136,7 +136,7 @@ public class EditBookDialogFragment extends Fragment {
                     bundle.putParcelable("book", bookVolume);
                     addBookToBookshelfDialogFragment.setArguments(bundle);
                     if (ft != null) {
-                        ft.add(R.id.dialog_container, addBookToBookshelfDialogFragment, "edit_review_fragment");
+                        ft.replace(R.id.dialog_container, addBookToBookshelfDialogFragment, "edit_review_fragment");
                         ft.addToBackStack(null);
                         ft.commit();
                     }
@@ -154,7 +154,7 @@ public class EditBookDialogFragment extends Fragment {
                     bundle.putParcelable("book", bookVolume);
                     qrCodeDialogFragment.setArguments(bundle);
                     if (ft != null) {
-                        ft.add(R.id.dialog_container, qrCodeDialogFragment, "qr_code_fragment");
+                        ft.replace(R.id.dialog_container, qrCodeDialogFragment, "qr_code_fragment");
                         ft.addToBackStack(null);
                         ft.commit();
                     }
@@ -165,7 +165,9 @@ public class EditBookDialogFragment extends Fragment {
                 public void onClick(View v) {
                     BooksViewModel.deleteBook(bookVolume);
                     new UsersBooksFragment.getBooksFromDb().execute();
-                    getFragmentManager().popBackStack();
+                    if (getFragmentManager() != null) {
+                        getFragmentManager().popBackStack();
+                    }
                     Log.i("onClickDeleteButton", "book deleted from sql db");
                 }
             });
