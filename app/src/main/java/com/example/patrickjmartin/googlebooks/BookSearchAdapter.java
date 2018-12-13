@@ -4,10 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.media.AudioRecord;
 import android.media.Image;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.patrickjmartin.googlebooks.apiaccess.NetworkAdapter;
 
@@ -31,7 +35,7 @@ import java.util.ArrayList;
 public class BookSearchAdapter extends RecyclerView.Adapter<BookSearchAdapter.ViewHolder> {
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        private ConstraintLayout constraintLayout;
+        private ConstraintLayout cardView;
         private ImageView bookImage;
         private TextView bookDetails;
         private ProgressBar progressBar;
@@ -39,7 +43,7 @@ public class BookSearchAdapter extends RecyclerView.Adapter<BookSearchAdapter.Vi
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            constraintLayout = itemView.findViewById(R.id.parent_view_searched_books);
+            cardView = itemView.findViewById(R.id.parent_view_searched_books);
             bookImage = itemView.findViewById(R.id.searched_book_image);
             bookDetails = itemView.findViewById(R.id.searched_book_details);
             progressBar = itemView.findViewById(R.id.progressBar);
@@ -47,12 +51,14 @@ public class BookSearchAdapter extends RecyclerView.Adapter<BookSearchAdapter.Vi
     }
 
     private ArrayList<Book> searchedBooks;
+    private ArrayList<Book> chosenBooks = new ArrayList<>();
     private Context context;
     private Activity activity;
 
     public BookSearchAdapter(ArrayList<Book> books, Activity activity) {
         this.searchedBooks = books;
         this.activity = activity;
+
     }
 
     @NonNull
@@ -70,16 +76,39 @@ public class BookSearchAdapter extends RecyclerView.Adapter<BookSearchAdapter.Vi
         final Book b = searchedBooks.get(i);
 
         final String url = b.getImage();
+
+        if(b.isSelected()){
+            holder.cardView.setBackgroundColor(Color.MAGENTA);
+        } else {
+            holder.cardView.setBackground(null);
+        }
+
         if(b.getImage() != null) {
             new DownloadBookImageTask(holder.bookImage, holder.progressBar).execute(url);
         }
-
 
         final String text = "Title: " + b.getTitle() +
                 "\nAuthor: " + b.getAuthor() +
                 "\nPublish Date: " + b.getPublishDate();
         holder.bookDetails.setText(text);
 
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(b.isSelected()) {
+                    b.setSelected(false);
+                    chosenBooks.remove(b);
+                    Toast.makeText(context, "Current picked count: " + chosenBooks.size(), Toast.LENGTH_SHORT).show();
+                } else {
+                    b.setSelected(true);
+                    chosenBooks.add(b);
+                    Toast.makeText(context, "Current picked count: " + chosenBooks.size(), Toast.LENGTH_SHORT).show();
+                }
+
+                //notifyDataSetChanged();
+                notifyItemChanged(holder.getAdapterPosition());
+            }
+        });
 
 
 
@@ -141,5 +170,13 @@ public class BookSearchAdapter extends RecyclerView.Adapter<BookSearchAdapter.Vi
 
 
         }
+    }
+
+    public ArrayList<Book> getChosenBooks(){
+        return chosenBooks;
+    }
+
+    public void clearChosenBooks(){
+        chosenBooks.clear();
     }
 }

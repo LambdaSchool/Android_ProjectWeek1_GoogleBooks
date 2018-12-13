@@ -2,6 +2,7 @@ package com.example.patrickjmartin.googlebooks;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText searchBox;
 
     private ArrayList<Book> results;
+    private ArrayList<Book> selectedBooks;
 
 
 
@@ -37,7 +39,9 @@ public class MainActivity extends AppCompatActivity {
         activity = this;
         results = new ArrayList<>();
 
+
         searchBox = findViewById(R.id.editText);
+
 
         searchRecyclerView = findViewById(R.id.recyclerView_search);
         searchRecyclerView.setHasFixedSize(true);
@@ -54,6 +58,28 @@ public class MainActivity extends AppCompatActivity {
 
         searchRecyclerView.setAdapter(searchAdapter);
 
+        findViewById(R.id.view_books_details).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent bookDetailsIntent = new Intent(context, BookDetailsActivity.class);
+
+                selectedBooks = searchAdapter.getChosenBooks();
+                searchAdapter.clearChosenBooks();
+
+                bookDetailsIntent.putExtra("SELECTED_BOOKS", selectedBooks);
+                startActivity(bookDetailsIntent);
+
+
+
+            }
+        });
+
+        findViewById(R.id.view_bookshelf_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent bookShelfIntent = new Intent(context, BookshelfActivity.class);
+            }
+        });
 
 
     }
@@ -62,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
 
         }
 
@@ -77,11 +104,8 @@ public class MainActivity extends AppCompatActivity {
             results.addAll(books);
             searchAdapter.notifyDataSetChanged();
 
+
         }
-
-
-
-
     }
 }
 

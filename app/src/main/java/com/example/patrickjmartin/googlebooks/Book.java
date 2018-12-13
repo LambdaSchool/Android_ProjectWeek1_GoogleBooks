@@ -13,6 +13,7 @@ public class Book implements Parcelable {
 
     private String title, author, review, publishDate, googleBooksID, image, bookshelfHomes;
     private int isRead;
+    private boolean isSelected;
 
     public Book(String title, String author, String review, String publishDate, String googleBooksID, String image) {
         this.title = title;
@@ -21,6 +22,7 @@ public class Book implements Parcelable {
         this.publishDate = publishDate;
         this.googleBooksID = googleBooksID;
         this.image = image.replace("http:", "https:");
+        this.isSelected = false;
 
     }
 
@@ -28,9 +30,7 @@ public class Book implements Parcelable {
 
         try {
             JSONObject volumeInfo = json.getJSONObject("volumeInfo");
-
             this.title = volumeInfo.getString("title");
-
             try {
                 JSONArray authorsJsonArray = volumeInfo.getJSONArray("authors");
                 this.author = parseAuthors(authorsJsonArray);
@@ -38,17 +38,15 @@ public class Book implements Parcelable {
                 e.printStackTrace();
                 this.author = "";
             }
-
-
             this.review = "";
             this.publishDate = volumeInfo.optString("publishedDate");
             this.googleBooksID = json.optString("id");
             this.image = volumeInfo.getJSONObject("imageLinks").optString("thumbnail");
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+        this.isSelected = false;
         if(this.image != null && !this.image.isEmpty()) {
             this.image = this.image
                     .replace("http:", "https:")
@@ -80,6 +78,14 @@ public class Book implements Parcelable {
             return new Book[size];
         }
     };
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 
     public void setReview(String review) {
         this.review = review;
