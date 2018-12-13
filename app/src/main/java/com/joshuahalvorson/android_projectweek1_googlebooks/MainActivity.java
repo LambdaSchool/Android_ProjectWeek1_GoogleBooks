@@ -1,6 +1,5 @@
 package com.joshuahalvorson.android_projectweek1_googlebooks;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -8,9 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     public Context context;
