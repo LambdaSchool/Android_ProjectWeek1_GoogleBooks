@@ -18,10 +18,10 @@ import android.widget.TextView;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
 import java.util.ArrayList;
 
-public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.ViewHolder> {
+public class BookshelfListAdapter extends RecyclerView.Adapter<BookshelfListAdapter.ViewHolder> {
+
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView bookTitle, bookContent;
@@ -31,11 +31,11 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.image_search_element);
-            bookTitle = itemView.findViewById(R.id.text_search_element_title);
-            bookContent = itemView.findViewById(R.id.text_search_element_content);
-            spinner = itemView.findViewById(R.id.spinner_search_element);
-            parentView = itemView.findViewById(R.id.search_element_parent_layout);
+            imageView = itemView.findViewById(R.id.image_bookshelf_element);
+            bookTitle = itemView.findViewById(R.id.text_bookshelf_element_title);
+            bookContent = itemView.findViewById(R.id.text_bookshelf_element_content);
+            spinner = itemView.findViewById(R.id.spinner_bookshelf_element);
+            parentView = itemView.findViewById(R.id.bookshelf_element_parent_layout);
         }
     }
 
@@ -44,7 +44,7 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
     private Activity activity;
     private ArrayList<String> spinnerArray;
 
-    SearchListAdapter(ArrayList<Book> dataList, Activity activity, ArrayList<String> spinnerArray) {
+    BookshelfListAdapter(ArrayList<Book> dataList, Activity activity, ArrayList<String> spinnerArray) {
         this.dataList = dataList;
         this.activity = activity;
         this.spinnerArray = spinnerArray;
@@ -52,19 +52,19 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
 
     @NonNull
     @Override
-    public SearchListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public BookshelfListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         context = viewGroup.getContext();
         View view = LayoutInflater.from(
                 viewGroup.getContext())
                 .inflate(
-                        R.layout.search_element_layout,
+                        R.layout.bookshelf_element_layout,
                         viewGroup,
                         false);
-        return new ViewHolder(view);
+        return new BookshelfListAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SearchListAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull BookshelfListAdapter.ViewHolder viewHolder, int i) {
         final Book data = dataList.get(i);
         viewHolder.bookTitle.setText(data.getTitle());
         viewHolder.bookContent.setText(data.getAuthor());
@@ -115,15 +115,17 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
         return dataList.size();
     }
 
-    private File getFileFromCache(String searchText) {
+    private File getFileFromCache(String bookshelfText) {
         File file = null;
         File[] items = context.getCacheDir().listFiles();
         for (File item : items) {
-            if (item.getName().contains(searchText)) {
+            if (item.getName().contains(bookshelfText)) {
                 file = item;
                 break;
             }
         }
         return file;
     }
+
+
 }
