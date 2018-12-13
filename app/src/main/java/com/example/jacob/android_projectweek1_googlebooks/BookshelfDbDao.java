@@ -11,8 +11,11 @@ public class BookshelfDbDao extends BooksDbDao {
         if (db != null) {
             ContentValues values = new ContentValues();
             values.put(BooksDbContract.BookEntry.COLUMN_NAME_TITLE, title);
-            long resultId = db.insert(BooksDbContract.BookEntry.BOOKSHELF_TABLE_NAME, null, values);
+            int resultId = Math.toIntExact(db.insert(BooksDbContract.BookEntry.BOOKSHELF_TABLE_NAME, null, values));
+            Bookshelf bookshelf = readBookshelf(resultId);
+            FirebaseDao.createBookshelf(bookshelf);
         }
+
     }
 
     static ArrayList<Bookshelf> readAllBookshelves() {
@@ -67,6 +70,7 @@ public class BookshelfDbDao extends BooksDbDao {
                 idsToString = idsToString.substring(1, idsToString.length() - 1);
                 values.put(BooksDbContract.BookEntry.COLUMN_NAME_BOOK_IDS, idsToString);
                 db.update(BooksDbContract.BookEntry.BOOKSHELF_TABLE_NAME, values, whereClause, null);
+                FirebaseDao.updateBookshelf(bookshelf);
             }
             cursor.close();
         }
@@ -176,6 +180,7 @@ public class BookshelfDbDao extends BooksDbDao {
                     null);
             if (cursor.getCount() == 1) {
                 db.delete(BooksDbContract.BookEntry.BOOKSHELF_TABLE_NAME, whereClause, null);
+                FirebaseDao.deleteBookshelf(id);
             }
             cursor.close();
         }

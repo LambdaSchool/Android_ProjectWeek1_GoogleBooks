@@ -69,6 +69,46 @@ public class Book {
         this.hasBeenRead = false;
     }
 
+    public String toJsonString() {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("id", this.id);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            json.put("title", this.title);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            json.put("author", this.author);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            json.put("publishedDate", this.publishedDate);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            json.put("imageUrl", this.imageUrl);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            json.put("review", this.review);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            json.put("hasBeenRead", this.hasBeenRead);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json.toString();
+    }
+
     public String getId() {
         return id;
     }

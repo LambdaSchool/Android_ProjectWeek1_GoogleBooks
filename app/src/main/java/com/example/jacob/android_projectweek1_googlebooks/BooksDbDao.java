@@ -5,9 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
-
 import java.util.ArrayList;
-import java.util.Arrays;
+
 
 public class BooksDbDao {
 
@@ -22,8 +21,17 @@ public class BooksDbDao {
 
     static void addBook(Book book) {
         if (db != null) {
-            ContentValues values = getContentValues(book);
-            db.insert(BooksDbContract.BookEntry.BOOK_TABLE_NAME, null, values);
+            Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE %s = '%s'",
+                    BooksDbContract.BookEntry.BOOK_TABLE_NAME,
+                    BooksDbContract.BookEntry._ID,
+                    book.getId()),
+                    null);
+            if (cursor.getCount() == 0) {
+                ContentValues values = getContentValues(book);
+                db.insert(BooksDbContract.BookEntry.BOOK_TABLE_NAME, null, values);
+                FirebaseDao.createBook(book);
+            }
+            cursor.close();
         }
     }
 
@@ -88,6 +96,7 @@ public class BooksDbDao {
                     null);
             if (cursor.getCount() == 1) {
                 db.delete(BooksDbContract.BookEntry.BOOK_TABLE_NAME, whereClause, null);
+                FirebaseDao.deleteBook(id);
             }
             cursor.close();
         }
@@ -107,24 +116,9 @@ public class BooksDbDao {
         return books;
     }
 
-
-    static Bookshelf readBookshelf(String id) {
-/*        ArrayList<Bookshelf> bookshelves = new ArrayList<>();
-        ArrayList<Book> books = readAllBooks();
-        ArrayList<String> bookshelfIds = new ArrayList<String>();
-        for (Book book : books) {
-            if (book.getBookshelves().contains(id)) {
-                bookshelfIds.add(book.getId());
-            }
-        }*/
-
-        return null;
-    }
-
-
     private static Book getBookFromCursor(Cursor cursor) {
         int index;
-        Book book = new Book(null,null,null,null,null,null,false);
+        Book book = new Book(null, null, null, null, null, null, false);
         index = cursor.getColumnIndexOrThrow(BooksDbContract.BookEntry._ID);
         book.setId(cursor.getString(index));
         index = cursor.getColumnIndexOrThrow(BooksDbContract.BookEntry.COLUMN_NAME_TITLE);
