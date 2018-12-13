@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class UsersBooksListAdapter extends RecyclerView.Adapter<SearchBooksListAdapter.ViewHolder> {
+public class UsersBooksListAdapter extends RecyclerView.Adapter<UsersBooksListAdapter.ViewHolder> {
     private ArrayList<BookVolume> bookVolumes;
     Activity activity;
 
@@ -26,15 +26,15 @@ public class UsersBooksListAdapter extends RecyclerView.Adapter<SearchBooksListA
 
     @NonNull
     @Override
-    public SearchBooksListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater
                 .from(viewGroup.getContext())
                 .inflate(R.layout.book_search_list_element_layout, viewGroup, false);
-        return new SearchBooksListAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final SearchBooksListAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         final BookVolume bookVolume = bookVolumes.get(i);
         String title = bookVolume.getTitle();
         String review = bookVolume.getUserReview();
