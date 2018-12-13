@@ -1,5 +1,7 @@
 package com.example.jacob.android_projectweek1_googlebooks;
 
+//TODO Big Items:  MVVM for Bookshelves and Bookshelf activites, Firebase, add Already read bookshelf.
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
