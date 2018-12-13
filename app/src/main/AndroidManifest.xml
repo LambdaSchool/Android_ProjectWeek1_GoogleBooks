@@ -24,7 +24,8 @@
             android:name=".BookshelvesActivity"
             android:label="@string/title_activity_bookshelves"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".BookshelfViewActivity"></activity>
+        <activity android:name=".BookshelfViewActivity" />
+        <activity android:name=".BookViewActivity"></activity>
     </application>
 
 </manifest>

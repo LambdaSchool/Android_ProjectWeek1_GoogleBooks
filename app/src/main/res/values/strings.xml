@@ -5,4 +5,5 @@
     <string name="title_notifications">Notifications</string>
     <string name="edit_text_search_hint">Search</string>
     <string name="title_activity_bookshelves">BookshelvesActivity</string>
+    <string name="title_activity_book_view">BookViewActivity</string>
 </resources>
