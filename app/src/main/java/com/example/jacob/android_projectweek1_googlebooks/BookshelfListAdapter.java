@@ -2,6 +2,7 @@ package com.example.jacob.android_projectweek1_googlebooks;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
@@ -26,6 +27,7 @@ public class BookshelfListAdapter extends RecyclerView.Adapter<BookshelfListAdap
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView bookTitle, bookContent;
         ImageView imageView;
+        View layoutView;
         ViewGroup parentView;
 //        Spinner spinner;
 
@@ -34,7 +36,7 @@ public class BookshelfListAdapter extends RecyclerView.Adapter<BookshelfListAdap
             imageView = itemView.findViewById(R.id.image_bookshelf_element);
             bookTitle = itemView.findViewById(R.id.text_bookshelf_element_title);
             bookContent = itemView.findViewById(R.id.text_bookshelf_element_content);
-//            spinner = itemView.findViewById(R.id.spinner_bookshelf_element);
+            layoutView = itemView.findViewById(R.id.layout_bookshelf);
             parentView = itemView.findViewById(R.id.bookshelf_element_parent_layout);
         }
     }
@@ -67,6 +69,14 @@ public class BookshelfListAdapter extends RecyclerView.Adapter<BookshelfListAdap
         final Book data = dataList.get(i);
         viewHolder.bookTitle.setText(data.getTitle());
         viewHolder.bookContent.setText(data.getAuthor());
+        viewHolder.layoutView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, BookViewActivity.class);
+                intent.putExtra(Constants.BOOK_EDIT_KEY, data.getId());
+                activity.startActivity(intent);
+            }
+        });
 
         String imageUrl = data.getImageUrl();
         if (imageUrl != null) {
