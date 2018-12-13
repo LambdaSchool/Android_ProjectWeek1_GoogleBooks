@@ -74,15 +74,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        mTextMessage = findViewById(R.id.message);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        ArrayList<Bookshelf> bookshelves = BookshelfDbDao.readAllBookshelves();
+        ArrayList<String> bookshelfTitles = new ArrayList<>();
+        for (Bookshelf bookshelf : bookshelves) {
+            bookshelfTitles.add(bookshelf.getTitle());
+        }
 
         recyclerView = findViewById(R.id.search_recycler_view);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
-        listAdapter = new SearchListAdapter(booksList, this);
+        listAdapter = new SearchListAdapter(booksList, this, bookshelfTitles);
         recyclerView.setAdapter(listAdapter);
     }
 
@@ -103,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
             listAdapter.notifyDataSetChanged();
             for (int i = 0; i < books.size(); ++i) {
                 String imageUrl = books.get(i).getImageUrl();
-                if (imageUrl!=null) {
+                if (imageUrl != null) {
                     String[] urlParts = imageUrl.substring(imageUrl.indexOf("id=") + 3).split("&");
                     String searchText = urlParts[0];
                     File[] items = context.getCacheDir().listFiles();

@@ -30,8 +30,8 @@ You must implement each of these requirements in your application:
 > For more information on performing a search, go [here](https://developers.google.com/books/docs/v1/using#PerformingSearch)
 - Your user can tag books to categorize them in "bookshelves". A single book may exist in more than one shelf. For example, your user might have a "Favorites" bookshelf as well as a "Thriller-Suspense" one.
 - Your user can view a list of all their bookshelves.
-- The book records including review, etc, are stored at Firebase and are read into the app whenever the user launches your app.
-- Your user can insert, update, and delete books in their bookshelf or move them from one bookshelf to another. This information is stored on their behalf at Firebase and is read in whenever the user launches your application.
+- The book records including review, etc, are stored in your SQLite Database and are read into the app whenever the user launches your app.
+- Your user can insert, update, and delete books in their bookshelf or move them from one bookshelf to another. This information is stored on their behalf at SQLite Database and is read in whenever the user launches your application.
 
 ### Extra Requirements
 
@@ -42,7 +42,8 @@ These extra requirements (or others you come up with on your own) are not necess
 A few ideas are as follows:
 
 - Use firebase to create online storage for the bookshelves (counts as 2 features)
-  - Allow more than one user to use the same database without conflicting or overwriting each other's data. The same information must be accessible at each launch of the program, so be sure to use good Firebase hygiene. 
+  - Allow more than one user to use the same database without conflicting or overwriting each other's data. The same information must be accessible at each launch of the program, so be sure to use good Firebase hygiene.
+  - You can find the instructions for setting up a firebase database that iOS uses in [this repo](https://github.com/LambdaSchool/ios-journal-REST)
 - When you mark a book as read, add it also to a pre-made "Already read" bookshelf. Books later marked as unread must be removed from this bookshelf. 
 - Allow users to select a light or a dark theme
 - Share a link to a book (there is one to the Google Play store in the JSON), or your review of it to Twitter, Facebook, etc.

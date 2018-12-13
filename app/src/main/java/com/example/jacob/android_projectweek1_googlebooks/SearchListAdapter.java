@@ -9,7 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.io.File;
@@ -24,12 +26,14 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
         TextView bookTitle, bookContent;
         ImageView imageView;
         ViewGroup parentView;
+        Spinner spinner;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.image_search_element);
             bookTitle = itemView.findViewById(R.id.text_search_element_title);
             bookContent = itemView.findViewById(R.id.text_search_element_content);
+            spinner = itemView.findViewById(R.id.spinner_search_element);
             parentView = itemView.findViewById(R.id.search_element_parent_layout);
         }
     }
@@ -37,10 +41,12 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
     private ArrayList<Book> dataList;
     private Context context;
     private Activity activity;
+    private ArrayList<String> spinnerArray;
 
-    SearchListAdapter(ArrayList<Book> dataList, Activity activity) {
+    SearchListAdapter(ArrayList<Book> dataList, Activity activity, ArrayList<String> spinnerArray) {
         this.dataList = dataList;
         this.activity = activity;
+        this.spinnerArray = spinnerArray;
     }
 
     @NonNull
@@ -61,6 +67,12 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
         final Book data = dataList.get(i);
         viewHolder.bookTitle.setText(data.getTitle());
         viewHolder.bookContent.setText(data.getAuthor());
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, spinnerArray);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        viewHolder.spinner.setAdapter(arrayAdapter);
+        viewHolder.spinner.setSelection(0, false);
+
         String imageUrl = data.getImageUrl();
         if (imageUrl != null) {
             String[] urlParts = imageUrl.substring(imageUrl.indexOf("id=") + 3).split("&");
