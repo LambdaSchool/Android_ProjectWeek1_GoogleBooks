@@ -11,9 +11,10 @@ public class BooksDbContract {
         static final String COLUMN_NAME_IMAGE_URL = "image_url";
         static final String COLUMN_NAME_REVIEW = "review";
         static final String COLUMN_NAME_HAS_BEEN_READ = "has_been_read";
-        static final String COLUMN_NAME_BOOKSHELVES = "bookshelves";
+//        static final String COLUMN_NAME_BOOKSHELVES = "bookshelves";
 
         static final String BOOKSHELF_TABLE_NAME = "bookshelves";
+        static final String COLUMN_NAME_BOOK_IDS = "book_ids";
 
         //TODO use a JOIN table.
 
@@ -24,13 +25,13 @@ public class BooksDbContract {
                 COLUMN_NAME_AUTHOR + " STRING, " +
                 COLUMN_NAME_PUBLISHED_DATE + " STRING, " +
                 COLUMN_NAME_IMAGE_URL + " STRING, " +
-                COLUMN_NAME_REVIEW + " TEXT, " +
-                COLUMN_NAME_HAS_BEEN_READ + " INTEGER, " +
-                COLUMN_NAME_BOOKSHELVES + " STRING);";
+                COLUMN_NAME_BOOK_IDS + " TEXT, " +
+                COLUMN_NAME_HAS_BEEN_READ + " INTEGER);";
 
         static final String SQL_BOOKSHELF_TABLE = "CREATE TABLE " + BOOKSHELF_TABLE_NAME +
                 " (" +
                 _ID + " INTEGER PRIMARY KEY, " +
+                COLUMN_NAME_REVIEW + " TEXT, " +
                 COLUMN_NAME_TITLE + " STRING);";
 
 //        static final String SQL_CREATE_TABLE = SQL_BOOK_TABLE + " " + SQL_BOOKSHELF_TABLE;

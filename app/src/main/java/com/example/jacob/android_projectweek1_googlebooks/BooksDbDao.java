@@ -37,7 +37,6 @@ public class BooksDbDao {
         values.put(BooksDbContract.BookEntry.COLUMN_NAME_IMAGE_URL, book.getImageUrl());
         values.put(BooksDbContract.BookEntry.COLUMN_NAME_REVIEW, book.getReview());
         values.put(BooksDbContract.BookEntry.COLUMN_NAME_HAS_BEEN_READ, (book.getHasBeenRead() ? 1 : 0));
-        values.put(BooksDbContract.BookEntry.COLUMN_NAME_BOOKSHELVES, book.getBookshelves().toString());
         return values;
     }
 
@@ -108,14 +107,14 @@ public class BooksDbDao {
 
 
     static Bookshelf readBookshelf(String id) {
-        ArrayList<Bookshelf> bookshelves = new ArrayList<>();
+/*        ArrayList<Bookshelf> bookshelves = new ArrayList<>();
         ArrayList<Book> books = readAllBooks();
         ArrayList<String> bookshelfIds = new ArrayList<String>();
         for (Book book : books) {
             if (book.getBookshelves().contains(id)) {
                 bookshelfIds.add(book.getId());
             }
-        }
+        }*/
 
         return null;
     }
@@ -138,8 +137,6 @@ public class BooksDbDao {
         book.setReview(cursor.getString(index));
         index = cursor.getColumnIndexOrThrow(BooksDbContract.BookEntry.COLUMN_NAME_HAS_BEEN_READ);
         book.setHasBeenRead(cursor.getInt(index) != 0);
-        index = cursor.getColumnIndexOrThrow(BooksDbContract.BookEntry.COLUMN_NAME_BOOKSHELVES);
-        book.setBookshelves(new ArrayList<String>(Arrays.asList(cursor.getString(index).split(","))));
         return book;
     }
 }
