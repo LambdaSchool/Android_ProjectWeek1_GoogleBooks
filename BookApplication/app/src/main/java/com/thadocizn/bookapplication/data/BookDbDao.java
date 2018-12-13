@@ -38,10 +38,23 @@ public class BookDbDao {
         if (db != null){
             ContentValues values = new ContentValues();
             values.put(BookDbContract.BookEntry.COLUMN_NAME_BOOKSHELF_CATEGORY, bookshelf.getShelf_name());
-            db.insert(BookDbContract.BookEntry.TABLE_NAME_BOOKSHELF, null, values);
+            long i = db.insert(BookDbContract.BookEntry.TABLE_NAME_BOOKSHELF, null, values);
         }
     }
 
+    public static void createBookshelfBook(Bookshelf bookshelf, Book book){
+
+        if(db != null){
+
+            ContentValues values = new ContentValues();
+
+            values.put(BookDbContract.BookEntry.COLUMN_NAME_BOOKSHELF_ID, bookshelf.getShelf_name());
+            values.put(BookDbContract.BookEntry.COLUMN_NAME_BOOK_KEY_ID, book.getBookTitle());
+            long i = db.insert(BookDbContract.BookEntry.TABLE_NAME_BOOKSHELF, null, values);
+
+        }
+
+    }
     public Book getBook(String bookId) {
 
         int index;
