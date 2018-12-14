@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="find_a_book">Find a Book:</string>
+    <string name="book_name">Book Name</string>
+    <string name="book_review">Book Review</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="read">Read</string>
+    <string name="read_book">Read Book</string>
+    <string name="book_title">Book Title</string>
+</resources>
