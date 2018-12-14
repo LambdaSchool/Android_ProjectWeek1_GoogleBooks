@@ -58,5 +58,3 @@
         app:menu="@menu/navigation" />
 
 </android.support.constraint.ConstraintLayout>
-
-    <!--TODO: Navigation Buttons, move stuff to string/dimen resources.-->

@@ -54,7 +54,6 @@ public class BookGoogleApiDao {
             try {
                 file = File.createTempFile(fileName, null, context.getCacheDir());
                 fileOutputStream = new FileOutputStream(file);
-                //TODO figure out if I need/want compression thing below.
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
             } catch (IOException e) {
                 e.printStackTrace();

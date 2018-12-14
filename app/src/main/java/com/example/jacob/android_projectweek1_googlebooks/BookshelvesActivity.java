@@ -6,6 +6,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,6 +19,11 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -45,20 +51,22 @@ public class BookshelvesActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Add new bookshelf", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 showMyDialog(context);
             }
         });
 
+
         bookshelves = BookshelfDbDao.readAllBookshelves();
-        if (bookshelves.size()<Constants.DEFAULT_BOOKSHELVES.length) {
+        if (bookshelves.size() < Constants.DEFAULT_BOOKSHELVES.length) {
             //Create 2 default tables
-            for (String shelfTitle: Constants.DEFAULT_BOOKSHELVES) {
+            for (String shelfTitle : Constants.DEFAULT_BOOKSHELVES) {
                 BookshelfDbDao.addBookshelf(shelfTitle);
             }
             bookshelves = BookshelfDbDao.readAllBookshelves();
         }
+
 
         recyclerView = findViewById(R.id.recycler_view_bookshelves);
         recyclerView.setHasFixedSize(true);
@@ -79,8 +87,6 @@ public class BookshelvesActivity extends AppCompatActivity {
             }
         };
         viewModel.getBookshelvesList().observe(this, observer);
-
-
     }
 
 
@@ -106,10 +112,4 @@ public class BookshelvesActivity extends AppCompatActivity {
         });
         dialog.show();
     }
-
-/*    public static void deleteBookshelf(int bookshelfId) {
-        viewModel.deleteBookshelf(bookshelfId);
-    }*/
-
-
 }

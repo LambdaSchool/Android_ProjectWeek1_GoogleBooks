@@ -25,10 +25,14 @@ public class BookshelfViewModel extends ViewModel {
     }
 
 
-    public void deleteBook(int bookshelfId, String bookId) {
+    public void removeBook(int bookshelfId, String bookId) {
         if (bookList != null) {
-            bookList.setValue(repo.deleteBook(bookshelfId, bookId));
+            bookList.setValue(repo.removeBook(bookshelfId, bookId));
         }
+    }
+
+    public void deleteBook(String bookId) {
+        repo.deleteBook(bookId);
     }
 
 }

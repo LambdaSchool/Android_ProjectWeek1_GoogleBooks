@@ -19,8 +19,12 @@ public class BooksRepository {
         return BookshelfDbDao.readBookshelf(bookshelfId).getBooks();
     }
 
-    public static ArrayList<Book> deleteBook(int bookshelfId, String bookId) {
+    public static ArrayList<Book> removeBook(int bookshelfId, String bookId) {
         BookshelfDbDao.removeBookfromBookshelf(bookshelfId,bookId);
         return BookshelfDbDao.readBookshelf(bookshelfId).getBooks();
+    }
+
+    public static void deleteBook(String bookId) {
+        BooksDbDao.deleteBook(bookId);
     }
 }

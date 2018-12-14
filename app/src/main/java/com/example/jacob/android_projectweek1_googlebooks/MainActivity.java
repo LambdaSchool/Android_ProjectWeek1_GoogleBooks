@@ -1,7 +1,5 @@
 package com.example.jacob.android_projectweek1_googlebooks;
 
-//TODO Big Items:  MVVM for Bookshelves and Bookshelf activites, Firebase, add Already read bookshelf.
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -20,6 +18,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.facebook.stetho.Stetho;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -47,12 +49,12 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(context, BookshelvesActivity.class);
                     startActivity(intent);
                     return true;
-                case R.id.navigation_dashboard:
+/*                case R.id.navigation_dashboard:
                     mTextMessage.setText(R.string.title_dashboard);
                     return true;
                 case R.id.navigation_notifications:
                     mTextMessage.setText(R.string.title_notifications);
-                    return true;
+                    return true;*/
             }
             return false;
         }
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         Stetho.initializeWithDefaults(this);
         context = this;
 
-        BooksDbDao.initializeInstance(context);//TODO move this to a repo
+        BooksDbDao.initializeInstance(context);
 
         editTextSearch = findViewById(R.id.edit_text_search);
         progressBar = findViewById(R.id.progress_bar);
@@ -80,8 +82,22 @@ public class MainActivity extends AppCompatActivity {
         mTextMessage = findViewById(R.id.message);
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        bookshelfTitles = new ArrayList<>();
 
+
+/*        FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_BOOKS).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<Book> books = new ArrayList<>();
+                books = (ArrayList<Book>) dataSnapshot.getValue();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });*/
+
+        bookshelfTitles = new ArrayList<>();
         updateSpinnerList();
 
         recyclerView = findViewById(R.id.search_recycler_view);
@@ -139,25 +155,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public class getBookImageTask extends AsyncTask<String, Integer, Wrapper> {
+    public class getBookImageTask extends AsyncTask<String, Integer, Integer> {
 
         @Override
-        protected void onPostExecute(Wrapper wrapper) {
-            super.onPostExecute(wrapper);
-            File imageFile = wrapper.getFile();
-            //TODO get rid of wrapper since file si not being used.
-            int index = wrapper.getIndex();
+        protected void onPostExecute(Integer index) {
+            super.onPostExecute(index);
             listAdapter.notifyItemChanged(index);
         }
 
+
         @Override
-        protected Wrapper doInBackground(String... strings) {
-            File file = BookGoogleApiDao.getImageFile(strings[0], context);
-            int index = Integer.parseInt(strings[1]);
-            Wrapper wrapper = new Wrapper();
-            wrapper.setFile(file);
-            wrapper.setIndex(index);
-            return wrapper;
+        protected Integer doInBackground(String... strings) {
+            BookGoogleApiDao.getImageFile(strings[0], context);
+            return Integer.parseInt(strings[1]);
         }
     }
 
@@ -170,36 +180,11 @@ public class MainActivity extends AppCompatActivity {
     private void updateSpinnerList() {
         ArrayList<Bookshelf> bookshelves = BookshelfDbDao.readAllBookshelves();
         bookshelfTitles.clear();
-//        bookshelfTitles.add("");
+        bookshelfTitles.add("");
         for (int i = 0; i < bookshelves.size(); i++) {
-            if (i > Constants.DEFAULT_BOOKSHELVES.length) {
+            if (i >= Constants.DEFAULT_BOOKSHELVES.length) {
                 bookshelfTitles.add(bookshelves.get(i).getTitle());
             }
-        }
-/*        for (Bookshelf bookshelf : bookshelves) {
-            bookshelfTitles.add(bookshelf.getTitle());
-        }*/
-    }
-
-
-    private class Wrapper {
-        public File file;
-        public int index;
-
-        public File getFile() {
-            return file;
-        }
-
-        public void setFile(File file) {
-            this.file = file;
-        }
-
-        public int getIndex() {
-            return index;
-        }
-
-        public void setIndex(int index) {
-            this.index = index;
         }
     }
 }

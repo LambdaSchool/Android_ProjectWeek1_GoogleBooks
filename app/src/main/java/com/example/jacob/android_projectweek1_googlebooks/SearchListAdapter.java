@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
         ImageView imageView;
         ViewGroup parentView;
         Spinner spinner;
+        ImageButton imageButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -36,6 +38,7 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
             bookContent = itemView.findViewById(R.id.text_search_element_content);
             spinner = itemView.findViewById(R.id.spinner_search_element);
             parentView = itemView.findViewById(R.id.search_element_parent_layout);
+            imageButton = itemView.findViewById(R.id.button_add_book);
         }
     }
 
@@ -68,6 +71,14 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
         final Book data = dataList.get(i);
         viewHolder.bookTitle.setText(data.getTitle());
         viewHolder.bookContent.setText(data.getAuthor());
+        viewHolder.imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BooksDbDao.addBook(data);
+                BookshelfDbDao.addBooktoBookshelf(Constants.DEFAULT_BOOKSHELVES[0], data);
+            }
+        });
+
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, spinnerArray);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

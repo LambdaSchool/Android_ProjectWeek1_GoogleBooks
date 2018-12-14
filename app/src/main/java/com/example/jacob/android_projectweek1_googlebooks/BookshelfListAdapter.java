@@ -10,11 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.io.File;
@@ -88,8 +85,10 @@ public class BookshelfListAdapter extends RecyclerView.Adapter<BookshelfListAdap
         viewHolder.imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewModel.deleteBook(bookshelfId, data.getId());
-//                BookshelfDbDao.removeBookfromBookshelf(bookshelfId, data.getId());
+                viewModel.removeBook(bookshelfId, data.getId());
+                if (bookshelfId<=Constants.DEFAULT_BOOKSHELVES.length) {
+                viewModel.deleteBook(data.getId());
+                }
             }
         });
 

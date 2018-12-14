@@ -1,12 +1,33 @@
 package com.example.jacob.android_projectweek1_googlebooks;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 
 public class FirebaseDao {
+
+    public static void MonitorBooks() {
+        FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_BOOKS).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 
     public static void createBook(Book book) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -25,7 +46,6 @@ public class FirebaseDao {
         DatabaseReference reference = database.getReference(Constants.FIREBASE_BOOKS);
         reference.child(id).removeValue();
     }
-//TODO figure out how to clean out books not on bookshelves.
 
     public static void createBookshelf(Bookshelf bookshelf) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
