@@ -40,58 +40,62 @@ public class BookViewActivity extends AppCompatActivity {
         imageView = findViewById(R.id.image_book_view);
         switchHasBeenRead = findViewById(R.id.switch_has_been_read);
 
-        String bookId = getIntent().getStringExtra(Constants.BOOK_EDIT_KEY);
+        final String bookId = getIntent().getStringExtra(Constants.BOOK_EDIT_KEY);
 
         final Book book = BooksDbDao.readBook(bookId);
-            if (book != null) {
-                textTitle.setText(book.getTitle());
-                textAuthor.setText(book.getAuthor());
-                textPublication.setText(book.getPublishedDate());
-                editTextReview.setText(book.getReview());
-                String imageUrl = book.getImageUrl();
-                if (imageUrl != null) {
-                    String[] urlParts = imageUrl.substring(imageUrl.indexOf("id=") + 3).split("&");
-                    String fileName = urlParts[0];
-                    File file = getFileFromCache(fileName);
-                    Bitmap bitmap = null;
-                    try {
-                        bitmap = BitmapFactory.decodeStream(new FileInputStream(file));
-                        imageView.setImageBitmap(bitmap);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                        imageView.setImageResource(R.color.colorPrimaryDark);
-                    } catch (NullPointerException e) {
-                        imageView.setImageResource(R.color.colorPrimaryDark);
-                    }
-                } else {
+        if (book != null) {
+            textTitle.setText(book.getTitle());
+            textAuthor.setText(book.getAuthor());
+            textPublication.setText(book.getPublishedDate());
+            editTextReview.setText(book.getReview());
+            String imageUrl = book.getImageUrl();
+            if (imageUrl != null) {
+                String[] urlParts = imageUrl.substring(imageUrl.indexOf("id=") + 3).split("&");
+                String fileName = urlParts[0];
+                File file = getFileFromCache(fileName);
+                Bitmap bitmap = null;
+                try {
+                    bitmap = BitmapFactory.decodeStream(new FileInputStream(file));
+                    imageView.setImageBitmap(bitmap);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                    imageView.setImageResource(R.color.colorPrimaryDark);
+                } catch (NullPointerException e) {
                     imageView.setImageResource(R.color.colorPrimaryDark);
                 }
-            }
-            if(book.getHasBeenRead()) {
-                switchHasBeenRead.setChecked(true);
             } else {
-                switchHasBeenRead.setChecked(false);
+                imageView.setImageResource(R.color.colorPrimaryDark);
             }
+        }
+        if (book.getHasBeenRead()) {
+            switchHasBeenRead.setChecked(true);
+        } else {
+            switchHasBeenRead.setChecked(false);
+        }
 
         switchHasBeenRead.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     book.setHasBeenRead(true);
+                    BookshelfDbDao.removeBookfromBookshelf(Constants.DEFAULT_BOOKSHELVES[0], bookId);
+                    BookshelfDbDao.addBooktoBookshelf(Constants.DEFAULT_BOOKSHELVES[1], book);
                 } else {
                     book.setHasBeenRead(false);
+                    BookshelfDbDao.removeBookfromBookshelf(Constants.DEFAULT_BOOKSHELVES[1], bookId);
+                    BookshelfDbDao.addBooktoBookshelf(Constants.DEFAULT_BOOKSHELVES[0], book);
                 }
                 BooksDbDao.updateBook(book);
             }
         });
 
-            findViewById(R.id.button_book_view_save).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    book.setReview(editTextReview.getText().toString());
-                    BooksDbDao.updateBook(book);
-                }
-            });
+        findViewById(R.id.button_book_view_save).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                book.setReview(editTextReview.getText().toString());
+                BooksDbDao.updateBook(book);
+            }
+        });
     }
 
     private File getFileFromCache(String bookshelfText) {

@@ -3,6 +3,8 @@ package com.example.jacob.android_projectweek1_googlebooks;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 
 public class FirebaseDao {
 
@@ -47,5 +49,14 @@ public class FirebaseDao {
         //I'm sure there's a better way to do this than deleting the whole thing and then re-creating it.
         deleteBookshelf(bookshelf);
         createBookshelf(bookshelf);
+    }
+
+    public ArrayList<Bookshelf> getBookshelves() {
+        ArrayList<Bookshelf> bookshelves = new ArrayList<>();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference reference = database.getReference(Constants.FIREBASE_BOOKSHELVES);
+        reference.getDatabase();
+
+        return bookshelves;
     }
 }

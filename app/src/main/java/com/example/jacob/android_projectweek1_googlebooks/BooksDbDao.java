@@ -30,6 +30,7 @@ public class BooksDbDao {
                 ContentValues values = getContentValues(book);
                 db.insert(BooksDbContract.BookEntry.BOOK_TABLE_NAME, null, values);
                 FirebaseDao.createBook(book);
+                BookshelfDbDao.addBooktoBookshelf(Constants.DEFAULT_BOOKSHELVES[0],book);
             }
             cursor.close();
         }
@@ -59,7 +60,6 @@ public class BooksDbDao {
             Book book = null;
 //            int temp = cursor.getCount();
             if (cursor.moveToNext() && (cursor.getCount() == 1)) {
-//            if (cursor.getCount() == 1) {
                 book = getBookFromCursor(cursor);
             }
             cursor.close();

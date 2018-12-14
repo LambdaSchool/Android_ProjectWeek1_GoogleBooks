@@ -170,10 +170,15 @@ public class MainActivity extends AppCompatActivity {
     private void updateSpinnerList() {
         ArrayList<Bookshelf> bookshelves = BookshelfDbDao.readAllBookshelves();
         bookshelfTitles.clear();
-        bookshelfTitles.add("");
-        for (Bookshelf bookshelf : bookshelves) {
-            bookshelfTitles.add(bookshelf.getTitle());
+//        bookshelfTitles.add("");
+        for (int i = 0; i < bookshelves.size(); i++) {
+            if (i > Constants.DEFAULT_BOOKSHELVES.length) {
+                bookshelfTitles.add(bookshelves.get(i).getTitle());
+            }
         }
+/*        for (Bookshelf bookshelf : bookshelves) {
+            bookshelfTitles.add(bookshelf.getTitle());
+        }*/
     }
 
 

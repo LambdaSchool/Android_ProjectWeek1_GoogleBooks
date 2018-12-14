@@ -86,21 +86,22 @@ public class BookshelfDbDao extends BooksDbDao {
             Bookshelf bookshelf = null;
             if (cursor.moveToNext() && (cursor.getCount() == 1)) {
                 bookshelf = getBookshelfFromCursor(cursor);
-            }
-            cursor.close();
-            ArrayList<Book> books = new ArrayList<>();
-            books = bookshelf.getBooks();
-            if (books != null) {
-                if (!books.contains(book)) {
+                cursor.close();
+
+                ArrayList<Book> books = new ArrayList<>();
+                books = bookshelf.getBooks();
+                if (books != null) {
+                    if (!books.contains(book)) {
+                        books.add(book);
+                        bookshelf.setBooks(books);
+                        updateBookshelf(bookshelf);
+                    }
+                } else {
+                    books = new ArrayList<>();
                     books.add(book);
                     bookshelf.setBooks(books);
                     updateBookshelf(bookshelf);
                 }
-            } else {
-                books = new ArrayList<>();
-                books.add(book);
-                bookshelf.setBooks(books);
-                updateBookshelf(bookshelf);
             }
         }
     }
@@ -134,6 +135,21 @@ public class BookshelfDbDao extends BooksDbDao {
         }
     }
 
+    static void removeBookfromBookshelf(String bookshelfTitle, String bookId) {
+        Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE %s = '%s'",
+                BooksDbContract.BookEntry.BOOKSHELF_TABLE_NAME,
+                BooksDbContract.BookEntry.COLUMN_NAME_TITLE,
+                bookshelfTitle),
+                null);
+        Bookshelf bookshelf = null;
+        if (cursor.moveToNext() && (cursor.getCount() == 1)) {
+            bookshelf = getBookshelfFromCursor(cursor);
+            cursor.close();
+            removeBookfromBookshelf(bookshelf.getId(), bookId);
+        }
+
+    }
+
 
     static void removeBookfromBookshelf(int bookshelfId, String bookId) {
         if (db != null) {
@@ -144,7 +160,6 @@ public class BookshelfDbDao extends BooksDbDao {
                     null);
             Bookshelf bookshelf = new Bookshelf(bookshelfId, null, null);
             if (cursor.moveToNext() && (cursor.getCount() == 1)) {
-//                bookshelf = getBookshelfFromCursor(cursor);
                 int index;
                 index = cursor.getColumnIndexOrThrow(BooksDbContract.BookEntry.COLUMN_NAME_BOOK_IDS);
                 String rawString = cursor.getString(index);
