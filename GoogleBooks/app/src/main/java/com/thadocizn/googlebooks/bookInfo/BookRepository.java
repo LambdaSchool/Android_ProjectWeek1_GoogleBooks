@@ -22,6 +22,16 @@ public class BookRepository {
         return liveDataList;
     }
 
+    public ArrayList<Bookshelf> getBookshelves(){
+        ArrayList<Bookshelf> bookshelves = new ArrayList<>();
+        bookshelves = SqlDbDao.getBookshelves();
+        if (bookshelves == null){
+            createBookshelf("Default");
+            getBookshelves();
+        }
+        return bookshelves;
+    }
+
     public void createBookshelf(final String bookshelf) {
         new Thread(new Runnable() {
             @Override
@@ -67,7 +77,7 @@ public class BookRepository {
         }).start();
     }
 
-    public void updateBok(final BookClass book) {
+    public void updateBook(final BookClass book) {
         new Thread(new Runnable() {
             @Override
             public void run() {
