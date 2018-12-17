@@ -2,6 +2,7 @@ package com.thadocizn.googlebooks.bookInfo;
 
 import android.arch.lifecycle.MutableLiveData;
 
+import com.thadocizn.googlebooks.bookshelfInfo.Bookshelf;
 import com.thadocizn.googlebooks.sqlObjects.SqlDbDao;
 
 import java.util.ArrayList;
@@ -21,6 +22,33 @@ public class BookRepository {
         return liveDataList;
     }
 
+    public void createBookshelf(final String bookshelf) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SqlDbDao.createBookshelf(bookshelf);
+            }
+        }).start();
+    }
+
+    public void deleteBookshelf(final Bookshelf bookshelf) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SqlDbDao.deleteBookshelf(bookshelf);
+            }
+        }).start();
+    }
+
+    public void updateBookshelf(final Bookshelf bookshelf) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SqlDbDao.updateBookshelfName(bookshelf);
+            }
+        }).start();
+    }
+
     public void createBook(final BookClass book) {
         new Thread(new Runnable() {
             @Override
@@ -30,7 +58,7 @@ public class BookRepository {
         }).start();
     }
 
-    public void deleteBook(final BookClass book){
+    public void deleteBook(final BookClass book) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -39,7 +67,7 @@ public class BookRepository {
         }).start();
     }
 
-    public void updateBok(final BookClass book){
+    public void updateBok(final BookClass book) {
         new Thread(new Runnable() {
             @Override
             public void run() {
