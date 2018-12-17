@@ -5,6 +5,8 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.content.Context;
 
+import com.thadocizn.googlebooks.bookshelfInfo.Bookshelf;
+
 import java.util.ArrayList;
 
 public class BookViewModel extends ViewModel {
@@ -24,5 +26,17 @@ public class BookViewModel extends ViewModel {
 
     public void updateBook(BookClass book){
             repo.updateBok(book);
+    }
+
+    public void addBookshelf(String bookshelf){
+            repo.createBookshelf(bookshelf);
+    }
+
+    public void deleteBookshelf(Bookshelf bookshelf){
+            repo.deleteBookshelf(bookshelf);
+    }
+
+    public void updateBookshelf(Bookshelf bookshelf){
+            repo.updateBookshelf(bookshelf);
     }
 }
