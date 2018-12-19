@@ -36,6 +36,10 @@ public class SqlDbDao {
             ContentValues values = new ContentValues();
             values.put(BookDbContract.BookEntry.BOOKSHELF_COLUMN_NAME_SHELF_NAME, bookshelf);
             long bookshelfId = db.insert(BookDbContract.BookEntry.BOOKSHELF_TABLE_NAME, null, values);
+
+            if (bookshelfId != -1){
+                Log.i("bookshelf", "createBookshelf: " + bookshelfId);
+            }
         }
     }
 

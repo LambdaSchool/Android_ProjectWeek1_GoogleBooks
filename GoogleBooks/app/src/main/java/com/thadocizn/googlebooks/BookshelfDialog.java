@@ -8,14 +8,23 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
+import android.widget.EditText;
+
+import com.thadocizn.googlebooks.bookInfo.BookViewModel;
 
 
 public class BookshelfDialog extends DialogFragment implements DialogInterface.OnClickListener {
 
     private View form = null;
+    private BookViewModel viewModel = null;
+    EditText bookshelf = null;
 
     @Override
     public void onClick(DialogInterface dialog, int which) {
+
+        //todo find out how to get text from dialog
+       /* viewModel = new BookViewModel();
+        viewModel.addBookshelf(bookshelf.getText().toString());*/
 
     }
 
