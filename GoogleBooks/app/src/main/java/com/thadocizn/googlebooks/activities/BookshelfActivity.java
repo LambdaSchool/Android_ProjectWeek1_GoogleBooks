@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.thadocizn.googlebooks.BookshelfDialog;
 import com.thadocizn.googlebooks.R;
 import com.thadocizn.googlebooks.adapters.BookshelfAdapter;
 import com.thadocizn.googlebooks.bookInfo.BookRepository;
@@ -42,6 +43,7 @@ public class BookshelfActivity extends AppCompatActivity {
             public void onClick(View view) {
                /* Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
+               new BookshelfDialog().show(getSupportFragmentManager(), "bookshelf");
             }
         });
 

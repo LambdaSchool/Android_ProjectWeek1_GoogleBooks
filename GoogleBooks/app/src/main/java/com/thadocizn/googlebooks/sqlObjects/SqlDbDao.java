@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.thadocizn.googlebooks.bookInfo.BookClass;
 import com.thadocizn.googlebooks.bookshelfInfo.Bookshelf;
@@ -114,12 +115,18 @@ public class SqlDbDao {
     public static void createBook(BookClass book) {
         if (db != null) {
             ContentValues values = new ContentValues();
+            values.put(BookDbContract.BookEntry.BOOK_COLUMN_NAME_BOOK_ID, book.getBookId());
             values.put(BookDbContract.BookEntry.BOOK_COLUMN_NAME_BOOK_TITLE, book.getBookTitle());
             values.put(BookDbContract.BookEntry.BOOK_COLUMN_NAME_BOOK_IMAGE_URL, book.getBookImageUrl());
             values.put(BookDbContract.BookEntry.BOOK_COLUMN_NAME_BOOK_REVIEW, book.getBookReview());
             values.put(BookDbContract.BookEntry.BOOK_COLUMN_NAME_READ_BOOK, book.isReadBook());
 
-            int bookId = (int) db.insert(BookDbContract.BookEntry.TABLE_NAME_BOOK, null, values);
+            long bookId = db.insert(BookDbContract.BookEntry.TABLE_NAME_BOOK, null, values);
+            if (bookId == -1){
+                Log.i("msg", "msg" + bookId);
+            }else {
+                Log.i("success", "createBook: " + bookId);
+            }
 
         }
     }

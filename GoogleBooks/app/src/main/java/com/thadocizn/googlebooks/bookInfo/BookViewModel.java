@@ -14,7 +14,6 @@ public class BookViewModel extends ViewModel {
     public void addBook(BookClass book) {
         repo = new BookRepository();
         repo.createBook(book);
-        repo.getBooks();
     }
 
     public void deleteBook(BookClass book) {
