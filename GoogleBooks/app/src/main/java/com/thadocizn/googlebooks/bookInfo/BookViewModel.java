@@ -26,6 +26,7 @@ public class BookViewModel extends ViewModel {
     }
 
     public void addBookshelf(String bookshelf) {
+        repo = new BookRepository();
         repo.createBookshelf(bookshelf);
     }
 

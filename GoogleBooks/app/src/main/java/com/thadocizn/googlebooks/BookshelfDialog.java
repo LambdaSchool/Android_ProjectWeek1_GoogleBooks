@@ -23,6 +23,9 @@ public class BookshelfDialog extends DialogFragment implements DialogInterface.O
     public void onClick(DialogInterface dialog, int which) {
 
         //todo find out how to get text from dialog
+        EditText name = form.findViewById(R.id.etBookshelfName);
+        viewModel = new BookViewModel();
+        viewModel.addBookshelf(name.getText().toString());
        /* viewModel = new BookViewModel();
         viewModel.addBookshelf(bookshelf.getText().toString());*/
 
