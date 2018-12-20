@@ -18,7 +18,7 @@ public class BookshelfDialog extends DialogFragment implements DialogInterface.O
     private View form               = null;
     private BookViewModel viewModel = null;
 
-    @Override
+ @Override
     public void onClick(DialogInterface dialog, int which) {
 
         //todo find out how to get text from dialog
@@ -39,4 +39,5 @@ public class BookshelfDialog extends DialogFragment implements DialogInterface.O
                 .setPositiveButton(android.R.string.ok, this)
                 .setNegativeButton(android.R.string.cancel, null).create();
     }
+
 }

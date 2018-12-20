@@ -9,8 +9,10 @@ import java.util.ArrayList;
 
 public class BookRepository {
 
-    public MutableLiveData<ArrayList<BookClass>> getBooks() {
+
+    public static MutableLiveData<ArrayList<BookClass>> getBook() {
         final MutableLiveData<ArrayList<BookClass>> liveDataList = new MutableLiveData<>();
+
 
         new Thread(new Runnable() {
             @Override

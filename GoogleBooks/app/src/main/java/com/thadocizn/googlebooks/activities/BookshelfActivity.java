@@ -3,7 +3,6 @@ package com.thadocizn.googlebooks.activities;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,12 +12,12 @@ import android.view.View;
 import com.thadocizn.googlebooks.BookshelfDialog;
 import com.thadocizn.googlebooks.R;
 import com.thadocizn.googlebooks.adapters.BookshelfAdapter;
-import com.thadocizn.googlebooks.bookInfo.BookRepository;
 import com.thadocizn.googlebooks.bookInfo.BookViewModel;
 import com.thadocizn.googlebooks.bookshelfInfo.Bookshelf;
-import com.thadocizn.googlebooks.sqlObjects.SqlDbDao;
 
 import java.util.ArrayList;
+
+//import com.thadocizn.googlebooks.BookshelfDialog;
 
 public class BookshelfActivity extends AppCompatActivity {
 
@@ -35,7 +34,7 @@ public class BookshelfActivity extends AppCompatActivity {
         context = this;
         setContentView(R.layout.activity_bookshelf);
         recyclerView = findViewById(R.id.rvBookshelf);
-        viewModel       = new BookViewModel();
+        viewModel = new BookViewModel();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -44,8 +43,7 @@ public class BookshelfActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-               new BookshelfDialog().show(getSupportFragmentManager(), "bookshelf");
-
+                new BookshelfDialog().show(getSupportFragmentManager(), "bookshelf");
 
             }
         });
@@ -54,7 +52,7 @@ public class BookshelfActivity extends AppCompatActivity {
         viewModel = new BookViewModel();
         shelves = new ArrayList<>();
 
-        if (shelves.size() < 0){
+        if (shelves.size() < 0) {
             viewModel.addBookshelf("Default");
         }
 

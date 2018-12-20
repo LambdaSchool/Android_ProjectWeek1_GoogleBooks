@@ -16,8 +16,6 @@ import android.widget.TextView;
 import com.thadocizn.googlebooks.R;
 import com.thadocizn.googlebooks.activities.BookshelfActivity;
 import com.thadocizn.googlebooks.bookInfo.BookClass;
-import com.thadocizn.googlebooks.bookInfo.BookRepository;
-import com.thadocizn.googlebooks.bookInfo.BookViewModel;
 
 import java.util.ArrayList;
 
@@ -37,7 +35,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> 
 
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_item_activity, parent, false);
-        context   = parent.getContext();
+        context = parent.getContext();
         return new MyViewHolder(view);
     }
 
@@ -55,8 +53,8 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> 
         myViewHolder.save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BookViewModel viewModel = new BookViewModel();
-                viewModel.addBook(currentBook);
+               /* BookViewModel viewModel = new BookViewModel();
+                viewModel.addBook(currentBook);*/
 
                 Intent intent = new Intent(context, BookshelfActivity.class);
                 intent.putExtra("currentBook", currentBook);
@@ -88,11 +86,11 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> 
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            bookTitle  = itemView.findViewById(R.id.tvBook);
+            bookTitle = itemView.findViewById(R.id.tvBook);
             bookReview = itemView.findViewById(R.id.tvReview);
-            bookId     = itemView.findViewById(R.id.tvBookId);
-            save       = itemView.findViewById(R.id.btnSave);
-            parent     = itemView.findViewById(R.id.parentLayout);
+            bookId = itemView.findViewById(R.id.tvBookId);
+            save = itemView.findViewById(R.id.btnSave);
+            parent = itemView.findViewById(R.id.parentLayout);
         }
     }
 }

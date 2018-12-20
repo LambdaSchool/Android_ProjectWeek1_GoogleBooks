@@ -1,8 +1,8 @@
 package com.thadocizn.googlebooks.activities;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private BookViewModel model;
     CardView cardView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,22 +39,16 @@ public class MainActivity extends AppCompatActivity {
         SqlDbDao.initializeInstance(this);
 
         context = this;
-        cardView     = findViewById(R.id.cardView);
-        search       = findViewById(R.id.etSearch);
+        cardView = findViewById(R.id.cardView);
+        search = findViewById(R.id.etSearch);
         recyclerView = findViewById(R.id.rvBook);
         searchButton = findViewById(R.id.imageButton);
-        bookList     = new ArrayList<>();
-
-
-        /*adapter = new BookAdapter(bookList);
-        recyclerView.setHasFixedSize(true);
-        linearLayoutManager = new LinearLayoutManager(context);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(adapter);*/
+        bookList = new ArrayList<>();
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 new Thread(new Runnable() {
                     @Override
                     public void run() {

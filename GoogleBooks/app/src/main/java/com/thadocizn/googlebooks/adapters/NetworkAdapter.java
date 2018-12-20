@@ -26,6 +26,12 @@ public class NetworkAdapter {
 
     // only handles get and post requests right now
     public static String httpRequest(String stringUrl, String requestType, String body) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        }).start();
         String result = "";
         InputStream stream = null;
         HttpURLConnection connection = null;

@@ -9,7 +9,8 @@ import java.util.ArrayList;
 public class BookViewModel extends ViewModel {
 
     private BookRepository repo;
-    private ArrayList<Bookshelf> bookList;
+    private ArrayList<Bookshelf> bookshelves;
+    private ArrayList<BookClass> bookList;
 
     public void addBook(BookClass book) {
         repo = new BookRepository();
@@ -18,7 +19,7 @@ public class BookViewModel extends ViewModel {
 
     public void deleteBook(BookClass book) {
         repo.deleteBook(book);
-        repo.getBooks();
+        repo.getBook();
     }
 
     public void updateBook(BookClass book) {
@@ -31,10 +32,10 @@ public class BookViewModel extends ViewModel {
     }
 
     public ArrayList<Bookshelf> getBookshelf() {
-        bookList = new ArrayList<>();
-        repo     = new BookRepository();
-        bookList = repo.getBookshelves();
-        return bookList;
+        bookshelves = new ArrayList<>();
+        repo = new BookRepository();
+        bookshelves = repo.getBookshelves();
+        return bookshelves;
     }
 
     public void deleteBookshelf(Bookshelf bookshelf) {
