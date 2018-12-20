@@ -65,6 +65,7 @@ public class Book implements Parcelable {
         image = in.readString();
         bookshelfHomes = in.readString();
         isRead = in.readInt();
+
     }
 
     public static final Creator<Book> CREATOR = new Creator<Book>() {

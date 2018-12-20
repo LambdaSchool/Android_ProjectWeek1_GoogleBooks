@@ -45,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
         searchRecyclerView = findViewById(R.id.recyclerView_search);
         searchRecyclerView.setHasFixedSize(true);
-        gridLayoutManager = new GridLayoutManager(context, 1);
+        gridLayoutManager = new GridLayoutManager(context, 2);
+
         searchRecyclerView.setLayoutManager(gridLayoutManager);
         searchAdapter = new BookSearchAdapter(results, activity);
 
@@ -66,8 +67,14 @@ public class MainActivity extends AppCompatActivity {
                 selectedBooks = searchAdapter.getChosenBooks();
                 searchAdapter.clearChosenBooks();
 
-                bookDetailsIntent.putExtra("SELECTED_BOOKS", selectedBooks);
-                startActivity(bookDetailsIntent);
+
+                if(selectedBooks != null) {
+                    bookDetailsIntent.putParcelableArrayListExtra("SELECTED_BOOKS", selectedBooks);
+                    startActivity(bookDetailsIntent);
+                } else {
+                    startActivity(bookDetailsIntent);
+                }
+
 
 
 
@@ -78,10 +85,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent bookShelfIntent = new Intent(context, BookshelfActivity.class);
+
             }
         });
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //selectedBooks.clear();
     }
 
     public class getBooksTask extends AsyncTask<String, Void, ArrayList<Book>> {

@@ -9,14 +9,14 @@ public class Library implements Serializable {
 
     private static volatile Library INSTANCE  ;
     private HashMap bookShelf;
-    private ArrayList<String> bsNames;
+
 
     private Library() {
         if(INSTANCE == null) {
             throw new RuntimeException("Use getINSTANCE()");
         } else {
-            this.bookShelf = new HashMap<String, ArrayList<Book>>();
-            this.bsNames = new ArrayList<>();
+            this.bookShelf = new HashMap<String, ArrayList>();
+
         }
 
     }
