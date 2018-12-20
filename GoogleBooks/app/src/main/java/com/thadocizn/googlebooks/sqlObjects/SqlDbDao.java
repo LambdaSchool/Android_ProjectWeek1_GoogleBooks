@@ -70,7 +70,7 @@ public class SqlDbDao {
 
         if (db != null) {
             Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s;",
-                    BookDbContract.BookEntry.BOOKS_BOOKSHELF_TABLE), null);
+                    BookDbContract.BookEntry.BOOKSHELF_TABLE_NAME), null);
 
             while (cursor.moveToNext()) {
                 bookshelves.add(getBookshelfFromCursor(cursor));

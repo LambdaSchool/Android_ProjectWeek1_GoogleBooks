@@ -32,8 +32,10 @@ public class BookshelfActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this;
         setContentView(R.layout.activity_bookshelf);
-        viewModel = new BookViewModel();
+        recyclerView = findViewById(R.id.rvBookshelf);
+        viewModel       = new BookViewModel();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -41,24 +43,29 @@ public class BookshelfActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
+
                new BookshelfDialog().show(getSupportFragmentManager(), "bookshelf");
+
+
             }
         });
 
 
-       /* new Thread(new Runnable() {
-            @Override
-            public void run() {
-                shelves = SqlDbDao.getBookshelves();
-                adapter = new BookshelfAdapter(shelves);
-                recyclerView.setHasFixedSize(true);
-                linearLayoutManager = new LinearLayoutManager(context);
-                recyclerView.setLayoutManager(linearLayoutManager);
-                recyclerView.setAdapter(adapter);
-            }
-        }).start();*/
+        viewModel = new BookViewModel();
+        shelves = new ArrayList<>();
+
+        if (shelves.size() < 0){
+            viewModel.addBookshelf("Default");
+        }
+
+        shelves = viewModel.getBookshelf();
+
+        recyclerView.setHasFixedSize(true);
+        linearLayoutManager = new LinearLayoutManager(context);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        adapter = new BookshelfAdapter(shelves);
+        recyclerView.setAdapter(adapter);
+
     }
 
 }

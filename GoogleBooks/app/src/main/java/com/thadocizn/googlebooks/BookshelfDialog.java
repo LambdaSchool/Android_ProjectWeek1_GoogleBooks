@@ -15,19 +15,16 @@ import com.thadocizn.googlebooks.bookInfo.BookViewModel;
 
 public class BookshelfDialog extends DialogFragment implements DialogInterface.OnClickListener {
 
-    private View form = null;
+    private View form               = null;
     private BookViewModel viewModel = null;
-    EditText bookshelf = null;
 
     @Override
     public void onClick(DialogInterface dialog, int which) {
 
         //todo find out how to get text from dialog
         EditText name = form.findViewById(R.id.etBookshelfName);
-        viewModel = new BookViewModel();
+        viewModel     = new BookViewModel();
         viewModel.addBookshelf(name.getText().toString());
-       /* viewModel = new BookViewModel();
-        viewModel.addBookshelf(bookshelf.getText().toString());*/
 
     }
 

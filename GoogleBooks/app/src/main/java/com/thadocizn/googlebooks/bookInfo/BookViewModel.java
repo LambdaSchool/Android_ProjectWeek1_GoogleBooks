@@ -32,7 +32,7 @@ public class BookViewModel extends ViewModel {
 
     public ArrayList<Bookshelf> getBookshelf() {
         bookList = new ArrayList<>();
-        repo = new BookRepository();
+        repo     = new BookRepository();
         bookList = repo.getBookshelves();
         return bookList;
     }
