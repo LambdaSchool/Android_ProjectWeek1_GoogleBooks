@@ -22,7 +22,7 @@ public class Book implements Parcelable {
         this.publishDate = publishDate;
         this.googleBooksID = googleBooksID;
         this.image = image.replace("http:", "https:");
-        this.isSelected = false;
+
 
     }
 
@@ -65,6 +65,7 @@ public class Book implements Parcelable {
         image = in.readString();
         bookshelfHomes = in.readString();
         isRead = in.readInt();
+        isSelected = in.readByte() != 0;
 
     }
 
@@ -80,6 +81,7 @@ public class Book implements Parcelable {
         }
     };
 
+
     public boolean isSelected() {
         return isSelected;
     }
@@ -87,6 +89,8 @@ public class Book implements Parcelable {
     public void setSelected(boolean selected) {
         isSelected = selected;
     }
+
+
 
     public void setReview(String review) {
         this.review = review;
@@ -152,7 +156,12 @@ public class Book implements Parcelable {
         dest.writeString(image);
         dest.writeString(bookshelfHomes);
         dest.writeInt(isRead);
+        dest.writeByte((byte)(isSelected ? 1 : 0));
+
     }
+
+
+
 
     private static String parseAuthors(JSONArray authorsAry) {
 

@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         searchRecyclerView = findViewById(R.id.recyclerView_search);
+
         searchRecyclerView.setHasFixedSize(true);
         gridLayoutManager = new GridLayoutManager(context, 2);
 
@@ -65,11 +66,11 @@ public class MainActivity extends AppCompatActivity {
                 Intent bookDetailsIntent = new Intent(context, BookDetailsActivity.class);
 
                 selectedBooks = searchAdapter.getChosenBooks();
-                searchAdapter.clearChosenBooks();
+                //searchAdapter.clearChosenBooks();
 
 
                 if(selectedBooks != null) {
-                    bookDetailsIntent.putParcelableArrayListExtra("SELECTED_BOOKS", selectedBooks);
+                    bookDetailsIntent.putParcelableArrayListExtra("foundbooks", selectedBooks);
                     startActivity(bookDetailsIntent);
                 } else {
                     startActivity(bookDetailsIntent);

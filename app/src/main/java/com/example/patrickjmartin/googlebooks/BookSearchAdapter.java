@@ -47,6 +47,7 @@ public class BookSearchAdapter extends RecyclerView.Adapter<BookSearchAdapter.Vi
             bookImage = itemView.findViewById(R.id.searched_book_image);
             bookDetails = itemView.findViewById(R.id.searched_book_details);
             progressBar = itemView.findViewById(R.id.progressBar);
+
         }
     }
 
@@ -116,6 +117,8 @@ public class BookSearchAdapter extends RecyclerView.Adapter<BookSearchAdapter.Vi
 
     @Override
     public int getItemCount() {
+
+
         return searchedBooks.size();
     }
 
