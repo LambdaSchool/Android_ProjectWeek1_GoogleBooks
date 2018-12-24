@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> {
 
+    public static final String CURRENT_BOOK = "currentBook";
     private ArrayList<BookClass> bookList;
     Context context;
     EditText title;
@@ -57,7 +58,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> 
                 viewModel.addBook(currentBook);*/
 
                 Intent intent = new Intent(context, BookshelfActivity.class);
-                intent.putExtra("currentBook", currentBook);
+                intent.putExtra(CURRENT_BOOK, currentBook);
                 context.startActivity(intent);
             }
         });

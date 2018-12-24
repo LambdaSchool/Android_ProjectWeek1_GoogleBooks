@@ -9,35 +9,47 @@ import java.util.ArrayList;
 
 public class BookRepository {
 
+    //todo create bookshelf repo
 
-    public static MutableLiveData<ArrayList<BookClass>> getBook() {
-        final MutableLiveData<ArrayList<BookClass>> liveDataList = new MutableLiveData<>();
+    ArrayList<Bookshelf> bookshelves;
+    MutableLiveData<ArrayList<Bookshelf>> liveData = new MutableLiveData<>();
 
 
+    public BookRepository() {
+
+        this.bookshelves = new ArrayList<>();
+    }
+
+    public MutableLiveData<ArrayList<Bookshelf>> getBookShelves(){
+        liveData = new MutableLiveData<>();
+        liveData.setValue(getBookshelfs());
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final ArrayList<BookClass> books = SqlDbDao.getAllBooks();
-                liveDataList.postValue(books);
+                bookshelves = SqlDbDao.getBookshelves();
+                liveData.postValue(bookshelves);
             }
         }).start();
-        return liveDataList;
+
+        return liveData;
     }
 
-    public ArrayList<Bookshelf> getBookshelves(){
-        ArrayList<Bookshelf> bookshelves = new ArrayList<>();
-        bookshelves = SqlDbDao.getBookshelves();
-
-        return bookshelves;
-    }
 
     public void createBookshelf(final String bookshelf) {
+
         new Thread(new Runnable() {
             @Override
             public void run() {
-                SqlDbDao.createBookshelf(bookshelf);
+
+            long id =   SqlDbDao.createBookshelf(bookshelf);
+            liveData.postValue(getBookshelfs());
             }
         }).start();
+
+    }
+
+    private ArrayList<Bookshelf> getBookshelfs(){
+        return SqlDbDao.getBookshelves();
     }
 
     public void deleteBookshelf(final Bookshelf bookshelf) {
@@ -45,6 +57,7 @@ public class BookRepository {
             @Override
             public void run() {
                 SqlDbDao.deleteBookshelf(bookshelf);
+                liveData.postValue(getBookshelfs());
             }
         }).start();
     }
@@ -54,6 +67,7 @@ public class BookRepository {
             @Override
             public void run() {
                 SqlDbDao.updateBookshelfName(bookshelf);
+                liveData.postValue(getBookshelfs());
             }
         }).start();
     }
@@ -81,6 +95,15 @@ public class BookRepository {
             @Override
             public void run() {
                 SqlDbDao.updateBook(book);
+            }
+        }).start();
+    }
+
+    public void addBookToBookshelf(final Bookshelf bookshelf, final BookClass book){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SqlDbDao.addBookToBookshelf(bookshelf.getBookshelfId(), book.getBookKeyId());
             }
         }).start();
     }

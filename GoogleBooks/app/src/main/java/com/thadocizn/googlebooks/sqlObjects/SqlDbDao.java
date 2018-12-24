@@ -22,7 +22,7 @@ public class SqlDbDao {
         }
     }
 
-    public static void addBookToBookshelf(int bookshelf, int book) {
+    public static void addBookToBookshelf(long bookshelf, long book) {
         if (db != null) {
             ContentValues values = new ContentValues();
             values.put(BookDbContract.BookEntry.BOOKS_BOOKSHELF_COLUMN_NAME_BOOK_ID, book);
@@ -31,16 +31,18 @@ public class SqlDbDao {
         }
     }
 
-    public static void createBookshelf(String bookshelf) {
+    // want to pass back bookshelfId for Intent to use
+    public static long createBookshelf(String bookshelf) {
         if (db != null) {
             ContentValues values = new ContentValues();
             values.put(BookDbContract.BookEntry.BOOKSHELF_COLUMN_NAME_SHELF_NAME, bookshelf);
             long bookshelfId = db.insert(BookDbContract.BookEntry.BOOKSHELF_TABLE_NAME, null, values);
 
-            if (bookshelfId != -1){
-                Log.i("bookshelf", "createBookshelf: " + bookshelfId);
-            }
+            return bookshelfId;
+
         }
+
+        return -1;
     }
 
     public static Bookshelf getBookshelf(long id){
@@ -86,7 +88,7 @@ public class SqlDbDao {
 
         int index;
         index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.BOOKSHELF_COLUMN_NAME_SHELF_ID);
-        long bookshelf_key = cursor.getLong(index);
+        int bookshelf_key = (int) cursor.getLong(index);
         index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.BOOKSHELF_COLUMN_NAME_SHELF_NAME);
         String name = cursor.getString(index);
 
@@ -215,7 +217,7 @@ public class SqlDbDao {
         BookClass book;
 
         index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.BOOK_COLUMN_NAME_BOOK_KEY);
-        long id = cursor.getLong(index);
+        int id = (int) cursor.getLong(index);
 
         index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.BOOK_COLUMN_NAME_BOOK_ID);
         String bookId = cursor.getString(index);
