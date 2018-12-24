@@ -21,7 +21,7 @@ import com.thadocizn.googlebooks.bookshelfInfo.Bookshelf;
 
 import java.util.ArrayList;
 
-//import com.thadocizn.googlebooks.BookshelfDialog;
+import com.thadocizn.googlebooks.BookshelfDialog;
 
 public class BookshelfActivity extends AppCompatActivity {
 
@@ -39,7 +39,7 @@ public class BookshelfActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bookshelf);
         Intent intent = getIntent();
         BookClass book = intent.getParcelableExtra(BookAdapter.CURRENT_BOOK);
-        int bookKeyId = (int) book.getBookKeyId();
+        long bookKeyId =  book.getBookKeyId();
 
         recyclerView = findViewById(R.id.rvBookshelf);
         viewModel = new BookViewModel();
