@@ -54,9 +54,9 @@ public class BookDbContract {
         public static final String SQL_CREATE_BOOK_BOOKSHELF_TABLE = String.format(
                 "CREATE TABLE " + "%s" +
                         " ( " +
-                        "%s INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        "%s INTEGER, " +
-                        "%s INTEGER, " +
+                        "%s LONG PRIMARY KEY AUTOINCREMENT, " +
+                        "%s LONG, " +
+                        "%s LONG, " +
                         "FOREIGN KEY (%s) REFERENCES %s(%s), " +
                         "FOREIGN KEY (%s) REFERENCES %s(%s));",
                 BOOKS_BOOKSHELF_TABLE,

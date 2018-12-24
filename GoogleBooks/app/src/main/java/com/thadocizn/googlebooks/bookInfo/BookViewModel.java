@@ -1,5 +1,6 @@
 package com.thadocizn.googlebooks.bookInfo;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
@@ -9,10 +10,21 @@ import java.util.ArrayList;
 
 public class BookViewModel extends ViewModel {
 
-    private static BookRepository repo;
-    private ArrayList<Bookshelf> bookshelves;
-    private ArrayList<BookClass> bookList;
+    private MutableLiveData<ArrayList<Bookshelf>> shelfList;
+    private BookRepository repo;
 
+    public LiveData<ArrayList<Bookshelf>> getBookshelfList(){
+        if (shelfList == null){
+            loadList();
+        }
+
+        return shelfList;
+    }
+
+    private void loadList() {
+        repo = new BookRepository();
+        shelfList = repo.getBookShelves();
+    }
 
     public void addBook(BookClass book) {
         repo = new BookRepository();
