@@ -4,8 +4,6 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
-import com.thadocizn.googlebooks.bookInfo.BookRepository;
-
 import java.util.ArrayList;
 
 public class BookshelfViewModel extends ViewModel {

@@ -11,6 +11,19 @@ import java.util.ArrayList;
 public class BookViewModel extends ViewModel {
     private BookRepository repo;
 
+    public BookClass getBook(BookClass bookId){
+        BookClass book = new BookClass();
+        repo = new BookRepository();
+        book = repo.getBook(bookId);
+        return book;
+    }
+
+    public ArrayList<BookClass> getBooks(){
+        repo = new BookRepository();
+        ArrayList<BookClass> bookList = repo.getBooks();
+        return bookList;
+    }
+
     public void addBook(BookClass book) {
         repo = new BookRepository();
         repo.createBook(book);

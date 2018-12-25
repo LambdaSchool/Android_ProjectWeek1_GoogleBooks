@@ -9,6 +9,18 @@ import java.util.ArrayList;
 
 public class BookRepository {
 
+    ArrayList<BookClass> bookList;
+
+    public BookClass getBook(BookClass book){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                BookClass book = new BookClass();
+                book = SqlDbDao.getBook(book.getBookKeyId());
+            }
+        }).start();
+        return book;
+    }
 
     public void createBook(final BookClass book) {
         new Thread(new Runnable() {
@@ -44,5 +56,16 @@ public class BookRepository {
                 SqlDbDao.addBookToBookshelf(bookshelf.getBookshelfId(), book.getBookKeyId());
             }
         }).start();
+    }
+
+    public ArrayList<BookClass> getBooks(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                bookList = new ArrayList<>(SqlDbDao.getAllBooks());
+            }
+        }).start();
+
+        return bookList;
     }
 }
