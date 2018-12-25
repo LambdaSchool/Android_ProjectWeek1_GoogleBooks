@@ -10,6 +10,21 @@ import java.util.ArrayList;
 public class BookRepository {
 
     ArrayList<BookClass> bookList;
+    MutableLiveData<ArrayList<BookClass>> liveData = new MutableLiveData<>();
+
+    public MutableLiveData<ArrayList<BookClass>> getBookList(){
+        liveData = new MutableLiveData<>();
+        liveData.setValue(getBooks());
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                bookList = SqlDbDao.getAllBooks();
+                liveData.postValue(bookList);
+            }
+        }).start();
+
+        return liveData;
+    }
 
     public BookClass getBook(BookClass book){
         new Thread(new Runnable() {

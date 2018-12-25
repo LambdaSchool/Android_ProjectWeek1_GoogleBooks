@@ -9,7 +9,22 @@ import com.thadocizn.googlebooks.bookshelfInfo.Bookshelf;
 import java.util.ArrayList;
 
 public class BookViewModel extends ViewModel {
+
+    private MutableLiveData<ArrayList<BookClass>> bookList;
     private BookRepository repo;
+
+    public LiveData<ArrayList<BookClass>> getBookList(){
+        if (bookList == null){
+            loadList();
+        }
+
+        return bookList;
+    }
+
+    private void loadList() {
+        repo = new BookRepository();
+        bookList = repo.getBookList();
+    }
 
     public BookClass getBook(BookClass bookId){
         BookClass book = new BookClass();
@@ -18,11 +33,11 @@ public class BookViewModel extends ViewModel {
         return book;
     }
 
-    public ArrayList<BookClass> getBooks(){
+    /*public ArrayList<BookClass> getBooks(){
         repo = new BookRepository();
         ArrayList<BookClass> bookList = repo.getBooks();
         return bookList;
-    }
+    }*/
 
     public void addBook(BookClass book) {
         repo = new BookRepository();

@@ -11,19 +11,20 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.thadocizn.googlebooks.bookInfo.BookViewModel;
+import com.thadocizn.googlebooks.bookshelfInfo.BookshelfViewModel;
 
 
 public class BookshelfDialog extends DialogFragment implements DialogInterface.OnClickListener {
 
     private View form               = null;
-    private BookViewModel viewModel = null;
+    private BookshelfViewModel viewModel = null;
 
  @Override
     public void onClick(DialogInterface dialog, int which) {
 
         //todo find out how to get text from dialog
         EditText name = form.findViewById(R.id.etBookshelfName);
-        viewModel     = new BookViewModel();
+        viewModel     = new BookshelfViewModel();
         viewModel.addBookshelf(name.getText().toString());
 
     }

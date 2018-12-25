@@ -22,6 +22,7 @@ import com.thadocizn.googlebooks.bookshelfInfo.Bookshelf;
 import java.util.ArrayList;
 
 import com.thadocizn.googlebooks.BookshelfDialog;
+import com.thadocizn.googlebooks.bookshelfInfo.BookshelfViewModel;
 
 public class BookshelfActivity extends AppCompatActivity {
 
@@ -30,7 +31,7 @@ public class BookshelfActivity extends AppCompatActivity {
     BookshelfAdapter adapter;
     Context context;
     private LinearLayoutManager linearLayoutManager;
-    BookViewModel viewModel;
+    BookshelfViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class BookshelfActivity extends AppCompatActivity {
         long bookKeyId =  book.getBookKeyId();
 
         recyclerView = findViewById(R.id.rvBookshelf);
-        viewModel = new BookViewModel();
+        viewModel = new BookshelfViewModel();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -58,7 +59,7 @@ public class BookshelfActivity extends AppCompatActivity {
         });
 
 
-        viewModel = new BookViewModel();
+        viewModel = new BookshelfViewModel();
         shelves = new ArrayList<>();
 
         if (shelves.size() < 0) {

@@ -13,7 +13,7 @@ public class BookshelfRepository {
 
     public MutableLiveData<ArrayList<Bookshelf>> getBookShelves(){
         liveData = new MutableLiveData<>();
-        liveData.setValue(getBookshelfs());
+        liveData.setValue(getBookshelfList());
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -33,14 +33,20 @@ public class BookshelfRepository {
             public void run() {
 
                 long id =   SqlDbDao.createBookshelf(bookshelf);
-                liveData.postValue(getBookshelfs());
+                liveData.postValue(getBookshelfList());
             }
         }).start();
 
     }
 
-    private ArrayList<Bookshelf> getBookshelfs(){
-        return SqlDbDao.getBookshelves();
+    private ArrayList<Bookshelf> getBookshelfList(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                bookshelves = SqlDbDao.getBookshelves();
+            }
+        }).start();
+        return bookshelves;
     }
 
     public void deleteBookshelf(final Bookshelf bookshelf) {
@@ -48,7 +54,7 @@ public class BookshelfRepository {
             @Override
             public void run() {
                 SqlDbDao.deleteBookshelf(bookshelf);
-                liveData.postValue(getBookshelfs());
+                liveData.postValue(getBookshelfList());
             }
         }).start();
     }
@@ -58,7 +64,7 @@ public class BookshelfRepository {
             @Override
             public void run() {
                 SqlDbDao.updateBookshelfName(bookshelf);
-                liveData.postValue(getBookshelfs());
+                liveData.postValue(getBookshelfList());
             }
         }).start();
     }
