@@ -1,8 +1,11 @@
 package com.thadocizn.googlebooks.activities;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,7 +46,23 @@ public class BookshelfActivity extends AppCompatActivity {
         long bookKeyId =  book.getBookKeyId();
 
         recyclerView = findViewById(R.id.rvBookshelf);
-        viewModel = new BookshelfViewModel();
+
+        //todo recycler is not showing names of bookshelves fix bug
+        viewModel = ViewModelProviders.of(this).get(BookshelfViewModel.class);
+        Observer<ArrayList<Bookshelf>> observer = new Observer<ArrayList<Bookshelf>>() {
+            @Override
+            public void onChanged(@Nullable ArrayList<Bookshelf> bookshelves) {
+                if (bookshelves != null){
+                    if (adapter == null){
+                        adapter = new BookshelfAdapter(bookshelves);
+                        getBookshelves();
+                    }
+                }
+            }
+        };
+
+        viewModel.getBookshelfList().observe(this, observer);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -58,25 +77,12 @@ public class BookshelfActivity extends AppCompatActivity {
             }
         });
 
-
-        viewModel = new BookshelfViewModel();
-        shelves = new ArrayList<>();
-
-        if (shelves.size() < 0) {
-            viewModel.addBookshelf("Default");
-        }
-
-        //shelves = viewModel.getBookshelf();
-
-        getBookshelves();
-
     }
 
     private void getBookshelves() {
         recyclerView.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new BookshelfAdapter(shelves);
         recyclerView.setAdapter(adapter);
     }
 
