@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+
         context = this;
         activity = this;
         results = new ArrayList<>();
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 if(selectedBooks != null) {
+                    selectedBooks.forEach((n) -> n.setSelected(false));
                     bookDetailsIntent.putParcelableArrayListExtra("foundbooks", selectedBooks);
                     startActivity(bookDetailsIntent);
                 } else {

@@ -12,11 +12,13 @@ public class Library implements Serializable {
 
 
     private Library() {
-        if(INSTANCE == null) {
+        if(INSTANCE != null) {
             throw new RuntimeException("Use getINSTANCE()");
         } else {
             this.bookShelf = new HashMap<String, ArrayList>();
-
+            this.bookShelf.put("All Books", new ArrayList<>());
+            this.bookShelf.put("Read", new ArrayList<>());
+            this.bookShelf.put("Favorites", new ArrayList<>());
         }
 
     }
@@ -26,6 +28,7 @@ public class Library implements Serializable {
             synchronized (Library.class) {
                 if(INSTANCE == null) {
                     INSTANCE = new Library();
+
                 }
             }
         }
