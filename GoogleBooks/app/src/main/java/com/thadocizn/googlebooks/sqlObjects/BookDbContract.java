@@ -18,7 +18,7 @@ public class BookDbContract {
         public static final String SQL_CREATE_BOOK_TABLE = String.format(
                 "CREATE TABLE" + " %s" +
                         " ( " +
-                        "%s LONG PRIMARY KEY AUTOINCREMENT, " +
+                        "%s INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "%s TEXT, " +
                         "%s TEXT, " +
                         "%s TEXT, " +
@@ -40,7 +40,7 @@ public class BookDbContract {
         public static final String SQL_CREATE_BOOKSHELF_TABLE       = String.format(
                 "CREATE TABLE " + "%s" +
                         " ( " +
-                        "%s LONG PRIMARY KEY AUTOINCREMENT, " +
+                        "%s INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "%s TEXT);",
 
                 BOOKSHELF_TABLE_NAME,
@@ -54,9 +54,9 @@ public class BookDbContract {
         public static final String SQL_CREATE_BOOK_BOOKSHELF_TABLE = String.format(
                 "CREATE TABLE " + "%s" +
                         " ( " +
-                        "%s LONG PRIMARY KEY AUTOINCREMENT, " +
-                        "%s LONG, " +
-                        "%s LONG, " +
+                        "%s INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "%s INTEGER, " +
+                        "%s INTEGER, " +
                         "FOREIGN KEY (%s) REFERENCES %s(%s), " +
                         "FOREIGN KEY (%s) REFERENCES %s(%s));",
                 BOOKS_BOOKSHELF_TABLE,

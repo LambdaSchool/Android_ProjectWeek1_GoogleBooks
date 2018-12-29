@@ -26,15 +26,16 @@ public class BookRepository {
         return liveData;
     }
 
-    public BookClass getBook(BookClass book){
+    public BookClass getBook(final BookClass book){
+        BookClass bookId = new BookClass();
         new Thread(new Runnable() {
             @Override
             public void run() {
-                BookClass book = new BookClass();
-                book = SqlDbDao.getBook(book.getBookKeyId());
+                BookClass bookId = new BookClass();
+                bookId = SqlDbDao.getBook(book);
             }
         }).start();
-        return book;
+        return bookId;
     }
 
     public void createBook(final BookClass book) {
@@ -68,7 +69,7 @@ public class BookRepository {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                SqlDbDao.addBookToBookshelf(bookshelf.getBookshelfId(), book.getBookKeyId());
+                SqlDbDao.addBookToBookshelf(bookshelf, book);
             }
         }).start();
     }

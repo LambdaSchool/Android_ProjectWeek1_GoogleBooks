@@ -1,5 +1,6 @@
 package com.thadocizn.googlebooks.activities;
 
+import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -12,19 +13,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 
 import com.thadocizn.googlebooks.BookshelfDialog;
 import com.thadocizn.googlebooks.R;
-import com.thadocizn.googlebooks.adapters.BookAdapter;
+import com.thadocizn.googlebooks.adapters.GoogleBookAdapter;
 import com.thadocizn.googlebooks.adapters.BookshelfAdapter;
 import com.thadocizn.googlebooks.bookInfo.BookClass;
-import com.thadocizn.googlebooks.bookInfo.BookViewModel;
 import com.thadocizn.googlebooks.bookshelfInfo.Bookshelf;
 
 import java.util.ArrayList;
 
-import com.thadocizn.googlebooks.BookshelfDialog;
 import com.thadocizn.googlebooks.bookshelfInfo.BookshelfViewModel;
 
 public class BookshelfActivity extends AppCompatActivity {
@@ -35,14 +33,18 @@ public class BookshelfActivity extends AppCompatActivity {
     Context context;
     private LinearLayoutManager linearLayoutManager;
     BookshelfViewModel viewModel;
+    Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = this;
         setContentView(R.layout.activity_bookshelf);
+
+        context = this;
+        activity = this;
+
         Intent intent = getIntent();
-        BookClass book = intent.getParcelableExtra(BookAdapter.CURRENT_BOOK);
+        BookClass book = intent.getParcelableExtra(GoogleBookAdapter.CURRENT_BOOK);
         long bookKeyId =  book.getBookKeyId();
 
         recyclerView = findViewById(R.id.rvBookshelf);
@@ -54,17 +56,20 @@ public class BookshelfActivity extends AppCompatActivity {
             public void onChanged(@Nullable ArrayList<Bookshelf> bookshelves) {
                 if (bookshelves != null){
                     if (adapter == null){
-                        adapter = new BookshelfAdapter(bookshelves);
+                        adapter = new BookshelfAdapter(bookshelves, activity);
                         getBookshelves();
+                    }else {
+                        adapter.notifyDataSetChanged();
                     }
                 }
             }
         };
 
-        viewModel.getBookshelfList().observe(this, observer);
+        viewModel.getBookshelfList(context).observe(this, observer);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getBookshelves();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

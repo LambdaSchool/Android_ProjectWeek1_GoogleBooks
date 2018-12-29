@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.thadocizn.googlebooks.R;
-import com.thadocizn.googlebooks.adapters.BookAdapter;
+import com.thadocizn.googlebooks.adapters.GoogleBookAdapter;
 import com.thadocizn.googlebooks.bookInfo.BookClass;
 import com.thadocizn.googlebooks.bookInfo.BookDaoClass;
 import com.thadocizn.googlebooks.bookInfo.BookViewModel;
@@ -21,10 +21,10 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    public EditText search;
+    private EditText search;
     private RecyclerView recyclerView;
     private ImageButton searchButton;
-    private BookAdapter adapter;
+    private GoogleBookAdapter adapter;
     private ArrayList<BookClass> bookList;
     private LinearLayoutManager linearLayoutManager;
     Context context;
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                adapter = new BookAdapter(bookList);
+                                adapter = new GoogleBookAdapter(bookList);
                                 recyclerView.setHasFixedSize(true);
                                 linearLayoutManager = new LinearLayoutManager(context);
                                 recyclerView.setLayoutManager(linearLayoutManager);

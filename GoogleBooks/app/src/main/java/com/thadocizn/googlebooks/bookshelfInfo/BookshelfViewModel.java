@@ -3,6 +3,7 @@ package com.thadocizn.googlebooks.bookshelfInfo;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.content.Context;
 
 import java.util.ArrayList;
 
@@ -11,17 +12,17 @@ public class BookshelfViewModel extends ViewModel {
     private MutableLiveData<ArrayList<Bookshelf>> shelfList;
     private BookshelfRepository repo;
 
-    public LiveData<ArrayList<Bookshelf>> getBookshelfList(){
+    public LiveData<ArrayList<Bookshelf>> getBookshelfList(Context context){
         if (shelfList == null){
-            loadList();
+            loadList(context);
         }
 
         return shelfList;
     }
 
-    private void loadList() {
+    private void loadList(Context context) {
         repo = new BookshelfRepository();
-        shelfList = repo.getBookShelves();
+        shelfList = repo.getBookShelves(context);
     }
 
     public void addBookshelf(String bookshelf) {

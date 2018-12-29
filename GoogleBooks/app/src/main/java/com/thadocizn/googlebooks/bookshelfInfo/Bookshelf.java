@@ -5,6 +5,11 @@ public class Bookshelf {
     private String name;
     private long bookshelfId;
 
+    public Bookshelf() {
+        this.name = "";
+        this.bookshelfId = 0;
+    }
+
     public String getName() {
         return name;
     }

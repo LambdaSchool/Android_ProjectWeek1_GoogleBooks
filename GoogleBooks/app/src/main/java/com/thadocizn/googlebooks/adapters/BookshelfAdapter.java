@@ -1,5 +1,7 @@
 package com.thadocizn.googlebooks.adapters;
 
+import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,15 +20,20 @@ import java.util.List;
 public class BookshelfAdapter extends RecyclerView.Adapter<BookshelfAdapter.MyViewHolder> {
 
     private ArrayList<Bookshelf> bookshelfList;
+    private Context              context;
+    private Activity             activity;
 
-    public BookshelfAdapter(ArrayList<Bookshelf> bookshelfList) {
+    public BookshelfAdapter(ArrayList<Bookshelf> bookshelfList, Activity activity) {
         this.bookshelfList = bookshelfList;
+        this.activity = activity;
     }
+
 
     @NonNull
     @Override
     public BookshelfAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
+        context = parent.getContext();
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_item_bookshelf, parent, false);
 
@@ -36,7 +43,7 @@ public class BookshelfAdapter extends RecyclerView.Adapter<BookshelfAdapter.MyVi
     @Override
     public void onBindViewHolder(@NonNull BookshelfAdapter.MyViewHolder myViewHolder, int i) {
 
-        final Bookshelf bookshelf = bookshelfList.get(i);
+        Bookshelf bookshelf = bookshelfList.get(i);
         myViewHolder.bookshelfName.setText(bookshelf.getName());
         myViewHolder.addBook.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,12 +53,12 @@ public class BookshelfAdapter extends RecyclerView.Adapter<BookshelfAdapter.MyVi
             }
         });
 
-        myViewHolder.viewBooks.setOnClickListener(new View.OnClickListener() {
+       /* myViewHolder.viewBooks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // todo decide on what I want to use
             }
-        });
+        });*/
     }
 
     @Override

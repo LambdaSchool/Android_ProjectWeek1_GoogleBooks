@@ -22,42 +22,39 @@ public class SqlDbDao {
         }
     }
 
-    public static void addBookToBookshelf(long bookshelf, long book) {
+    public static void addBookToBookshelf(Bookshelf bookshelf, BookClass book) {
         if (db != null) {
             ContentValues values = new ContentValues();
-            values.put(BookDbContract.BookEntry.BOOKS_BOOKSHELF_COLUMN_NAME_BOOK_ID, book);
-            values.put(BookDbContract.BookEntry.BOOKS_BOOKSHELF_COLUMN_NAME_BOOkSHELF_ID, bookshelf);
+            values.put(BookDbContract.BookEntry.BOOKS_BOOKSHELF_COLUMN_NAME_BOOK_ID, book.getBookKeyId());
+            values.put(BookDbContract.BookEntry.BOOKS_BOOKSHELF_COLUMN_NAME_BOOkSHELF_ID, bookshelf.getBookshelfId());
             long row = db.insert(BookDbContract.BookEntry.BOOKS_BOOKSHELF_TABLE, null, values);
         }
     }
 
     // want to pass back bookshelfId for Intent to use
-    public static long createBookshelf(String bookshelf) {
+    public static void createBookshelf(String bookshelf) {
+
         if (db != null) {
             ContentValues values = new ContentValues();
             values.put(BookDbContract.BookEntry.BOOKSHELF_COLUMN_NAME_SHELF_NAME, bookshelf);
             long bookshelfId = db.insert(BookDbContract.BookEntry.BOOKSHELF_TABLE_NAME, null, values);
 
-            return bookshelfId;
-
         }
-
-        return -1;
     }
 
-    public static Bookshelf getBookshelf(long id){
+    public static Bookshelf getBookshelf(Bookshelf id) {
         Bookshelf bookshelf = null;
-        if (db != null){
+        if (db != null) {
 
             String whereClause = String.format("%s = '%s'",
                     BookDbContract.BookEntry.BOOKSHELF_COLUMN_NAME_SHELF_ID,
-                    id);
+                    id.getBookshelfId());
             Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE %s",
                     BookDbContract.BookEntry.BOOKSHELF_TABLE_NAME, whereClause),
                     null);
 
 
-            if (cursor.moveToFirst()){
+            if (cursor.moveToFirst()) {
                 bookshelf = getBookshelfFromCursor(cursor);
             } else {
                 bookshelf = null;
@@ -89,10 +86,15 @@ public class SqlDbDao {
         int index;
         index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.BOOKSHELF_COLUMN_NAME_SHELF_ID);
         int bookshelf_key = (int) cursor.getLong(index);
+
         index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.BOOKSHELF_COLUMN_NAME_SHELF_NAME);
         String name = cursor.getString(index);
 
-        return new Bookshelf(bookshelf_key, name);
+        Bookshelf bookshelf = new Bookshelf();
+        bookshelf.setBookshelfId(bookshelf_key);
+        bookshelf.setName(name);
+
+        return bookshelf;
 
     }
 
@@ -128,28 +130,23 @@ public class SqlDbDao {
             values.put(BookDbContract.BookEntry.BOOK_COLUMN_NAME_READ_BOOK, book.isReadBook());
 
             long bookId = db.insert(BookDbContract.BookEntry.TABLE_NAME_BOOK, null, values);
-            if (bookId == -1){
-                Log.i("msg", "msg" + bookId);
-            }else {
-                Log.i("success", "createBook: " + bookId);
-            }
-
+            Log.i("This", "is" + bookId);
         }
     }
 
-    public static BookClass getBook(long id){
+    public static BookClass getBook(BookClass bookId) {
         BookClass book = null;
-        if (db != null){
+        if (db != null) {
 
             String whereClause = String.format("%s = '%s'",
-                    BookDbContract.BookEntry.BOOK_COLUMN_NAME_BOOK_KEY,
-                    id);
+                    BookDbContract.BookEntry.BOOK_COLUMN_NAME_BOOK_TITLE,
+                    bookId.getBookTitle());
             Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE %s",
                     BookDbContract.BookEntry.TABLE_NAME_BOOK, whereClause),
                     null);
 
 
-            if (cursor.moveToFirst()){
+            if (cursor.moveToFirst()) {
                 book = getBookFromCursor(cursor);
             } else {
                 book = null;
@@ -204,19 +201,19 @@ public class SqlDbDao {
             while (cursor.moveToNext()) {
                 books.add(getBookFromCursor(cursor));
             }
-            cursor.close();
-            return books;
-        } else {
-            return new ArrayList<>();
+            if (cursor != null) {
+                cursor.close();
+            }
         }
 
+        return books;
     }
 
     private static BookClass getBookFromCursor(Cursor cursor) {
         int index;
         BookClass book;
 
-        index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.BOOK_COLUMN_NAME_BOOK_KEY);
+        index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry._ID);
         int id = (int) cursor.getLong(index);
 
         index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.BOOK_COLUMN_NAME_BOOK_ID);
@@ -234,9 +231,6 @@ public class SqlDbDao {
         index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.BOOK_COLUMN_NAME_READ_BOOK);
         int readBook = cursor.getInt(index);
 
-        index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.BOOK_COLUMN_NAME_BOOK_ID);
-        String idBook = cursor.getString(index);
-
         book = new BookClass();
         book.setBookKeyId(id);
         book.setBookId(bookId);
@@ -244,7 +238,6 @@ public class SqlDbDao {
         book.setBookImageUrl(imageUrl);
         book.setBookReview(bookReview);
         book.setReadBook(readBook);
-        book.setBookId(idBook);
         return book;
     }
 
