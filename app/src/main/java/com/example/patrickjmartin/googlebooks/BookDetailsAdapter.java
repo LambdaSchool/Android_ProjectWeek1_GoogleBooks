@@ -58,8 +58,12 @@ public class BookDetailsAdapter extends ArrayAdapter<Book> {
             }
         }).start();
 
+
+
         return listItem;
 
 
     }
+
+
 }

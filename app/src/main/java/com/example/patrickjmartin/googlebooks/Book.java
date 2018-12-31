@@ -140,10 +140,17 @@ public class Book implements Parcelable {
 
     public void setBookshelfHomes(String bookshelfHomes) {
 
-        if (this.bookshelfHomes == null) {
-            this.bookshelfHomes = bookshelfHomes;
-        } else {
-            this.bookshelfHomes += bookshelfHomes;
+        if (this.bookshelfHomes == "") this.bookshelfHomes = bookshelfHomes;
+        else this.bookshelfHomes += ("," + bookshelfHomes);
+    }
+
+    public void removeBookShelfHomes(String bookshelfToBeRemoved) {
+
+        String compare = this.bookshelfHomes;
+        this.bookshelfHomes.replaceAll("," + bookshelfToBeRemoved, "");
+
+        if(compare == this.bookshelfHomes) {
+            this.bookshelfHomes.replaceAll(bookshelfToBeRemoved + ",", "");
         }
     }
 
