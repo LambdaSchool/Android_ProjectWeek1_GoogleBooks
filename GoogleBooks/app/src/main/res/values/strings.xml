@@ -17,4 +17,5 @@
     <string name="url">image</string>
     <string name="save_book">Save Book</string>
     <string name="add_book">Add Book</string>
+    <string name="view_bookshelves">View Bookshelves</string>
 </resources>

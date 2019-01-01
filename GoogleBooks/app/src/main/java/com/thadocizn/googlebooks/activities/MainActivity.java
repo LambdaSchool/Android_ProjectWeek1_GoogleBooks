@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -32,6 +34,13 @@ public class MainActivity extends AppCompatActivity {
     private BookViewModel model;
     CardView cardView;
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
