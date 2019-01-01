@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -34,6 +35,22 @@ public class MainActivity extends AppCompatActivity {
     private BookViewModel model;
     CardView cardView;
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+        switch (item.getItemId()){
+            case R.id.viewAllBooks:
+                intent = new Intent(this, BookActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.viewBookshelves:
+                intent = new Intent(this, BookshelfActivity.class);
+                startActivity(intent);
+                break;
+        }
+        return true;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
