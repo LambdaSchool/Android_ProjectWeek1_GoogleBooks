@@ -1,5 +1,9 @@
 package com.thadocizn.googlebooks.activities;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +14,7 @@ import com.thadocizn.googlebooks.R;
 import com.thadocizn.googlebooks.adapters.BookAdapter;
 import com.thadocizn.googlebooks.bookInfo.BookClass;
 import com.thadocizn.googlebooks.bookInfo.BookViewModel;
+import com.thadocizn.googlebooks.sqlObjects.SqlDbDao;
 
 import java.util.ArrayList;
 
@@ -19,19 +24,31 @@ public class BookActivity extends AppCompatActivity {
     BookAdapter adapter;
     LinearLayoutManager linearLayoutManager;
     ArrayList<BookClass> bookList;
-    BookViewModel model;
+    private BookViewModel model;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
+        context = this;
+        SqlDbDao.initializeInstance(context);
 
-        model = new BookViewModel();
+        model = ViewModelProviders.of(this).get(BookViewModel.class);
+        Observer<ArrayList<BookClass>>listObserver = new Observer<ArrayList<BookClass>>() {
+            @Override
+            public void onChanged(@Nullable ArrayList<BookClass> bookClasses) {
+                adapter = new BookAdapter(bookClasses);
+            }
+        };
+
+        model.getBookList().observe(this, listObserver);
+
         recyclerView = findViewById(R.id.book_rv);
         linearLayoutManager = new LinearLayoutManager(this);
 
 
-        new Thread(new Runnable() {
+       /* new Thread(new Runnable() {
             @Override
             public void run() {
                 bookList = model.getBooks();
@@ -45,7 +62,7 @@ public class BookActivity extends AppCompatActivity {
                     }
                 });
             }
-        }).start();
+        }).start();*/
 
 
 

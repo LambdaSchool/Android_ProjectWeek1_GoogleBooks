@@ -213,7 +213,7 @@ public class SqlDbDao {
         int index;
         BookClass book;
 
-        index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry._ID);
+        index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.BOOK_COLUMN_NAME_BOOK_KEY);
         int id = (int) cursor.getLong(index);
 
         index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.BOOK_COLUMN_NAME_BOOK_ID);

@@ -53,13 +53,10 @@ public class GoogleBookAdapter extends RecyclerView.Adapter<GoogleBookAdapter.My
         myViewHolder.save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* BookViewModel viewModel = new BookViewModel();
-                viewModel.addBook(currentBook);*/
+
                 BookViewModel model = new BookViewModel();
                 model.addBook(currentBook);
 
-                /*Intent intent = new Intent(context, BookActivity.class);
-                context.startActivity(intent);*/
             }
         });
         //Todo image

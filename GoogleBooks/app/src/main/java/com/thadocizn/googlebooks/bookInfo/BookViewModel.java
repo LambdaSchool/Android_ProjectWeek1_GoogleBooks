@@ -27,7 +27,7 @@ public class BookViewModel extends ViewModel {
     }
 
     public BookClass getBook(BookClass bookId){
-        BookClass book = new BookClass();
+        BookClass book;
         repo = new BookRepository();
         book = repo.getBook(bookId);
         return book;
