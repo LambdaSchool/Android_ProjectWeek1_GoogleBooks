@@ -57,6 +57,9 @@ public class GoogleBookAdapter extends RecyclerView.Adapter<GoogleBookAdapter.My
                 BookViewModel model = new BookViewModel();
                 model.addBook(currentBook);
 
+                Intent intent = new Intent(context, BookActivity.class);
+                context.startActivity(intent);
+
             }
         });
         //Todo image
@@ -65,12 +68,8 @@ public class GoogleBookAdapter extends RecyclerView.Adapter<GoogleBookAdapter.My
 
     @Override
     public int getItemCount() {
-        if (bookList == null) {
-            return 0;
 
-        } else {
             return bookList.size();
-        }
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {

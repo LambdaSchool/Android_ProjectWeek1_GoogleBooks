@@ -14,7 +14,6 @@ public class BookRepository {
 
     public MutableLiveData<ArrayList<BookClass>> getBookList(){
         liveData = new MutableLiveData<>();
-        liveData.setValue(getBooks());
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -74,14 +73,4 @@ public class BookRepository {
         }).start();
     }
 
-    public ArrayList<BookClass> getBooks(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                bookList = new ArrayList<>(SqlDbDao.getAllBooks());
-            }
-        }).start();
-
-        return bookList;
-    }
 }

@@ -34,18 +34,20 @@ public class BookActivity extends AppCompatActivity {
         context = this;
         SqlDbDao.initializeInstance(context);
 
+        recyclerView = findViewById(R.id.book_rv);
+        linearLayoutManager = new LinearLayoutManager(this);
         model = ViewModelProviders.of(this).get(BookViewModel.class);
         Observer<ArrayList<BookClass>>listObserver = new Observer<ArrayList<BookClass>>() {
             @Override
             public void onChanged(@Nullable ArrayList<BookClass> bookClasses) {
                 adapter = new BookAdapter(bookClasses);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(linearLayoutManager);
+                recyclerView.setAdapter(adapter);
             }
         };
 
         model.getBookList().observe(this, listObserver);
-
-        recyclerView = findViewById(R.id.book_rv);
-        linearLayoutManager = new LinearLayoutManager(this);
 
 
        /* new Thread(new Runnable() {

@@ -15,6 +15,7 @@ public class BookViewModel extends ViewModel {
 
     public LiveData<ArrayList<BookClass>> getBookList(){
         if (bookList == null){
+            bookList = new MutableLiveData<>();
             loadList();
         }
 
@@ -33,11 +34,6 @@ public class BookViewModel extends ViewModel {
         return book;
     }
 
-    public ArrayList<BookClass> getBooks(){
-        repo = new BookRepository();
-        ArrayList<BookClass> bookList = repo.getBooks();
-        return bookList;
-    }
 
     public void addBook(BookClass book) {
         repo = new BookRepository();
