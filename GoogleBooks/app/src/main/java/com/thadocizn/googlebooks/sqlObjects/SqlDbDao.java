@@ -75,10 +75,9 @@ public class SqlDbDao {
                 bookshelves.add(getBookshelfFromCursor(cursor));
             }
             cursor.close();
-            return bookshelves;
-        } else {
-            return new ArrayList<>();
         }
+        return bookshelves;
+
     }
 
     private static Bookshelf getBookshelfFromCursor(Cursor cursor) {

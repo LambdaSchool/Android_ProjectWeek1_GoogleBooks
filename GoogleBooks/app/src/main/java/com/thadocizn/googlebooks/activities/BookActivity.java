@@ -49,24 +49,5 @@ public class BookActivity extends AppCompatActivity {
 
         model.getBookList().observe(this, listObserver);
 
-
-       /* new Thread(new Runnable() {
-            @Override
-            public void run() {
-                bookList = model.getBooks();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapter = new BookAdapter(bookList);
-                        recyclerView.setHasFixedSize(true);
-                        recyclerView.setLayoutManager(linearLayoutManager);
-                        recyclerView.setAdapter(adapter);
-                    }
-                });
-            }
-        }).start();*/
-
-
-
     }
 }

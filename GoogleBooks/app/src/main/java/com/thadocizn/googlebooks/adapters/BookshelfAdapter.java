@@ -1,7 +1,5 @@
 package com.thadocizn.googlebooks.adapters;
 
-import android.app.Activity;
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,21 +9,16 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.thadocizn.googlebooks.R;
-import com.thadocizn.googlebooks.bookInfo.BookViewModel;
 import com.thadocizn.googlebooks.bookshelfInfo.Bookshelf;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class BookshelfAdapter extends RecyclerView.Adapter<BookshelfAdapter.MyViewHolder> {
 
     private ArrayList<Bookshelf> bookshelfList;
-    private Context              context;
-    private Activity             activity;
 
-    public BookshelfAdapter(ArrayList<Bookshelf> bookshelfList, Activity activity) {
+    public BookshelfAdapter(ArrayList<Bookshelf> bookshelfList) {
         this.bookshelfList = bookshelfList;
-        this.activity = activity;
     }
 
 
@@ -33,7 +26,6 @@ public class BookshelfAdapter extends RecyclerView.Adapter<BookshelfAdapter.MyVi
     @Override
     public BookshelfAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
-        context = parent.getContext();
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_item_bookshelf, parent, false);
 
@@ -44,12 +36,12 @@ public class BookshelfAdapter extends RecyclerView.Adapter<BookshelfAdapter.MyVi
     public void onBindViewHolder(@NonNull BookshelfAdapter.MyViewHolder myViewHolder, int i) {
 
         Bookshelf bookshelf = bookshelfList.get(i);
+
         myViewHolder.bookshelfName.setText(bookshelf.getName());
         myViewHolder.addBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO decide on what I want to use
-                BookViewModel viewModel = new BookViewModel();
             }
         });
 
@@ -63,14 +55,10 @@ public class BookshelfAdapter extends RecyclerView.Adapter<BookshelfAdapter.MyVi
 
     @Override
     public int getItemCount() {
-        if (bookshelfList == null){
-            return 0;
-        }else {
-            return bookshelfList.size();
-        }
+        return bookshelfList.size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView bookshelfName;
         Button viewBooks;
         Button   addBook;

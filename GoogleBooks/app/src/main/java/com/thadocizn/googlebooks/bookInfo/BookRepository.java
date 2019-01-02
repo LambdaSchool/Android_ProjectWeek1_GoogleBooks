@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class BookRepository {
 
     ArrayList<BookClass> bookList;
-    MutableLiveData<ArrayList<BookClass>> liveData = new MutableLiveData<>();
+    MutableLiveData<ArrayList<BookClass>> liveData;
 
     public MutableLiveData<ArrayList<BookClass>> getBookList(){
         liveData = new MutableLiveData<>();
