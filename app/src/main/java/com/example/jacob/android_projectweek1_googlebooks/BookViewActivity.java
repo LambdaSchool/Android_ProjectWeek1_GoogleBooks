@@ -89,6 +89,13 @@ public class BookViewActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.button_add_to_bookshelf).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PublicFunctions.bookshelfSelectionDialog(context, book, false);
+            }
+        });
+
         findViewById(R.id.button_book_view_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

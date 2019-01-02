@@ -67,6 +67,16 @@
         app:layout_constraintTop_toBottomOf="@id/text_book_view_read_label"
         />
 
+    <ImageButton
+        android:id="@+id/button_add_to_bookshelf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:paddingTop="10dp"
+        android:src="@android:drawable/ic_input_add"
+        app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintTop_toBottomOf="@id/switch_has_been_read" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
