@@ -21,12 +21,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.facebook.stetho.Stetho;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.io.File;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -86,26 +80,12 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-
-/*        FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_BOOKS).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<Book> books = new ArrayList<>();
-                books = (ArrayList<Book>) dataSnapshot.getValue();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });*/
-
         bookshelfTitles = new ArrayList<>();
         recyclerView = findViewById(R.id.search_recycler_view);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
-        listAdapter = new SearchListAdapter(booksList, this, bookshelfTitles);
+        listAdapter = new SearchListAdapter(booksList, this);
         recyclerView.setAdapter(listAdapter);
         updateSpinnerList();
     }
@@ -172,16 +152,7 @@ public class MainActivity extends AppCompatActivity {
         final Observer<ArrayList<Bookshelf>> observer = new Observer<ArrayList<Bookshelf>>() {
             @Override
             public void onChanged(@Nullable ArrayList<Bookshelf> bookshelvesList) {
-                if (bookshelvesList != null) {
-                    bookshelfTitles.clear();
-                    bookshelfTitles.add("");
-                    for (int i =2; i < bookshelvesList.size(); i++) {
-                        if (i >= Constants.DEFAULT_BOOKSHELVES.length) {
-                            bookshelfTitles.add(bookshelvesList.get(i).getTitle());
-                        }
-                    }
-                    listAdapter.notifyDataSetChanged();
-                }
+            //TODO Make this somehow different so as not to have to get Firebase data like this.
             }
         };
         viewModel.getBookshelvesList().observe(this, observer);

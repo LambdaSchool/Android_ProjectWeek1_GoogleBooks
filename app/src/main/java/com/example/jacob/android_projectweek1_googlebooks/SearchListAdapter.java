@@ -11,14 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.io.File;
@@ -33,7 +28,6 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
         TextView bookTitle, bookContent;
         ImageView imageView;
         ViewGroup parentView;
-        Spinner spinner;
         ImageButton imageButton;
 
         public ViewHolder(@NonNull View itemView) {
@@ -41,7 +35,6 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
             imageView = itemView.findViewById(R.id.image_search_element);
             bookTitle = itemView.findViewById(R.id.text_search_element_title);
             bookContent = itemView.findViewById(R.id.text_search_element_content);
-            spinner = itemView.findViewById(R.id.spinner_search_element);
             parentView = itemView.findViewById(R.id.search_element_parent_layout);
             imageButton = itemView.findViewById(R.id.button_add_book);
         }
@@ -50,12 +43,10 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
     private ArrayList<Book> dataList;
     private Context context;
     private Activity activity;
-    private ArrayList<String> spinnerArray;
 
-    SearchListAdapter(ArrayList<Book> dataList, Activity activity, ArrayList<String> spinnerArray) {
+    SearchListAdapter(ArrayList<Book> dataList, Activity activity) {
         this.dataList = dataList;
         this.activity = activity;
-        this.spinnerArray = spinnerArray;
     }
 
     @NonNull
@@ -82,28 +73,6 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
                 showSelectionDialog(context, data);
             }
         });
-
-
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, spinnerArray);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        viewHolder.spinner.setAdapter(arrayAdapter);
-        viewHolder.spinner.setSelection(0, false);
-        viewHolder.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedItem = (String) parent.getItemAtPosition(position);
-                if (!selectedItem.equals("")) {
-                    BooksDbDao.addBook(data);
-                    BookshelfDbDao.addBooktoBookshelf(selectedItem, data);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
 
         String imageUrl = data.getImageUrl();
         if (imageUrl != null) {
