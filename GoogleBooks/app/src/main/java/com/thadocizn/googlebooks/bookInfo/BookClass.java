@@ -20,11 +20,11 @@ public class BookClass implements Parcelable {
                      String bookImageUrl,
                      String bookReview,
                      boolean readBook) {
-        this.bookKeyId = bookKeyId;
-        this.bookId = bookId;
-        this.bookTitle = bookTitle;
+        this.bookKeyId    = bookKeyId;
+        this.bookId       = bookId;
+        this.bookTitle    = bookTitle;
         this.bookImageUrl = bookImageUrl;
-        this.bookReview = bookReview;
+        this.bookReview   = bookReview;
         if (readBook) {
             this.readBook = 0;
         } else {
@@ -34,12 +34,12 @@ public class BookClass implements Parcelable {
     }
 
     protected BookClass(Parcel in) {
-        bookKeyId = in.readLong();
-        bookId = in.readString();
-        bookTitle = in.readString();
+        bookKeyId    = in.readLong();
+        bookId       = in.readString();
+        bookTitle    = in.readString();
         bookImageUrl = in.readString();
-        bookReview = in.readString();
-        readBook = in.readInt();
+        bookReview   = in.readString();
+        readBook     = in.readInt();
     }
 
     public static final Creator<BookClass> CREATOR = new Creator<BookClass>() {
@@ -63,12 +63,12 @@ public class BookClass implements Parcelable {
     }
 
     public BookClass() {
-        bookKeyId = 0;
-        bookId = "";
-        bookTitle = "";
+        bookKeyId    = 0;
+        bookId       = "";
+        bookTitle    = "";
         bookImageUrl = "";
-        bookReview = "";
-        readBook = -1;
+        bookReview   = "";
+        readBook     = -1;
     }
 
     public String getBookId() {

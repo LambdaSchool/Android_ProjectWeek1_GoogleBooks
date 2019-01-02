@@ -8,7 +8,7 @@ public class BookDbContract {
 
         public static final String TABLE_NAME_BOOK                 = "book";
 
-        public static final String BOOK_COLUMN_NAME_BOOK_KEY        = "_ID";
+        public static final String BOOK_COLUMN_NAME_BOOK_KEY       = "_ID";
         public static final String BOOK_COLUMN_NAME_BOOK_ID        = "book_id";
         public static final String BOOK_COLUMN_NAME_BOOK_TITLE     = "title";
         public static final String BOOK_COLUMN_NAME_BOOK_IMAGE_URL = "image";
@@ -63,10 +63,8 @@ public class BookDbContract {
                 _ID,
                 BOOKS_BOOKSHELF_COLUMN_NAME_BOOK_ID,
                 BOOKS_BOOKSHELF_COLUMN_NAME_BOOkSHELF_ID,
-                BOOKS_BOOKSHELF_COLUMN_NAME_BOOK_ID,
-                TABLE_NAME_BOOK, BOOK_COLUMN_NAME_BOOK_ID,
-                BOOKS_BOOKSHELF_COLUMN_NAME_BOOkSHELF_ID,
-                BOOKSHELF_TABLE_NAME, BOOKSHELF_COLUMN_NAME_SHELF_ID);
+                BOOKS_BOOKSHELF_COLUMN_NAME_BOOK_ID, TABLE_NAME_BOOK, BOOK_COLUMN_NAME_BOOK_ID,
+                BOOKS_BOOKSHELF_COLUMN_NAME_BOOkSHELF_ID, BOOKSHELF_TABLE_NAME, BOOKSHELF_COLUMN_NAME_SHELF_ID);
 
         public static final String SQL_DELETE_TABLE_BOOK =
                 "DROP TABLE IF EXISTS " + TABLE_NAME_BOOK + ";";

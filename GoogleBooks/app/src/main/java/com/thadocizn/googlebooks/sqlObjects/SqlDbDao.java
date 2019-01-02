@@ -68,7 +68,7 @@ public class SqlDbDao {
         ArrayList<Bookshelf> bookshelves = new ArrayList<>();
 
         if (db != null) {
-            Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s;",
+            Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s",
                     BookDbContract.BookEntry.BOOKSHELF_TABLE_NAME), null);
 
             while (cursor.moveToNext()) {
@@ -194,7 +194,7 @@ public class SqlDbDao {
         ArrayList<BookClass> books = new ArrayList<>();
 
         if (db != null) {
-            Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s;",
+            Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s",
                     BookDbContract.BookEntry.TABLE_NAME_BOOK), null);
 
             while (cursor.moveToNext()) {
