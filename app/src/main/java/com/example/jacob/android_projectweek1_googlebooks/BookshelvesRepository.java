@@ -69,6 +69,9 @@ public class BookshelvesRepository {
 //                        for (Bookshelf bookshelf : bookshelves) {
 //                            BookshelfDbDao.addBookshelf(bookshelf.getTitle());
 //                        }
+                        int tempInt = BookshelfDbDao.readAllBookshelves().size();
+                        int temp2Int = Constants.DEFAULT_BOOKSHELVES.length;
+                        Boolean temp3 = (tempInt < temp2Int);
 
                         if (BookshelfDbDao.readAllBookshelves().size() < Constants.DEFAULT_BOOKSHELVES.length) {
                             //Create 2 default tables

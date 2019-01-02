@@ -1,6 +1,7 @@
 package com.example.jacob.android_projectweek1_googlebooks;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,10 +10,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -74,8 +79,7 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
         viewHolder.imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BooksDbDao.addBook(data);
-                BookshelfDbDao.addBooktoBookshelf(Constants.DEFAULT_BOOKSHELVES[0], data);
+                showSelectionDialog(context, data);
             }
         });
 
@@ -137,4 +141,34 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
         }
         return file;
     }
+
+    private void showSelectionDialog(Context context, Book book) {
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_select_bookshelf);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setCancelable(true);
+
+        LinearLayout parentLayout = dialog.findViewById(R.id.layout_bookshelf_selection);
+
+
+        ArrayList<Bookshelf> bookshelves = BookshelfDbDao.readAllBookshelves();
+        for (Bookshelf bookshelf:bookshelves) {
+            TextView view = new TextView(context);
+            view.setText(bookshelf.getTitle());
+            view.setTextSize(28);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    BooksDbDao.addBook(book);
+                    BookshelfDbDao.addBooktoBookshelf(Constants.DEFAULT_BOOKSHELVES[0], book);
+                    BookshelfDbDao.addBooktoBookshelf(view.getText().toString(), book);
+                    dialog.dismiss();
+                }
+            });
+            parentLayout.addView(view);
+        }
+        dialog.show();
+    }
+
 }

@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Book> booksList = new ArrayList<>();
     private LinearLayoutManager layoutManager;
     private RecyclerView recyclerView;
-    private SearchListAdapter listAdapter;
+    SearchListAdapter listAdapter;
     ArrayList<String> bookshelfTitles;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -101,14 +101,13 @@ public class MainActivity extends AppCompatActivity {
         });*/
 
         bookshelfTitles = new ArrayList<>();
-        updateSpinnerList();
-
         recyclerView = findViewById(R.id.search_recycler_view);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
         listAdapter = new SearchListAdapter(booksList, this, bookshelfTitles);
         recyclerView.setAdapter(listAdapter);
+        updateSpinnerList();
     }
 
     public class getBooksTask extends AsyncTask<String, Integer, ArrayList<Book>> {
@@ -127,23 +126,9 @@ public class MainActivity extends AppCompatActivity {
             booksList.addAll(books);
             listAdapter.notifyDataSetChanged();
             for (int i = 0; i < books.size(); ++i) {
-                String imageUrl = books.get(i).getImageUrl();
-                if (imageUrl != null) {
-                    String[] urlParts = imageUrl.substring(imageUrl.indexOf("id=") + 3).split("&");
-                    String searchText = urlParts[0];
-                    File[] items = context.getCacheDir().listFiles();
-                    Boolean fileFound = false;
-                    for (File item : items) {
-                        if (item.getName().contains(searchText)) {
-                            fileFound = true;
-                            break;
-                        }
-                    }
-                    if (!fileFound) {
-                        new getBookImageTask().execute(imageUrl, String.valueOf(i));
-                    }
-                }
+                new getBookImageTask().execute(books.get(i).getImageUrl(), String.valueOf(i));
             }
+
         }
 
         @Override
@@ -177,11 +162,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        updateSpinnerList();
+//        updateSpinnerList();
     }
 
     private void updateSpinnerList() {
-        BookshelvesListAdapter listAdapter;
         BookshelvesViewModel viewModel;
 
         viewModel = ViewModelProviders.of(this).get(BookshelvesViewModel.class);
@@ -191,11 +175,12 @@ public class MainActivity extends AppCompatActivity {
                 if (bookshelvesList != null) {
                     bookshelfTitles.clear();
                     bookshelfTitles.add("");
-                    for (int i = 0; i < bookshelvesList.size(); i++) {
+                    for (int i =2; i < bookshelvesList.size(); i++) {
                         if (i >= Constants.DEFAULT_BOOKSHELVES.length) {
                             bookshelfTitles.add(bookshelvesList.get(i).getTitle());
                         }
                     }
+                    listAdapter.notifyDataSetChanged();
                 }
             }
         };

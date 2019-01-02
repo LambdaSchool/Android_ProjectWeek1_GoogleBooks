@@ -43,9 +43,41 @@ public class BookGoogleApiDao {
         return books;
     }
 
-    public static File getImageFile(String url, Context context) {
+    static void getImageFile(String url, Context context) {
         File file = null;
+
         if (url != null) {
+            String[] urlParts = url.substring(url.indexOf("id=") + 3).split("&");
+            String searchText = urlParts[0];
+            File[] items = context.getCacheDir().listFiles();
+            Boolean fileFound = false;
+            for (File item : items) {
+                if (item.getName().contains(searchText)) {
+                    fileFound = true;
+                    break;
+                }
+            }
+            if (!fileFound) {
+                Bitmap bitmap = NetworkAdapter.httpImageRequest(url);
+                FileOutputStream fileOutputStream = null;
+                try {
+                    file = File.createTempFile(searchText, null, context.getCacheDir());
+                    fileOutputStream = new FileOutputStream(file);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (fileOutputStream != null) {
+                        try {
+                            fileOutputStream.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
+/*        if (url != null) {
             Bitmap bitmap = NetworkAdapter.httpImageRequest(url);
             String[] urlParts = url.substring(url.indexOf("id=")+3).split("&");
             String fileName = urlParts[0];
@@ -66,7 +98,6 @@ public class BookGoogleApiDao {
                     }
                 }
             }
-        }
-        return file;
+        }*/
     }
 }
