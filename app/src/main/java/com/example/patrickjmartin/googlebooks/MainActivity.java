@@ -14,6 +14,10 @@ import android.widget.EditText;
 import com.example.patrickjmartin.googlebooks.apiaccess.GoogleBooksApiDao;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -61,39 +65,43 @@ public class MainActivity extends AppCompatActivity {
 
         searchRecyclerView.setAdapter(searchAdapter);
 
-        findViewById(R.id.view_books_details).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent bookDetailsIntent = new Intent(context, BookDetailsActivity.class);
+        findViewById(R.id.view_books_details).setOnClickListener(v -> {
+            Intent bookDetailsIntent = new Intent(context, BookDetailsActivity.class);
 
-                selectedBooks = searchAdapter.getChosenBooks();
-                //searchAdapter.clearChosenBooks();
+            selectedBooks = searchAdapter.getChosenBooks();
+            //searchAdapter.clearChosenBooks();
 
 
-                if(selectedBooks != null) {
-                    selectedBooks.forEach((n) -> n.setSelected(false));
-                    bookDetailsIntent.putParcelableArrayListExtra("foundbooks", selectedBooks);
-                    startActivity(bookDetailsIntent);
-                } else {
-                    startActivity(bookDetailsIntent);
-                }
-
-
-
-
+            if(selectedBooks != null) {
+                selectedBooks.forEach((n) -> n.setSelected(false));
+                bookDetailsIntent.putParcelableArrayListExtra("foundbooks", selectedBooks);
+                startActivity(bookDetailsIntent);
+            } else {
+                startActivity(bookDetailsIntent);
             }
+
+
+
+
         });
 
-        findViewById(R.id.view_bookshelf_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent bookShelfIntent = new Intent(context, BookshelfActivity.class);
+        findViewById(R.id.view_bookshelf_button).setOnClickListener(v -> {
+            selectedBooks = searchAdapter.getChosenBooks();
+
+            if (selectedBooks != null) {
 
             }
+
+            Intent bookShelfIntent = new Intent(context, BookshelfActivity.class);
+            bookShelfIntent.putParcelableArrayListExtra("organizeBooks", selectedBooks);
+
+
         });
 
 
     }
+
+
 
     @Override
     protected void onResume() {

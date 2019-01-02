@@ -93,22 +93,19 @@ public class BookSearchAdapter extends RecyclerView.Adapter<BookSearchAdapter.Vi
                 "\nPublish Date: " + b.getPublishDate();
         holder.bookDetails.setText(text);
 
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(b.isSelected()) {
-                    b.setSelected(false);
-                    chosenBooks.remove(b);
-                    Toast.makeText(context, "Current picked count: " + chosenBooks.size(), Toast.LENGTH_SHORT).show();
-                } else {
-                    b.setSelected(true);
-                    chosenBooks.add(b);
-                    Toast.makeText(context, "Current picked count: " + chosenBooks.size(), Toast.LENGTH_SHORT).show();
-                }
-
-                //notifyDataSetChanged();
-                notifyItemChanged(holder.getAdapterPosition());
+        holder.cardView.setOnClickListener(v -> {
+            if(b.isSelected()) {
+                b.setSelected(false);
+                chosenBooks.remove(b);
+                Toast.makeText(context, "Current picked count: " + chosenBooks.size(), Toast.LENGTH_SHORT).show();
+            } else {
+                b.setSelected(true);
+                chosenBooks.add(b);
+                Toast.makeText(context, "Current picked count: " + chosenBooks.size(), Toast.LENGTH_SHORT).show();
             }
+
+            //notifyDataSetChanged();
+            notifyItemChanged(holder.getAdapterPosition());
         });
 
 
@@ -128,7 +125,7 @@ public class BookSearchAdapter extends RecyclerView.Adapter<BookSearchAdapter.Vi
 
 
         public DownloadBookImageTask(ImageView bookImageView, ProgressBar progressBar) {
-            this.imageViewWeakReference = new WeakReference<ImageView>(bookImageView);
+            this.imageViewWeakReference = new WeakReference<>(bookImageView);
             this.progressBar = progressBar;
         }
 
@@ -142,8 +139,8 @@ public class BookSearchAdapter extends RecyclerView.Adapter<BookSearchAdapter.Vi
 
         @Override
         protected Bitmap doInBackground(String... strings) {
-            String url = strings[0];//.replace("http:", "https:");
-            Bitmap image = null;
+            String url = strings[0];
+            Bitmap image;
             InputStream in;
             try {
                 URL imageURL = new URL(url);

@@ -11,7 +11,7 @@ import org.json.JSONObject;
 
 public class Book implements Parcelable {
 
-    private String title, author, review, publishDate, googleBooksID, image, bookshelfHomes;
+    private String title, author, review, publishDate, googleBooksID, image;
     private int isRead;
     private boolean isFavorite, isSelected;
 
@@ -46,7 +46,6 @@ public class Book implements Parcelable {
             e.printStackTrace();
         }
 
-        this.bookshelfHomes = "";
         this.isRead = 0;
         this.isFavorite = false;
         this.isSelected = false;
@@ -66,7 +65,7 @@ public class Book implements Parcelable {
         publishDate = in.readString();
         googleBooksID = in.readString();
         image = in.readString();
-        bookshelfHomes = in.readString();
+
         isRead = in.readInt();
         isFavorite = in.readByte() != 0;
         isSelected = in.readByte() != 0;
@@ -130,28 +129,8 @@ public class Book implements Parcelable {
         return image;
     }
 
-    public String getBookshelfHomes() {
-        return bookshelfHomes;
-    }
-
     public int getRead() {
         return isRead;
-    }
-
-    public void setBookshelfHomes(String bookshelfHomes) {
-
-        if (this.bookshelfHomes == "") this.bookshelfHomes = bookshelfHomes;
-        else this.bookshelfHomes += ("," + bookshelfHomes);
-    }
-
-    public void removeBookShelfHomes(String bookshelfToBeRemoved) {
-
-        String compare = this.bookshelfHomes;
-        this.bookshelfHomes.replaceAll("," + bookshelfToBeRemoved, "");
-
-        if(compare == this.bookshelfHomes) {
-            this.bookshelfHomes.replaceAll(bookshelfToBeRemoved + ",", "");
-        }
     }
 
     public void setRead(int read) {
@@ -171,7 +150,6 @@ public class Book implements Parcelable {
         dest.writeString(publishDate);
         dest.writeString(googleBooksID);
         dest.writeString(image);
-        dest.writeString(bookshelfHomes);
         dest.writeInt(isRead);
         dest.writeByte((byte)(isFavorite ? 1 : 0));
         dest.writeByte((byte)(isSelected ? 1 : 0));
@@ -209,14 +187,12 @@ public class Book implements Parcelable {
                         "Author: %s\n" +
                         "Review: %s\n" +
                         "Publish Date: %s\n" +
-                        "GoogleBooks ID: %s\n" +
-                        "Bookshelve(s): %s\n",
+                        "GoogleBooks ID: %s\n",
                 title,
                 author,
                 review,
                 publishDate,
-                googleBooksID,
-                bookshelfHomes
+                googleBooksID
         );
 
         return bookInfo;
