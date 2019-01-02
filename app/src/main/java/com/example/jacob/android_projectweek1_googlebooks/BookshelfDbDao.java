@@ -191,6 +191,8 @@ public class BookshelfDbDao extends BooksDbDao {
             Bookshelf bookshelf = new Bookshelf(bookshelfId, null, null);
             if (cursor.moveToNext() && (cursor.getCount() == 1)) {
                 int index;
+                index = cursor.getColumnIndexOrThrow(BooksDbContract.BookEntry.COLUMN_NAME_TITLE);
+                bookshelf.setTitle(cursor.getString(index));
                 index = cursor.getColumnIndexOrThrow(BooksDbContract.BookEntry.COLUMN_NAME_BOOK_IDS);
                 String rawString = cursor.getString(index);
                 if (rawString != null) {

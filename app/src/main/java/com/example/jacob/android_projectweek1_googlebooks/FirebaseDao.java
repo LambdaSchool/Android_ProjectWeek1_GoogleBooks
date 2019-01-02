@@ -71,8 +71,8 @@ public class FirebaseDao {
     }
 
     public static void updateBookshelf(Bookshelf bookshelf) {
-        //I'm sure there's a better way to do this than deleting the whole thing and then re-creating it.
-        deleteBookshelf(bookshelf);
-        createBookshelf(bookshelf);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference reference = database.getReference(Constants.FIREBASE_BOOKSHELVES).child(String.valueOf(bookshelf.getId()));
+        reference.child("books").setValue(bookshelf.getBooks());
     }
 }

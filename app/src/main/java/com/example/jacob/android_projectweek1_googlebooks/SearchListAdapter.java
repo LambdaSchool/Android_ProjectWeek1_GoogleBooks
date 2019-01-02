@@ -70,7 +70,8 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
         viewHolder.imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSelectionDialog(context, data);
+                PublicFunctions.bookshelfSelectionDialog(context, data, true);
+//                showSelectionDialog(context, data);
             }
         });
 
@@ -110,34 +111,4 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
         }
         return file;
     }
-
-    private void showSelectionDialog(Context context, Book book) {
-        final Dialog dialog = new Dialog(context);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_select_bookshelf);
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.setCancelable(true);
-
-        LinearLayout parentLayout = dialog.findViewById(R.id.layout_bookshelf_selection);
-
-
-        ArrayList<Bookshelf> bookshelves = BookshelfDbDao.readAllBookshelves();
-        for (Bookshelf bookshelf:bookshelves) {
-            TextView view = new TextView(context);
-            view.setText(bookshelf.getTitle());
-            view.setTextSize(28);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    BooksDbDao.addBook(book);
-                    BookshelfDbDao.addBooktoBookshelf(Constants.DEFAULT_BOOKSHELVES[0], book);
-                    BookshelfDbDao.addBooktoBookshelf(view.getText().toString(), book);
-                    dialog.dismiss();
-                }
-            });
-            parentLayout.addView(view);
-        }
-        dialog.show();
-    }
-
 }
