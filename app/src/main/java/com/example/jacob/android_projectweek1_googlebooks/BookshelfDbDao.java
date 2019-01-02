@@ -15,7 +15,35 @@ public class BookshelfDbDao extends BooksDbDao {
             Bookshelf bookshelf = readBookshelf(resultId);
             FirebaseDao.createBookshelf(bookshelf);
         }
+    }
 
+    static void addBookshelf(Bookshelf bookshelf) {
+        if (db != null) {
+            Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE %s = '%s'",
+                    BooksDbContract.BookEntry.BOOKSHELF_TABLE_NAME,
+                    BooksDbContract.BookEntry.COLUMN_NAME_TITLE,
+                    bookshelf.getTitle()),
+                    null);
+            if (cursor.getCount() == 0) {
+                ContentValues values = new ContentValues();
+                values.put(BooksDbContract.BookEntry._ID, bookshelf.getId());
+                values.put(BooksDbContract.BookEntry.COLUMN_NAME_TITLE, bookshelf.getTitle());
+                ArrayList<Book> books = bookshelf.getBooks();
+                if (books != null) {
+                    ArrayList<String> bookIds = new ArrayList<>();
+                    for (Book book : books) {
+                        bookIds.add(book.getId());
+                    }
+                    String idsToString = bookIds.toString();
+                    idsToString = idsToString.substring(1, idsToString.length() - 1);
+                    values.put(BooksDbContract.BookEntry.COLUMN_NAME_BOOK_IDS, idsToString);
+                }
+                int resultId = Math.toIntExact(db.insert(BooksDbContract.BookEntry.BOOKSHELF_TABLE_NAME, null, values));
+            } else {
+                updateBookshelf(bookshelf);
+            }
+            cursor.close();
+        }
     }
 
     static ArrayList<Bookshelf> readAllBookshelves() {
@@ -62,13 +90,15 @@ public class BookshelfDbDao extends BooksDbDao {
                 values.put(BooksDbContract.BookEntry._ID, bookshelf.getId());
                 values.put(BooksDbContract.BookEntry.COLUMN_NAME_TITLE, bookshelf.getTitle());
                 ArrayList<Book> books = bookshelf.getBooks();
-                ArrayList<String> bookIds = new ArrayList<>();
-                for (Book book : books) {
-                    bookIds.add(book.getId());
+                if (books != null) {
+                    ArrayList<String> bookIds = new ArrayList<>();
+                    for (Book book : books) {
+                        bookIds.add(book.getId());
+                    }
+                    String idsToString = bookIds.toString();
+                    idsToString = idsToString.substring(1, idsToString.length() - 1);
+                    values.put(BooksDbContract.BookEntry.COLUMN_NAME_BOOK_IDS, idsToString);
                 }
-                String idsToString = bookIds.toString();
-                idsToString = idsToString.substring(1, idsToString.length() - 1);
-                values.put(BooksDbContract.BookEntry.COLUMN_NAME_BOOK_IDS, idsToString);
                 db.update(BooksDbContract.BookEntry.BOOKSHELF_TABLE_NAME, values, whereClause, null);
                 FirebaseDao.updateBookshelf(bookshelf);
             }

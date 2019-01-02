@@ -1,10 +1,13 @@
 package com.example.jacob.android_projectweek1_googlebooks;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 
@@ -178,13 +181,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateSpinnerList() {
-        ArrayList<Bookshelf> bookshelves = BookshelfDbDao.readAllBookshelves();
-        bookshelfTitles.clear();
-        bookshelfTitles.add("");
-        for (int i = 0; i < bookshelves.size(); i++) {
-            if (i >= Constants.DEFAULT_BOOKSHELVES.length) {
-                bookshelfTitles.add(bookshelves.get(i).getTitle());
+        BookshelvesListAdapter listAdapter;
+        BookshelvesViewModel viewModel;
+
+        viewModel = ViewModelProviders.of(this).get(BookshelvesViewModel.class);
+        final Observer<ArrayList<Bookshelf>> observer = new Observer<ArrayList<Bookshelf>>() {
+            @Override
+            public void onChanged(@Nullable ArrayList<Bookshelf> bookshelvesList) {
+                if (bookshelvesList != null) {
+                    bookshelfTitles.clear();
+                    bookshelfTitles.add("");
+                    for (int i = 0; i < bookshelvesList.size(); i++) {
+                        if (i >= Constants.DEFAULT_BOOKSHELVES.length) {
+                            bookshelfTitles.add(bookshelvesList.get(i).getTitle());
+                        }
+                    }
+                }
             }
-        }
+        };
+        viewModel.getBookshelvesList().observe(this, observer);
     }
 }

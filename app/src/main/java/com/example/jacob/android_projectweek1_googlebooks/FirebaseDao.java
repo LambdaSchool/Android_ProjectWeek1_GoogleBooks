@@ -2,6 +2,7 @@ package com.example.jacob.android_projectweek1_googlebooks;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -16,17 +17,21 @@ import java.util.ArrayList;
 public class FirebaseDao {
 
     public static void MonitorBooks() {
-        FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_BOOKS).addListenerForSingleValueEvent(new ValueEventListener() {
+        ArrayList<Bookshelf> bookshelves = new ArrayList<>();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_BOOKS);
+        ValueEventListener dbListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                Bookshelf bookshelf = dataSnapshot.getValue(Bookshelf.class);
+                BookshelfDbDao.updateBookshelf(bookshelf);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        };
+        reference.addValueEventListener(dbListener);
     }
 
     public static void createBook(Book book) {
@@ -69,14 +74,5 @@ public class FirebaseDao {
         //I'm sure there's a better way to do this than deleting the whole thing and then re-creating it.
         deleteBookshelf(bookshelf);
         createBookshelf(bookshelf);
-    }
-
-    public ArrayList<Bookshelf> getBookshelves() {
-        ArrayList<Bookshelf> bookshelves = new ArrayList<>();
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference reference = database.getReference(Constants.FIREBASE_BOOKSHELVES);
-        reference.getDatabase();
-
-        return bookshelves;
     }
 }

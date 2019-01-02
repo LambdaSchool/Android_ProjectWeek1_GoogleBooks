@@ -30,7 +30,6 @@ import java.util.ArrayList;
 public class BookshelvesActivity extends AppCompatActivity {
 
     Context context;
-    private ArrayList<Bookshelf> bookshelves = new ArrayList<>();
     private LinearLayoutManager layoutManager;
     private RecyclerView recyclerView;
     private BookshelvesListAdapter listAdapter;
@@ -56,17 +55,6 @@ public class BookshelvesActivity extends AppCompatActivity {
                 showMyDialog(context);
             }
         });
-
-
-        bookshelves = BookshelfDbDao.readAllBookshelves();
-        if (bookshelves.size() < Constants.DEFAULT_BOOKSHELVES.length) {
-            //Create 2 default tables
-            for (String shelfTitle : Constants.DEFAULT_BOOKSHELVES) {
-                BookshelfDbDao.addBookshelf(shelfTitle);
-            }
-            bookshelves = BookshelfDbDao.readAllBookshelves();
-        }
-
 
         recyclerView = findViewById(R.id.recycler_view_bookshelves);
         recyclerView.setHasFixedSize(true);

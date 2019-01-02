@@ -12,6 +12,7 @@ public class Bookshelf {
         this.title = title;
         this.books = books;
     }
+    public Bookshelf() {}
 
     public int getId() {
         return id;

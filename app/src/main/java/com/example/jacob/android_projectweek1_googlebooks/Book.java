@@ -20,6 +20,8 @@ public class Book {
         this.hasBeenRead = hasBeenRead;
     }
 
+    public Book(){}
+
     public Book(JSONObject inputJson) {
 
         try {
