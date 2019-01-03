@@ -21,21 +21,26 @@ public class PublicFunctions {
 
 
         ArrayList<Bookshelf> bookshelves = BookshelfDbDao.readAllBookshelves();
-        for (Bookshelf bookshelf:bookshelves) {
-            TextView view = new TextView(context);
-            view.setText(bookshelf.getTitle());
-            view.setTextSize(28);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (addToDb) {
-                        BooksDbDao.addBook(book);
+        if (bookshelves.size() > 2) {
+            for (int i = 2; i < bookshelves.size(); ++i) {
+                Bookshelf bookshelf = bookshelves.get(i);
+                TextView view = new TextView(context);
+                view.setText(bookshelf.getTitle());
+                view.setTextSize(28);
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (addToDb) {
+                            BooksDbDao.addBook(book);
+                        }
+                        BookshelfDbDao.addBooktoBookshelf(view.getText().toString(), book);
+                        dialog.dismiss();
                     }
-                    BookshelfDbDao.addBooktoBookshelf(view.getText().toString(), book);
-                    dialog.dismiss();
-                }
-            });
-            parentLayout.addView(view);
+                });
+                parentLayout.addView(view);
+            }
+        } else {
+
         }
         dialog.show();
     }

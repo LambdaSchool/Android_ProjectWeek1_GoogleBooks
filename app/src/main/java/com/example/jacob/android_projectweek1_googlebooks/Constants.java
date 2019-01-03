@@ -6,4 +6,5 @@ public class Constants {
     public static final String FIREBASE_BOOKS = "Books";
     public static final String FIREBASE_BOOKSHELVES = "Bookshelves";
     public static final String[] DEFAULT_BOOKSHELVES = {"Unread Books", "Read Books"};
+    public static final int RC_SIGN_IN = 13547;
 }

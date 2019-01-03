@@ -21,7 +21,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.facebook.stetho.Stetho;
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.IdpResponse;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     SearchListAdapter listAdapter;
     ArrayList<String> bookshelfTitles;
+    private FirebaseAuth mAuth;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -56,6 +64,27 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            List<AuthUI.IdpConfig> providers = Arrays.asList(
+                    new AuthUI.IdpConfig.EmailBuilder().build(),
+                    new AuthUI.IdpConfig.PhoneBuilder().build(),
+                    new AuthUI.IdpConfig.GoogleBuilder().build());
+
+            startActivityForResult(
+                    AuthUI.getInstance()
+                            .createSignInIntentBuilder()
+                            .setAvailableProviders(providers)
+                            .build(),
+                    Constants.RC_SIGN_IN);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +117,32 @@ public class MainActivity extends AppCompatActivity {
         listAdapter = new SearchListAdapter(booksList, this);
         recyclerView.setAdapter(listAdapter);
         updateSpinnerList();
+
+//        Intent intent = new Intent(context, GoogleSignInActivity.class);
+//        startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == Constants.RC_SIGN_IN) {
+            IdpResponse response = IdpResponse.fromResultIntent(data);
+
+            if (resultCode == RESULT_OK) {
+                // Successfully signed in
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
+                // ...
+            } else {
+                // Sign in failed. If response is null the user canceled the
+                // sign-in flow using the back button. Otherwise check
+                // response.getError().getErrorCode() and handle the error.
+                // ...
+            }
+        }
+
     }
 
     public class getBooksTask extends AsyncTask<String, Integer, ArrayList<Book>> {
@@ -152,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
         final Observer<ArrayList<Bookshelf>> observer = new Observer<ArrayList<Bookshelf>>() {
             @Override
             public void onChanged(@Nullable ArrayList<Bookshelf> bookshelvesList) {
-            //TODO Make this somehow different so as not to have to get Firebase data like this.
+                //TODO Make this somehow different so as not to have to get Firebase data like this.
             }
         };
         viewModel.getBookshelvesList().observe(this, observer);
