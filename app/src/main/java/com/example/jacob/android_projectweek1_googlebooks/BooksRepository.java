@@ -23,7 +23,7 @@ public class BooksRepository {
             @Override
             public void run() {
 //                DatabaseReference reference = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_BOOKSHELVES).child(String.valueOf(bookshelf.getId())).child("books");
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_BOOKSHELVES).child(String.valueOf(bookshelf.getId()));
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference(FirebaseDao.getUser()).child(Constants.FIREBASE_BOOKSHELVES).child(String.valueOf(bookshelf.getId()));
                 ValueEventListener dbListener = new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

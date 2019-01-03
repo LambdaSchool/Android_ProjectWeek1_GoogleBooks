@@ -21,17 +21,17 @@ public class BooksDbContract {
         static final String SQL_BOOK_TABLE = "CREATE TABLE " + BOOK_TABLE_NAME +
                 " (" +
                 _ID + " STRING PRIMARY KEY, " +
-                COLUMN_NAME_TITLE + " STRING, " +
-                COLUMN_NAME_AUTHOR + " STRING, " +
-                COLUMN_NAME_PUBLISHED_DATE + " STRING, " +
-                COLUMN_NAME_IMAGE_URL + " STRING, " +
+                COLUMN_NAME_TITLE + " TEXT, " +
+                COLUMN_NAME_AUTHOR + " TEXT, " +
+                COLUMN_NAME_PUBLISHED_DATE + " TEXT, " +
+                COLUMN_NAME_IMAGE_URL + " TEXT, " +
                 COLUMN_NAME_REVIEW + " TEXT, " +
                 COLUMN_NAME_HAS_BEEN_READ + " INTEGER);";
 
         static final String SQL_BOOKSHELF_TABLE = "CREATE TABLE " + BOOKSHELF_TABLE_NAME +
                 " (" +
                 _ID + " INTEGER PRIMARY KEY, " +
-                COLUMN_NAME_TITLE + " STRING, " +
+                COLUMN_NAME_TITLE + " TEXT, " +
                 COLUMN_NAME_BOOK_IDS + " TEXT);";
 
 //        static final String SQL_CREATE_TABLE = SQL_BOOK_TABLE + " " + SQL_BOOKSHELF_TABLE;

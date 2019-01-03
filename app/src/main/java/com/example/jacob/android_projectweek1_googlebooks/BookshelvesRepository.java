@@ -23,7 +23,7 @@ public class BookshelvesRepository {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_BOOKS);
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference(FirebaseDao.getUser()).child(Constants.FIREBASE_BOOKS);
                 ValueEventListener dbListener = new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -49,7 +49,7 @@ public class BookshelvesRepository {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_BOOKSHELVES);
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference(FirebaseDao.getUser()).child(Constants.FIREBASE_BOOKSHELVES);
                 ValueEventListener dbListener = new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -62,16 +62,6 @@ public class BookshelvesRepository {
                                 BookshelfDbDao.addBookshelf(bookshelf);
                             }
                         }
-//                        GenericTypeIndicator<ArrayList<Bookshelf>> t = new GenericTypeIndicator<ArrayList<Bookshelf>>() {
-//                        };
-//                        bookshelves = dataSnapshot.getValue(t);
-//                        bookshelves.removeIf(Objects::isNull);
-//                        for (Bookshelf bookshelf : bookshelves) {
-//                            BookshelfDbDao.addBookshelf(bookshelf.getTitle());
-//                        }
-                        int tempInt = BookshelfDbDao.readAllBookshelves().size();
-                        int temp2Int = Constants.DEFAULT_BOOKSHELVES.length;
-                        Boolean temp3 = (tempInt < temp2Int);
 
                         if (BookshelfDbDao.readAllBookshelves().size() < Constants.DEFAULT_BOOKSHELVES.length) {
                             //Create 2 default tables
