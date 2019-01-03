@@ -56,48 +56,32 @@ public class MainActivity extends AppCompatActivity {
         searchRecyclerView.setLayoutManager(gridLayoutManager);
         searchAdapter = new BookSearchAdapter(results, activity);
 
-        findViewById(R.id.search_books_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new getBooksTask().execute(searchBox.getText().toString());
-            }
-        });
+        findViewById(R.id.search_books_button).setOnClickListener(v -> new getBooksTask().
+                execute(searchBox.getText().toString()));
 
         searchRecyclerView.setAdapter(searchAdapter);
 
         findViewById(R.id.view_books_details).setOnClickListener(v -> {
             Intent bookDetailsIntent = new Intent(context, BookDetailsActivity.class);
-
             selectedBooks = searchAdapter.getChosenBooks();
-            //searchAdapter.clearChosenBooks();
-
 
             if(selectedBooks != null) {
                 selectedBooks.forEach((n) -> n.setSelected(false));
                 bookDetailsIntent.putParcelableArrayListExtra("foundbooks", selectedBooks);
                 startActivity(bookDetailsIntent);
-            } else {
-                startActivity(bookDetailsIntent);
-            }
-
-
-
-
+            } else startActivity(bookDetailsIntent);
         });
 
         findViewById(R.id.view_bookshelf_button).setOnClickListener(v -> {
+            Intent bookShelfIntent = new Intent(context, BookshelfActivity.class);
             selectedBooks = searchAdapter.getChosenBooks();
 
             if (selectedBooks != null) {
-
-            }
-
-            Intent bookShelfIntent = new Intent(context, BookshelfActivity.class);
-            bookShelfIntent.putParcelableArrayListExtra("organizeBooks", selectedBooks);
-
-
+                selectedBooks.forEach((n) -> n.setSelected(false));
+                bookShelfIntent.putParcelableArrayListExtra("organizeBooks", selectedBooks);
+                startActivity(bookShelfIntent);
+            } else startActivity(bookShelfIntent);
         });
-
 
     }
 
@@ -106,7 +90,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //selectedBooks.clear();
+        if (selectedBooks != null ) {
+            selectedBooks.clear();
+        }
+
     }
 
     public class getBooksTask extends AsyncTask<String, Void, ArrayList<Book>> {

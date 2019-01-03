@@ -1,17 +1,16 @@
 package com.example.patrickjmartin.googlebooks;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Library implements Serializable {
 
     private static volatile Library INSTANCE  ;
     private Map<String, ArrayList<Book>> bookShelf;
+    private ArrayList<String> libraryDirectory;
 
 
     private Library() {
@@ -23,6 +22,7 @@ public class Library implements Serializable {
             bookShelf.put("Reviewed", new ArrayList<>());
             bookShelf.put("Read", new ArrayList<>());
             bookShelf.put("Favorites", new ArrayList<>());
+            libraryDirectory = new ArrayList<>(bookShelf.keySet());
         }
 
     }
@@ -39,16 +39,59 @@ public class Library implements Serializable {
         return  INSTANCE;
     }
 
+
+
     public void addToBookshelf(String shelfName, Book toBeAdded) {
+        shelfName = toCamelCase(shelfName);
         bookShelf.computeIfAbsent(shelfName, k-> new ArrayList<>()).add(toBeAdded);
-        toBeAdded.setBookshelfHomes(shelfName);
+
     }
 
+    public void addToBookshelf(String shelfName) {
+        shelfName = toCamelCase(shelfName);
+        bookShelf.computeIfAbsent(shelfName, k-> new ArrayList<>());
+    }
+
+
     public void removeFromBookshelf(String shelfName, Book toBeRemoved) {
+        shelfName = toCamelCase(shelfName);
         bookShelf.computeIfPresent(shelfName, (k, v)-> v.remove(toBeRemoved) && v.isEmpty()
                 ? null : v );
-        toBeRemoved.removeBookShelfHomes(shelfName);
 
+
+    }
+
+    public void removeFromBookshelf(String shelfName) {
+        shelfName = toCamelCase(shelfName);
+
+        if (!Objects.equals(shelfName, "All Books")) {
+            bookShelf.remove(shelfName);
+            libraryDirectory.remove(shelfName);
+        }
+    }
+
+    public static String toCamelCase(String initString) {
+        String newString = "";
+        if (initString == null || initString == "" ) {
+            return newString;
+        } else {
+            String[] initAry = initString.split(" ");
+            for (int i = 0; i < initAry.length; i++) {
+                String first = initAry[i].substring(0,1).toUpperCase();
+                String rest = initAry[i].substring(1).toLowerCase();
+
+                if (i == 0) newString += (first + rest);
+                else newString += (" " + first + rest);
+            }
+        }
+        return newString;
+    }
+
+
+
+
+    public ArrayList getBookshelfNames() {
+        return new ArrayList<String>(bookShelf.keySet());
     }
 
 

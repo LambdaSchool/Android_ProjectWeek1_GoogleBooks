@@ -19,7 +19,7 @@ public class BookDetailsAdapter extends ArrayAdapter<Book> {
 
     private Context context;
     private Activity activity;
-    private ArrayList<Book> booksAList = new ArrayList<>();
+    private ArrayList<Book> booksAList;
 
 
     public BookDetailsAdapter(@NonNull Context context, @NonNull Activity activity, ArrayList<Book> aList) {
@@ -44,19 +44,17 @@ public class BookDetailsAdapter extends ArrayAdapter<Book> {
         final Book currentBook = booksAList.get(position);
         final ImageView image = listItem.findViewById(R.id.book_details_listview_image);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final Bitmap bitmap = NetworkAdapter.httpImageRequest(currentBook.getImage());
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        image.setImageBitmap(bitmap);
-                    }
-                });
+        new Thread(() -> {
+            final Bitmap bitmap = NetworkAdapter.httpImageRequest(currentBook.getImage());
+            activity.runOnUiThread(() -> image.setImageBitmap(bitmap));
 
-            }
         }).start();
+
+        if (context instanceof BookshelfActivity) {
+            image.setOnClickListener(v -> {
+
+            });
+        }
 
 
 

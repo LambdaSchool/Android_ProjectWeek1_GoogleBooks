@@ -11,4 +11,8 @@
     <string name="add_to_library_switch_text">Add to Library?</string>
     <string name="add_bookshelf_button_text">Add</string>
     <string name="search_books_button_text">Search Books</string>
+    <string name="delete_bookshelf_button_text">Delete</string>
+    <string name="library_bookdetails_button_text">Book Details</string>
+    <string name="library_searchbooks_button_text">Search Books</string>
+    <string name="library_selectedbooks_textview_text">Selected Books</string>
 </resources>
