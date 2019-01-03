@@ -62,8 +62,6 @@ public class BookshelfActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 new BookshelfDialog().show(getSupportFragmentManager(), "bookshelf");
-
-
             }
         });
 

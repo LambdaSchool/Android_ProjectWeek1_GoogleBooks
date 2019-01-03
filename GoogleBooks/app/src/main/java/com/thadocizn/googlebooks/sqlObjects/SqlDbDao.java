@@ -204,25 +204,25 @@ public class SqlDbDao {
         int index;
         BookClass book;
 
-        index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.BOOK_COLUMN_NAME_BOOK_KEY);
-        int id = (int) cursor.getLong(index);
+        index             = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.BOOK_COLUMN_NAME_BOOK_KEY);
+        int id            = (int) cursor.getLong(index);
 
-        index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.BOOK_COLUMN_NAME_BOOK_ID);
-        String bookId = cursor.getString(index);
+        index             = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.BOOK_COLUMN_NAME_BOOK_ID);
+        String bookId     = cursor.getString(index);
 
-        index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.BOOK_COLUMN_NAME_BOOK_TITLE);
-        String title = cursor.getString(index);
+        index             = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.BOOK_COLUMN_NAME_BOOK_TITLE);
+        String title      = cursor.getString(index);
 
-        index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.BOOK_COLUMN_NAME_BOOK_IMAGE_URL);
-        String imageUrl = cursor.getString(index);
+        index             = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.BOOK_COLUMN_NAME_BOOK_IMAGE_URL);
+        String imageUrl   = cursor.getString(index);
 
-        index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.BOOK_COLUMN_NAME_BOOK_REVIEW);
+        index             = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.BOOK_COLUMN_NAME_BOOK_REVIEW);
         String bookReview = cursor.getString(index);
 
-        index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.BOOK_COLUMN_NAME_CATEGORY);
-        String category = cursor.getString(index);
+        index             = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.BOOK_COLUMN_NAME_CATEGORY);
+        String category   = cursor.getString(index);
 
-        index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.BOOK_COLUMN_NAME_READ_BOOK);
+        index  = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.BOOK_COLUMN_NAME_READ_BOOK);
         int readBook = cursor.getInt(index);
 
         book = new BookClass();

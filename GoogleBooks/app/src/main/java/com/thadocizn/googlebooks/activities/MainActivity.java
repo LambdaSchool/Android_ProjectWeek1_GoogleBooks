@@ -65,12 +65,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         SqlDbDao.initializeInstance(this);
 
-        context = this;
-        cardView = findViewById(R.id.cardView);
-        search = findViewById(R.id.etSearch);
+        context      = this;
+        cardView     = findViewById(R.id.cardView);
+        search       = findViewById(R.id.etSearch);
         recyclerView = findViewById(R.id.rvBook);
         searchButton = findViewById(R.id.imageButton);
-        bookList = new ArrayList<>();
+        bookList     = new ArrayList<>();
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override

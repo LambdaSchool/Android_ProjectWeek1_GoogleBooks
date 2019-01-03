@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.thadocizn.googlebooks.R;
-import com.thadocizn.googlebooks.activities.BookActivity;
 import com.thadocizn.googlebooks.bookInfo.BookClass;
 
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> 
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
-        context = parent.getContext();
+        context   = parent.getContext();
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.list_item_book_activity, parent, false);
 
@@ -41,7 +40,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> 
         myViewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+
             }
         });
     }

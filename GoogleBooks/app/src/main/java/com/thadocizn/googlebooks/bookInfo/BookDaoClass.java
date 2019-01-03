@@ -17,15 +17,15 @@ public class BookDaoClass {
 
     public static ArrayList<BookClass> findBooks(String bookSearch) {
 
-        BookClass book = null;
+        BookClass book             = null;
         ArrayList<BookClass> books = new ArrayList<>();
-        String url = SEARCH_URL + bookSearch;
-        final String result = NetworkAdapter.httpRequest(url, NetworkAdapter.GET);
+        String url                 = SEARCH_URL + bookSearch;
+        final String result        = NetworkAdapter.httpRequest(url, NetworkAdapter.GET);
 
         try {
 
             JSONObject topLevel = new JSONObject(result);
-            JSONArray json = topLevel.getJSONArray("items");
+            JSONArray json      = topLevel.getJSONArray("items");
 
             for (int i = 0; i < json.length(); ++i) {
                 book = new BookClass(json.getJSONObject(i));

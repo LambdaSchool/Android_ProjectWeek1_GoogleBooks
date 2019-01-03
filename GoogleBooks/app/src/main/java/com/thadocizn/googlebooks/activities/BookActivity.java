@@ -36,9 +36,9 @@ public class BookActivity extends AppCompatActivity {
         SqlDbDao.initializeInstance(context);
 
 
-        recyclerView = findViewById(R.id.book_rv);
+        recyclerView        = findViewById(R.id.book_rv);
         linearLayoutManager = new LinearLayoutManager(this);
-        model = ViewModelProviders.of(this).get(BookViewModel.class);
+        model               = ViewModelProviders.of(this).get(BookViewModel.class);
         Observer<ArrayList<BookClass>>listObserver = new Observer<ArrayList<BookClass>>() {
             @Override
             public void onChanged(@Nullable ArrayList<BookClass> bookClasses) {
@@ -52,10 +52,4 @@ public class BookActivity extends AppCompatActivity {
         model.getBookList().observe(this, listObserver);
 
     }
-
-  /*  @Override
-    public void onItemClicked(View v) {
-        BookDialog updateBook = new BookDialog();
-        updateBook.show(getSupportFragmentManager(), "Book");
-    }*/
 }

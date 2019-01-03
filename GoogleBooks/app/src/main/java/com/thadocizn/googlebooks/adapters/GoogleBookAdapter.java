@@ -33,7 +33,7 @@ public class GoogleBookAdapter extends RecyclerView.Adapter<GoogleBookAdapter.My
     @Override
     public GoogleBookAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int index) {
 
-        context = parent.getContext();
+        context   = parent.getContext();
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.list_item_activity, parent, false);
         return new MyViewHolder(view);
