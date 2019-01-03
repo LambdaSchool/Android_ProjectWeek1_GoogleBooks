@@ -22,16 +22,6 @@ public class SqlDbDao {
         }
     }
 
-    public static void addBookToBookshelf(Bookshelf bookshelf, BookClass book) {
-        if (db != null) {
-            ContentValues values = new ContentValues();
-            values.put(BookDbContract.BookEntry.BOOKS_BOOKSHELF_COLUMN_NAME_BOOK_ID, book.getBookKeyId());
-            values.put(BookDbContract.BookEntry.BOOKS_BOOKSHELF_COLUMN_NAME_BOOkSHELF_ID, bookshelf.getBookshelfId());
-            long row = db.insert(BookDbContract.BookEntry.BOOKS_BOOKSHELF_TABLE, null, values);
-        }
-    }
-
-    // want to pass back bookshelfId for Intent to use
     public static void createBookshelf(String bookshelf) {
 
         if (db != null) {
@@ -83,6 +73,7 @@ public class SqlDbDao {
     private static Bookshelf getBookshelfFromCursor(Cursor cursor) {
 
         int index;
+
         index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.BOOKSHELF_COLUMN_NAME_SHELF_ID);
         int bookshelf_key = (int) cursor.getLong(index);
 
@@ -171,6 +162,7 @@ public class SqlDbDao {
                 values.put(BookDbContract.BookEntry.BOOK_COLUMN_NAME_BOOK_TITLE, book.getBookTitle());
                 values.put(BookDbContract.BookEntry.BOOK_COLUMN_NAME_BOOK_IMAGE_URL, book.getBookImageUrl());
                 values.put(BookDbContract.BookEntry.BOOK_COLUMN_NAME_BOOK_REVIEW, book.getBookReview());
+                values.put(BookDbContract.BookEntry.BOOK_COLUMN_NAME_CATEGORY, book.getCategory());
                 values.put(BookDbContract.BookEntry.BOOK_COLUMN_NAME_READ_BOOK, book.isReadBook());
 
                 int rows = db.update(BookDbContract.BookEntry.TABLE_NAME_BOOK, values, whereClause, null);
@@ -227,6 +219,9 @@ public class SqlDbDao {
         index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.BOOK_COLUMN_NAME_BOOK_REVIEW);
         String bookReview = cursor.getString(index);
 
+        index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.BOOK_COLUMN_NAME_CATEGORY);
+        String category = cursor.getString(index);
+
         index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.BOOK_COLUMN_NAME_READ_BOOK);
         int readBook = cursor.getInt(index);
 
@@ -236,6 +231,7 @@ public class SqlDbDao {
         book.setBookTitle(title);
         book.setBookImageUrl(imageUrl);
         book.setBookReview(bookReview);
+        book.setCategory(category);
         book.setReadBook(readBook);
         return book;
     }

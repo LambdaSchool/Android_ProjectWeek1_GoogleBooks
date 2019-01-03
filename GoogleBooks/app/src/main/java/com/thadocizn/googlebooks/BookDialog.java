@@ -39,7 +39,7 @@ public class BookDialog extends DialogFragment implements DialogInterface.OnClic
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         return builder.setTitle("Update Book").setView(form)
-                .setPositiveButton(android.R.string.ok, this)
+                .setPositiveButton("Delete", this)
                 .setNegativeButton(android.R.string.cancel, null).create();
     }
 }

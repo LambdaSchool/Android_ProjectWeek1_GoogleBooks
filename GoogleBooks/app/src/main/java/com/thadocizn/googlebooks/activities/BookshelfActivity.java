@@ -23,11 +23,11 @@ import java.util.ArrayList;
 
 public class BookshelfActivity extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-    BookshelfAdapter adapter;
-    Context context;
-    private LinearLayoutManager linearLayoutManager;
-    BookshelfViewModel viewModel;
+    RecyclerView        recyclerView;
+    BookshelfAdapter    adapter;
+    Context             context;
+    LinearLayoutManager linearLayoutManager;
+    BookshelfViewModel  viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +37,9 @@ public class BookshelfActivity extends AppCompatActivity {
         context = this;
         SqlDbDao.initializeInstance(context);
 
-        recyclerView = findViewById(R.id.rvBookshelf);
+        recyclerView        = findViewById(R.id.rvBookshelf);
         linearLayoutManager = new LinearLayoutManager(this);
-        viewModel = ViewModelProviders.of(this).get(BookshelfViewModel.class);
+        viewModel           = ViewModelProviders.of(this).get(BookshelfViewModel.class);
         Observer<ArrayList<Bookshelf>> observer = new Observer<ArrayList<Bookshelf>>() {
             @Override
             public void onChanged(@Nullable ArrayList<Bookshelf> bookshelves) {

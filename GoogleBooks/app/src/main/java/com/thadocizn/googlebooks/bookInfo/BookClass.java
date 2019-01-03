@@ -12,6 +12,7 @@ public class BookClass implements Parcelable {
     private String bookTitle;
     private String bookImageUrl;
     private String bookReview;
+    private String category;
     private int readBook;
 
     public BookClass(long bookKeyId,
@@ -19,11 +20,14 @@ public class BookClass implements Parcelable {
                      String bookTitle,
                      String bookImageUrl,
                      String bookReview,
+                     String category,
+
                      boolean readBook) {
         this.bookKeyId    = bookKeyId;
         this.bookId       = bookId;
         this.bookTitle    = bookTitle;
         this.bookImageUrl = bookImageUrl;
+        this.category     = category;
         this.bookReview   = bookReview;
         if (readBook) {
             this.readBook = 0;
@@ -39,6 +43,7 @@ public class BookClass implements Parcelable {
         bookTitle    = in.readString();
         bookImageUrl = in.readString();
         bookReview   = in.readString();
+        category     = in.readString();
         readBook     = in.readInt();
     }
 
@@ -68,6 +73,7 @@ public class BookClass implements Parcelable {
         bookTitle    = "";
         bookImageUrl = "";
         bookReview   = "";
+        category     = "";
         readBook     = -1;
     }
 
@@ -111,6 +117,14 @@ public class BookClass implements Parcelable {
         this.readBook = readBook;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public BookClass(JSONObject jsonObject) {
 
         try {
@@ -148,6 +162,7 @@ public class BookClass implements Parcelable {
         dest.writeString(bookTitle);
         dest.writeString(bookImageUrl);
         dest.writeString(bookReview);
+        dest.writeString(category);
         dest.writeInt(isReadBook());
     }
 }

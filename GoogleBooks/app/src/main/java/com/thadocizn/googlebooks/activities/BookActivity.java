@@ -8,8 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 
+import com.thadocizn.googlebooks.BookDialog;
 import com.thadocizn.googlebooks.R;
 import com.thadocizn.googlebooks.adapters.BookAdapter;
 import com.thadocizn.googlebooks.bookInfo.BookClass;
@@ -23,7 +25,6 @@ public class BookActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     BookAdapter adapter;
     LinearLayoutManager linearLayoutManager;
-    ArrayList<BookClass> bookList;
     private BookViewModel model;
     Context context;
 
@@ -33,6 +34,7 @@ public class BookActivity extends AppCompatActivity {
         setContentView(R.layout.activity_book);
         context = this;
         SqlDbDao.initializeInstance(context);
+
 
         recyclerView = findViewById(R.id.book_rv);
         linearLayoutManager = new LinearLayoutManager(this);
@@ -50,4 +52,10 @@ public class BookActivity extends AppCompatActivity {
         model.getBookList().observe(this, listObserver);
 
     }
+
+  /*  @Override
+    public void onItemClicked(View v) {
+        BookDialog updateBook = new BookDialog();
+        updateBook.show(getSupportFragmentManager(), "Book");
+    }*/
 }

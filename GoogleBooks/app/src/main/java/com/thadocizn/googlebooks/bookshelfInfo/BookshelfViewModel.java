@@ -21,7 +21,7 @@ public class BookshelfViewModel extends ViewModel {
     }
 
     private void loadList() {
-        repo = new BookshelfRepository();
+        repo      = new BookshelfRepository();
         shelfList = repo.getBookShelves();
     }
 

@@ -21,7 +21,7 @@ public class BookViewModel extends ViewModel {
     }
 
     private void loadList() {
-        repo = new BookRepository();
+        repo     = new BookRepository();
         bookList = repo.getBookList();
     }
 

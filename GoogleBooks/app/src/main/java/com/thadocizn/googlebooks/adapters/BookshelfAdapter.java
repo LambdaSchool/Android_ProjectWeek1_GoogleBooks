@@ -60,14 +60,14 @@ public class BookshelfAdapter extends RecyclerView.Adapter<BookshelfAdapter.MyVi
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView bookshelfName;
-        Button viewBooks;
+        Button   viewBooks;
         Button   addBook;
 
-        public MyViewHolder(@NonNull View item) {
-            super(item);
-            bookshelfName = item.findViewById(R.id.tvBookshelfName);
-            viewBooks     = item.findViewById(R.id.btnViewBooks);
-            addBook       = item.findViewById(R.id.btnAddBook);
+        public MyViewHolder(@NonNull View bookshelf) {
+            super(bookshelf);
+            bookshelfName = bookshelf.findViewById(R.id.tvBookshelfName);
+            viewBooks     = bookshelf.findViewById(R.id.btnViewBooks);
+            addBook       = bookshelf.findViewById(R.id.btnAddBook);
         }
     }
 }

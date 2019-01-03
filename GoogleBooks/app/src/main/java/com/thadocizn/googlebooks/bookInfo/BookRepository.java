@@ -64,13 +64,4 @@ public class BookRepository {
         }).start();
     }
 
-    public void addBookToBookshelf(final Bookshelf bookshelf, final BookClass book){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                SqlDbDao.addBookToBookshelf(bookshelf, book);
-            }
-        }).start();
-    }
-
 }

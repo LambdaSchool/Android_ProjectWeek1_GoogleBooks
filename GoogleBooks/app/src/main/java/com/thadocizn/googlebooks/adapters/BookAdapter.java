@@ -6,9 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.thadocizn.googlebooks.R;
+import com.thadocizn.googlebooks.activities.BookActivity;
 import com.thadocizn.googlebooks.bookInfo.BookClass;
 
 import java.util.ArrayList;
@@ -36,6 +38,12 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> 
         myViewHolder.bookId.setText(currentBook.getBookId());
         myViewHolder.bookTitle.setText(currentBook.getBookTitle());
         myViewHolder.bookReview.setText(currentBook.getBookReview());
+        myViewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+            }
+        });
     }
 
     public BookAdapter(ArrayList<BookClass> myBookList) {
@@ -53,12 +61,15 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> 
         TextView bookId;
         TextView bookTitle;
         TextView bookReview;
+        LinearLayout parentLayout;
 
         public MyViewHolder(@NonNull View book) {
             super(book);
             bookId = book.findViewById(R.id.book_bookId);
             bookTitle = book.findViewById(R.id.book_bookTitle);
             bookReview = book.findViewById(R.id.book_bookReview);
+            parentLayout = book.findViewById(R.id.bookActivity);
+
         }
     }
 }
