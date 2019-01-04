@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -28,6 +29,8 @@ public class UpdateBookActivity extends AppCompatActivity {
     Switch readBook;
     ArrayList<Bookshelf> shelfList;
     BookshelfViewModel model;
+    String strCategory;
+    Integer read;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +40,27 @@ public class UpdateBookActivity extends AppCompatActivity {
         updateTitle                = findViewById(R.id.tvUpdateTitle);
         updateReview               = findViewById(R.id.etUpdateReview);
         readBook                   = findViewById(R.id.swithUpdateRead);
+        readBook.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    read = 1;
+                    readBook.setTextOn("yes");
+                }else {
+                    read = 0;
+                    readBook.setTextOff("no");
+                }
+            }
+        });
+
         model                      = new BookshelfViewModel();
         shelfList                  = new ArrayList<>(model.getBookshelfs());
         category                   = findViewById(R.id.spinnerUpdateCategory);
-        final String[] strCategory = new String[1];
         category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                strCategory[0] = shelfList.get(position).toString();
+                UpdateBookActivity.this.strCategory = new String();
+                UpdateBookActivity.this.strCategory = shelfList.get(position).toString();
             }
 
             @Override
@@ -62,11 +78,8 @@ public class UpdateBookActivity extends AppCompatActivity {
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         category.setAdapter(arrayAdapter);
 
-        String bookTitle  = book.getBookTitle();
-        String bookReview = book.getBookReview();
-
-        updateTitle.setText(bookTitle);
-        updateReview.setText(bookReview);
+        updateTitle.setText(book.getBookTitle());
+        updateReview.setText(book.getBookReview());
 
     }
 }
