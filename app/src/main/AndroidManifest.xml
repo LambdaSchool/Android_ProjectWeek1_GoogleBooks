@@ -27,10 +27,6 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".BookshelfViewActivity" />
         <activity android:name=".BookViewActivity"></activity>
-
-        <activity android:name=".GoogleSignInActivity"
-        android:label="@string/label_google_sign_in" />
-
     </application>
 
 </manifest>

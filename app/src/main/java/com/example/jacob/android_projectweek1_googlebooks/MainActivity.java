@@ -23,6 +23,8 @@ import android.widget.TextView;
 import com.facebook.stetho.Stetho;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -54,12 +56,20 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(context, BookshelvesActivity.class);
                     startActivity(intent);
                     return true;
-/*                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                case R.id.navigation_dashboard:
+//                    mTextMessage.setText(R.string.title_dashboard);
+                    BooksDbDao.clearDatabase(context);
+                    AuthUI.getInstance()
+                            .signOut(context)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    onStart();
+                                }
+                            });
                     return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
-                    return true;*/
+//                case R.id.navigation_notifications:
+//                    mTextMessage.setText(R.string.title_notifications);
+//                    return true;
             }
             return false;
         }
@@ -74,8 +84,9 @@ public class MainActivity extends AppCompatActivity {
         if (currentUser == null) {
             List<AuthUI.IdpConfig> providers = Arrays.asList(
                     new AuthUI.IdpConfig.EmailBuilder().build(),
-                    new AuthUI.IdpConfig.PhoneBuilder().build(),
-                    new AuthUI.IdpConfig.GoogleBuilder().build());
+                    new AuthUI.IdpConfig.GoogleBuilder().build(),
+                    new AuthUI.IdpConfig.AnonymousBuilder().build()                    );
+
 
             startActivityForResult(
                     AuthUI.getInstance()
@@ -117,9 +128,6 @@ public class MainActivity extends AppCompatActivity {
         listAdapter = new SearchListAdapter(booksList, this);
         recyclerView.setAdapter(listAdapter);
         updateSpinnerList();
-
-//        Intent intent = new Intent(context, GoogleSignInActivity.class);
-//        startActivity(intent);
     }
 
     @Override

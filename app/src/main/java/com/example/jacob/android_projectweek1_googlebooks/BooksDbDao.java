@@ -19,6 +19,15 @@ public class BooksDbDao {
         }
     }
 
+    static void clearDatabase(Context context) {
+        if (db != null) {
+            db.close();
+            context.deleteDatabase(BooksDbHelper.DATABASE_NAME);
+            db = null;
+            initializeInstance(context);
+        }
+    }
+
     static void addBook(Book book) {
         if (db != null) {
             Cursor cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE %s = '%s'",
