@@ -1,14 +1,17 @@
 package com.example.jacob.android_projectweek1_googlebooks;
 
+import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.v7.widget.LinearLayoutManager;
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     SearchListAdapter listAdapter;
     ArrayList<String> bookshelfTitles;
     private FirebaseAuth mAuth;
+    Activity activity;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -51,13 +55,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
-//                    mTextMessage.setText(R.string.title_home);
+                case R.id.navigation_bookshelves:
                     Intent intent = new Intent(context, BookshelvesActivity.class);
                     startActivity(intent);
                     return true;
-                case R.id.navigation_dashboard:
-//                    mTextMessage.setText(R.string.title_dashboard);
+                case R.id.navigation_login:
                     BooksDbDao.clearDatabase(context);
                     AuthUI.getInstance()
                             .signOut(context)
@@ -67,9 +69,32 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             });
                     return true;
-//                case R.id.navigation_notifications:
-//                    mTextMessage.setText(R.string.title_notifications);
-//                    return true;
+                case R.id.navigation_delete_account:
+                    AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                    builder.setMessage(R.string.dialog_message)
+                            .setTitle(R.string.dialog_title);
+                    builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            BooksDbDao.clearDatabase(context);
+                            AuthUI instance = AuthUI.getInstance();
+                            instance.delete(context)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            instance.signOut(context);
+                                            onStart();
+                                        }
+                                    });
+                        }
+                    });
+                    builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User cancelled the dialog
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                    return true;
             }
             return false;
         }
@@ -85,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
             List<AuthUI.IdpConfig> providers = Arrays.asList(
                     new AuthUI.IdpConfig.EmailBuilder().build(),
                     new AuthUI.IdpConfig.GoogleBuilder().build(),
-                    new AuthUI.IdpConfig.AnonymousBuilder().build()                    );
+                    new AuthUI.IdpConfig.AnonymousBuilder().build());
 
 
             startActivityForResult(
@@ -103,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Stetho.initializeWithDefaults(this);
         context = this;
+        activity = this;
 
         BooksDbDao.initializeInstance(context);
 

@@ -77,27 +77,5 @@ public class BookGoogleApiDao {
                 }
             }
         }
-/*        if (url != null) {
-            Bitmap bitmap = NetworkAdapter.httpImageRequest(url);
-            String[] urlParts = url.substring(url.indexOf("id=")+3).split("&");
-            String fileName = urlParts[0];
-            FileOutputStream fileOutputStream = null;
-
-            try {
-                file = File.createTempFile(fileName, null, context.getCacheDir());
-                fileOutputStream = new FileOutputStream(file);
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                if (fileOutputStream != null) {
-                    try {
-                        fileOutputStream.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }*/
     }
 }

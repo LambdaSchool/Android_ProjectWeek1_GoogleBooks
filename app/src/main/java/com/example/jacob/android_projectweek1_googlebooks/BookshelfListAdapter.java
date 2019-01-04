@@ -134,6 +134,4 @@ public class BookshelfListAdapter extends RecyclerView.Adapter<BookshelfListAdap
         return file;
         //TODO download image if it has lost its cache.  Somehow should spin that whole thing off on its own somewhere so not repeating code.
     }
-
-
 }

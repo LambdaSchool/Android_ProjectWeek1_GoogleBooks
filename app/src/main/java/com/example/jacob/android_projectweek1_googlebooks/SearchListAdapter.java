@@ -110,5 +110,6 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Vi
             }
         }
         return file;
+        //TODO download image if it has lost its cache.  Somehow should spin that whole thing off on its own somewhere so not repeating code.
     }
 }

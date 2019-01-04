@@ -22,6 +22,8 @@ public class BookshelfViewActivity extends AppCompatActivity {
     private BookshelfListAdapter listAdapter;
     private BookshelfViewModel viewModel;
     Activity activity;
+    int bookshelfId;
+    Observer<ArrayList<Book>> observer;
 
 
     @Override
@@ -37,10 +39,10 @@ public class BookshelfViewActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
 
-        final int bookshelfId = getIntent().getIntExtra(Constants.VIEW_BOOKSHELF_KEY, -1);
+        bookshelfId = getIntent().getIntExtra(Constants.VIEW_BOOKSHELF_KEY, -1);
         if (bookshelfId != -1) {
             viewModel = ViewModelProviders.of(this).get(BookshelfViewModel.class);
-            final Observer<ArrayList<Book>> observer = new Observer<ArrayList<Book>>() {
+            observer = new Observer<ArrayList<Book>>() {
                 @Override
                 public void onChanged(@Nullable ArrayList<Book> bookList) {
                     if (bookList != null) {
