@@ -24,6 +24,12 @@ public class BookshelfRepository {
         return liveData;
     }
 
+    public ArrayList<Bookshelf> getList(){
+        ArrayList<Bookshelf> list = new ArrayList<>();
+        list = SqlDbDao.getBookshelves();
+        return list;
+    }
+
 
     public void createBookshelf(final String bookshelf) {
 

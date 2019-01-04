@@ -30,6 +30,11 @@ public class BookshelfViewModel extends ViewModel {
         repo.createBookshelf(bookshelf);
     }
 
+    public ArrayList<Bookshelf> getBookshelfs(){
+        repo = new BookshelfRepository();
+        ArrayList<Bookshelf> list = new ArrayList<>(repo.getList());
+        return list;
+    }
     public void deleteBookshelf(Bookshelf bookshelf) {
         repo.deleteBookshelf(bookshelf);
     }

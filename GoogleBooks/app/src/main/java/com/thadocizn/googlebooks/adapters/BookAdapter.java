@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.thadocizn.googlebooks.R;
-import com.thadocizn.googlebooks.UpdateBookActivity;
+import com.thadocizn.googlebooks.activities.UpdateBookActivity;
 import com.thadocizn.googlebooks.bookInfo.BookClass;
 
 import java.util.ArrayList;

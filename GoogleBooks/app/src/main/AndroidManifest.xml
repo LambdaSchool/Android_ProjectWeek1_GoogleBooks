@@ -26,7 +26,7 @@
             android:label="@string/title_activity_bookshelf"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.BookActivity" />
-        <activity android:name=".UpdateBookActivity"></activity>
+        <activity android:name=".activities.UpdateBookActivity"></activity>
     </application>
 
 </manifest>
