@@ -8,10 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.TextView;
 
-import com.thadocizn.googlebooks.BookDialog;
 import com.thadocizn.googlebooks.R;
 import com.thadocizn.googlebooks.adapters.BookAdapter;
 import com.thadocizn.googlebooks.bookInfo.BookClass;

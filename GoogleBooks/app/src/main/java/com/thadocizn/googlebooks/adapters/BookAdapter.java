@@ -1,6 +1,7 @@
 package com.thadocizn.googlebooks.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,12 +11,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.thadocizn.googlebooks.R;
+import com.thadocizn.googlebooks.UpdateBookActivity;
 import com.thadocizn.googlebooks.bookInfo.BookClass;
 
 import java.util.ArrayList;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> {
 
+    public static final String CURRENT_BOOK = "current_book";
     ArrayList<BookClass> myBookList;
     Context context;
 
@@ -32,7 +35,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
-        BookClass currentBook = myBookList.get(i);
+        final BookClass currentBook = myBookList.get(i);
 
         myViewHolder.bookId.setText(currentBook.getBookId());
         myViewHolder.bookTitle.setText(currentBook.getBookTitle());
@@ -40,7 +43,9 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> 
         myViewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(context, UpdateBookActivity.class);
+                intent.putExtra(CURRENT_BOOK, currentBook);
+                context.startActivity(intent);
             }
         });
     }

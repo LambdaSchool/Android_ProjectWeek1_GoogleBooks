@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         SqlDbDao.initializeInstance(this);
 
         context      = this;
-        cardView     = findViewById(R.id.cardView);
         search       = findViewById(R.id.etSearch);
         recyclerView = findViewById(R.id.rvBook);
         searchButton = findViewById(R.id.imageButton);
