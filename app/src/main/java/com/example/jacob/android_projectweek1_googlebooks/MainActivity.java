@@ -22,8 +22,8 @@ import android.widget.EditText;
 
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.facebook.stetho.Stetho;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Stetho.initializeWithDefaults(this);
+//        Stetho.initializeWithDefaults(this);
         context = this;
         activity = this;
 
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         listAdapter = new SearchListAdapter(booksList, this);
         recyclerView.setAdapter(listAdapter);
-        updateSpinnerList();
+        downloadFirebaseData();
     }
 
     @Override
@@ -170,10 +170,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 // ...
             } else {
-                // Sign in failed. If response is null the user canceled the
-                // sign-in flow using the back button. Otherwise check
-                // response.getError().getErrorCode() and handle the error.
-                // ...
+                Toast.makeText(this, "Sign-in Failed.  Please try again.", Toast.LENGTH_LONG).show();
+                onStart();
             }
         }
 
@@ -231,10 +229,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        updateSpinnerList();
+//        downloadFirebaseData();
     }
 
-    private void updateSpinnerList() {
+    private void downloadFirebaseData() {
         BookshelvesViewModel viewModel;
 
         viewModel = ViewModelProviders.of(this).get(BookshelvesViewModel.class);
