@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Android_ProjectWeek1_GoogleBooks</string>
+    <string name="title_bookshelves">Shelves</string>
+    <string name="title_login">Switch Accounts</string>
+    <string name="title_delete_account">Delete Account</string>
+    <string name="edit_text_search_hint">Search</string>
+    <string name="title_activity_bookshelves">BookshelvesActivity</string>
+    <string name="title_activity_book_view">BookViewActivity</string>
+    <string name="dialog_message">Are you sure you want to delete your account in this app?</string>
+    <string name="dialog_title">Confirmation</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+</resources>

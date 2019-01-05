@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BookViewActivity">
+
+    <TextView
+        android:id="@+id/text_book_view_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Book Title"
+        android:textSize="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/image_book_view"
+        android:layout_width="175dp"
+        android:layout_height="175dp"
+        android:scaleType="fitCenter"
+        android:src="@color/colorPrimaryDark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_book_view_title" />
+
+    <TextView
+        android:id="@+id/text_book_view_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="10dp"
+        android:text="Author(s)"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_book_view_title" />
+
+    <TextView
+        android:id="@+id/text_book_view_publication"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="10dp"
+        android:text="Publication"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_book_view_author" />
+
+    <TextView
+        android:id="@+id/text_book_view_read_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="10dp"
+        android:paddingTop="20dp"
+        android:text="Has been read"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_book_view_publication" />
+
+
+    <Switch
+        android:id="@+id/switch_has_been_read"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingRight="20dp"
+        app:layout_constraintTop_toBottomOf="@id/text_book_view_read_label"
+        />
+
+    <ImageButton
+        android:id="@+id/button_add_to_bookshelf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:paddingTop="10dp"
+        android:src="@android:drawable/ic_input_add"
+        app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintTop_toBottomOf="@id/switch_has_been_read" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/button_book_view_save"
+        app:layout_constraintTop_toBottomOf="@id/image_book_view">
+
+        <EditText
+            android:id="@+id/edit_text_review"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Type review here..." />
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/button_book_view_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>
