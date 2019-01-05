@@ -22,18 +22,14 @@ public class BookClass implements Parcelable {
                      String bookReview,
                      String category,
 
-                     boolean readBook) {
+                     int readBook) {
         this.bookKeyId    = bookKeyId;
         this.bookId       = bookId;
         this.bookTitle    = bookTitle;
         this.bookImageUrl = bookImageUrl;
         this.category     = category;
         this.bookReview   = bookReview;
-        if (readBook) {
-            this.readBook = 0;
-        } else {
-            this.readBook = 1;
-        }
+        this.readBook = readBook;
 
     }
 
@@ -74,7 +70,7 @@ public class BookClass implements Parcelable {
         bookImageUrl = "";
         bookReview   = "";
         category     = "";
-        readBook     = -1;
+        readBook     = 0;
     }
 
     public String getBookId() {

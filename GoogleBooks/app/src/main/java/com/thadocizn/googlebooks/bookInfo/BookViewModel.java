@@ -39,10 +39,12 @@ public class BookViewModel extends ViewModel {
     }
 
     public void deleteBook(BookClass book) {
+        repo = new BookRepository();
         repo.deleteBook(book);
     }
 
     public void updateBook(BookClass book) {
+        repo = new BookRepository();
         repo.updateBook(book);
     }
 
