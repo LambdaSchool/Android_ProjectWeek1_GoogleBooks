@@ -54,7 +54,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> 
             @Override
             public boolean onLongClick(View v) {
                Log.i("tag", "Charles" + v.getId());
-                deleteItem((int) currentBook.getBookKeyId());
+                deleteBook((int) currentBook.getBookKeyId());
                 BookViewModel model = new BookViewModel();
                 model.deleteBook(currentBook);
                 return false;
@@ -72,7 +72,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> 
 
     }
 
-    void deleteItem(int index){
+    void deleteBook(int index){
         myBookList.remove(index -1);
 
         notifyItemRemoved(index);
@@ -80,16 +80,16 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView bookId;
-        TextView bookTitle;
-        TextView bookReview;
+        TextView     bookId;
+        TextView     bookTitle;
+        TextView     bookReview;
         LinearLayout parentLayout;
 
         public MyViewHolder(@NonNull View book) {
             super(book);
-            bookId = book.findViewById(R.id.book_bookId);
-            bookTitle = book.findViewById(R.id.book_bookTitle);
-            bookReview = book.findViewById(R.id.book_bookReview);
+            bookId       = book.findViewById(R.id.book_bookId);
+            bookTitle    = book.findViewById(R.id.book_bookTitle);
+            bookReview   = book.findViewById(R.id.book_bookReview);
             parentLayout = book.findViewById(R.id.bookActivity);
 
         }

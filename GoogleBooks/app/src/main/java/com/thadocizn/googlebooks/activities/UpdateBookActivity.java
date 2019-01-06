@@ -41,12 +41,12 @@ public class UpdateBookActivity extends AppCompatActivity {
 
         model                      = new BookshelfViewModel();
         shelfList                  = new ArrayList<>();
-        shelfList = model.getBookshelfs();
+        shelfList                  = model.getBookshelfs();
 
         updateTitle                = findViewById(R.id.tvUpdateTitle);
         updateReview               = findViewById(R.id.etUpdateReview);
-        Intent intent     = getIntent();
-        final BookClass book    = intent.getParcelableExtra(BookAdapter.CURRENT_BOOK);
+        Intent intent              = getIntent();
+        final BookClass book       = intent.getParcelableExtra(BookAdapter.CURRENT_BOOK);
 
         ArrayAdapter<Bookshelf> arrayAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item,

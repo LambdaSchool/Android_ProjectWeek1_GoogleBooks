@@ -6,10 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.thadocizn.googlebooks.R;
 import com.thadocizn.googlebooks.bookshelfInfo.Bookshelf;
+import com.thadocizn.googlebooks.bookshelfInfo.BookshelfViewModel;
 
 import java.util.ArrayList;
 
@@ -35,9 +37,18 @@ public class BookshelfAdapter extends RecyclerView.Adapter<BookshelfAdapter.MyVi
     @Override
     public void onBindViewHolder(@NonNull BookshelfAdapter.MyViewHolder myViewHolder, int i) {
 
-        Bookshelf bookshelf = bookshelfList.get(i);
+        final Bookshelf bookshelf = bookshelfList.get(i);
 
         myViewHolder.bookshelfName.setText(bookshelf.getName());
+        myViewHolder.parent.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                BookshelfViewModel model = new BookshelfViewModel();
+                model.deleteBookshelf(bookshelf);
+                deleteBookshelf((int) bookshelf.getBookshelfId());
+                return false;
+            }
+        });
         myViewHolder.addBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,12 +56,12 @@ public class BookshelfAdapter extends RecyclerView.Adapter<BookshelfAdapter.MyVi
             }
         });
 
-       /* myViewHolder.viewBooks.setOnClickListener(new View.OnClickListener() {
+        myViewHolder.viewBooks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // todo decide on what I want to use
             }
-        });*/
+        });
     }
 
     @Override
@@ -58,16 +69,24 @@ public class BookshelfAdapter extends RecyclerView.Adapter<BookshelfAdapter.MyVi
         return bookshelfList.size();
     }
 
+    void deleteBookshelf(int index){
+        bookshelfList.remove(index -1);
+
+        notifyItemRemoved(index);
+    }
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView bookshelfName;
         Button   viewBooks;
         Button   addBook;
+        LinearLayout parent;
 
         public MyViewHolder(@NonNull View bookshelf) {
             super(bookshelf);
             bookshelfName = bookshelf.findViewById(R.id.tvBookshelfName);
             viewBooks     = bookshelf.findViewById(R.id.btnViewBooks);
             addBook       = bookshelf.findViewById(R.id.btnAddBook);
+            parent = bookshelf.findViewById(R.id.parentBookshelfActivity);
         }
     }
 }

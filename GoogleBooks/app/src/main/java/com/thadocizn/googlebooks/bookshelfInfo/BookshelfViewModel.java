@@ -36,6 +36,7 @@ public class BookshelfViewModel extends ViewModel {
         return list;
     }
     public void deleteBookshelf(Bookshelf bookshelf) {
+        repo = new BookshelfRepository();
         repo.deleteBookshelf(bookshelf);
     }
 
