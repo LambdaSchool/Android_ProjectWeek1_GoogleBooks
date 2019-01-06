@@ -31,7 +31,7 @@ public class UpdateBookActivity extends AppCompatActivity {
     ArrayList<Bookshelf> shelfList;
     BookshelfViewModel   model;
     String               strCategory;
-    BookViewModel bookViewModel;
+    BookViewModel        bookViewModel;
     Integer              read;
 
     @Override
@@ -40,7 +40,8 @@ public class UpdateBookActivity extends AppCompatActivity {
         setContentView(R.layout.activity_update_book);
 
         model                      = new BookshelfViewModel();
-        shelfList                  = new ArrayList<>(model.getBookshelfs());
+        shelfList                  = new ArrayList<>();
+        shelfList = model.getBookshelfs();
 
         updateTitle                = findViewById(R.id.tvUpdateTitle);
         updateReview               = findViewById(R.id.etUpdateReview);
@@ -58,7 +59,7 @@ public class UpdateBookActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 UpdateBookActivity.this.strCategory = new String();
-                UpdateBookActivity.this.strCategory = shelfList.get(position).toString();
+                UpdateBookActivity.this.strCategory = String.valueOf(shelfList.get(position).getName());
             }
 
             @Override
@@ -106,6 +107,16 @@ public class UpdateBookActivity extends AppCompatActivity {
                     readBook.setTextOff("no");
                 }
             }
+        });
+
+        findViewById(R.id.btnDelete).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bookViewModel = new BookViewModel();
+                bookViewModel.deleteBook(book);
+
+            }
+
         });
 
      }
