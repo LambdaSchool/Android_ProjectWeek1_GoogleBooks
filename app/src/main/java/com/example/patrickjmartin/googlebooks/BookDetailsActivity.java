@@ -81,35 +81,24 @@ public class BookDetailsActivity extends AppCompatActivity {
             readSwitch.setOnCheckedChangeListener(null);
             addLibrarySwitch.setOnCheckedChangeListener(null);
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    final Bitmap bitmap = NetworkAdapter.httpImageRequest(clickBook.getImage());
-                    activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            bookDetailsImage.setImageBitmap(bitmap);
-                        }
-                    });
-                }
+            new Thread(() -> {
+                final Bitmap bitmap = NetworkAdapter.httpImageRequest(clickBook.getImage());
+                activity.runOnUiThread(() -> bookDetailsImage.setImageBitmap(bitmap));
             }).start();
 
             bookDetailsTextView.setText(clickBook.toString());
 
-            saveReviewButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    clickBook.setReview(bookReviewTextBox.getText().toString());
-                    bookReviewTextBox.getText().clear();
-                    bookDetailsTextView.setText(clickBook.toString());
-                    library.addToBookshelf("Reviewed", clickBook);
-                    library.addToBookshelf("Read", clickBook);
-                    clickBook.setSelected(true);
-                    clickBook.setRead(1);
-                    addLibrarySwitch.setChecked(true);
-                    readSwitch.setChecked(true);
-                    detailsAdapter.notifyDataSetChanged();
-                }
+            saveReviewButton.setOnClickListener(v -> {
+                clickBook.setReview(bookReviewTextBox.getText().toString());
+                bookReviewTextBox.getText().clear();
+                bookDetailsTextView.setText(clickBook.toString());
+                library.addToBookshelf("Reviewed", clickBook);
+                library.addToBookshelf("Read", clickBook);
+                clickBook.setSelected(true);
+                clickBook.setRead(1);
+                addLibrarySwitch.setChecked(true);
+                readSwitch.setChecked(true);
+                detailsAdapter.notifyDataSetChanged();
             });
 
             addLibrarySwitch.setChecked(clickBook.isSelected());

@@ -70,6 +70,12 @@ public class Library implements Serializable {
         }
     }
 
+    public ArrayList<Book> getBookshelf(String shelfName) {
+
+        return bookShelf.get(shelfName);
+
+    }
+
     public static String toCamelCase(String initString) {
         String newString = "";
         if (initString == null || initString == "" ) {
@@ -86,9 +92,6 @@ public class Library implements Serializable {
         }
         return newString;
     }
-
-
-
 
     public ArrayList getBookshelfNames() {
         return new ArrayList<String>(bookShelf.keySet());

@@ -50,18 +50,16 @@ public class BookDetailsAdapter extends ArrayAdapter<Book> {
 
         }).start();
 
-        if (context instanceof BookshelfActivity) {
-            image.setOnClickListener(v -> {
-
-            });
-        }
-
+//        if (context instanceof BookshelfActivity) {
+//
+//        }
 
 
         return listItem;
 
 
     }
+
 
 
 }

@@ -14,5 +14,4 @@
     <string name="delete_bookshelf_button_text">Delete</string>
     <string name="library_bookdetails_button_text">Book Details</string>
     <string name="library_searchbooks_button_text">Search Books</string>
-    <string name="library_selectedbooks_textview_text">Selected Books</string>
 </resources>
