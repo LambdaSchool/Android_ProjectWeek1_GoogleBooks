@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">GoogleBooks</string>
+    <string name="search_button_text">Search</string>
+    <string name="view_selected_books_button_text">View Selected Book(s)</string>
+    <string name="view_bookshelf_button_text">View Bookshelf</string>
+    <string name="save_review_button_text">Save Review</string>
+    <string name="review_edittext_hint">Saving your review will place it in your reviewed bookshelf.</string>
+    <string name="organize_bookshelf_button_text">Organize Library</string>
+    <string name="favorites_switch_text">Favorite Book?</string>
+    <string name="read_switch_text">Read?</string>
+    <string name="add_to_library_switch_text">Add to Library?</string>
+    <string name="add_bookshelf_button_text">Add</string>
+    <string name="search_books_button_text">Search Books</string>
+    <string name="delete_bookshelf_button_text">Delete</string>
+    <string name="library_bookdetails_button_text">Book Details</string>
+    <string name="library_searchbooks_button_text">Search Books</string>
+</resources>
