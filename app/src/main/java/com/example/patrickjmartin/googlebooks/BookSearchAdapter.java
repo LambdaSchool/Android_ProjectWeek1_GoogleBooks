@@ -27,6 +27,7 @@ import org.w3c.dom.Text;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -114,9 +115,12 @@ public class BookSearchAdapter extends RecyclerView.Adapter<BookSearchAdapter.Vi
 
     @Override
     public int getItemCount() {
-
-
         return searchedBooks.size();
+    }
+
+    public void setShelf(ArrayList<Book> newData) {
+        this.searchedBooks = newData;
+        notifyDataSetChanged();
     }
 
     private class DownloadBookImageTask extends AsyncTask<String, Void, Bitmap> {
@@ -173,6 +177,7 @@ public class BookSearchAdapter extends RecyclerView.Adapter<BookSearchAdapter.Vi
     }
 
     public ArrayList<Book> getChosenBooks(){
+        chosenBooks.forEach((n)-> n.setSelected(false));
         return chosenBooks;
     }
 

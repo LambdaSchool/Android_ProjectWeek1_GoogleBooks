@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 import com.example.patrickjmartin.googlebooks.apiaccess.NetworkAdapter;
+import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,7 @@ public class BookDetailsAdapter extends ArrayAdapter<Book> {
     private Context context;
     private Activity activity;
     private ArrayList<Book> booksAList;
+
 
 
     public BookDetailsAdapter(@NonNull Context context, @NonNull Activity activity, ArrayList<Book> aList) {
@@ -49,17 +51,6 @@ public class BookDetailsAdapter extends ArrayAdapter<Book> {
             activity.runOnUiThread(() -> image.setImageBitmap(bitmap));
 
         }).start();
-
-//        if (context instanceof BookshelfActivity) {
-//
-//        }
-
-
         return listItem;
-
-
     }
-
-
-
 }

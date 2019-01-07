@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
             selectedBooks = searchAdapter.getChosenBooks();
 
             if(selectedBooks != null) {
-                selectedBooks.forEach((n) -> n.setSelected(false));
                 bookDetailsIntent.putParcelableArrayListExtra("foundbooks", selectedBooks);
                 startActivity(bookDetailsIntent);
             } else startActivity(bookDetailsIntent);
@@ -77,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
             selectedBooks = searchAdapter.getChosenBooks();
 
             if (selectedBooks != null) {
-                selectedBooks.forEach((n) -> n.setSelected(false));
                 bookShelfIntent.putParcelableArrayListExtra("organizeBooks", selectedBooks);
                 startActivity(bookShelfIntent);
             } else startActivity(bookShelfIntent);

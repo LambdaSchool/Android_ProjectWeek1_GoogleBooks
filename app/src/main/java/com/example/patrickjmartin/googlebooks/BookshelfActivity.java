@@ -38,7 +38,7 @@ public class BookshelfActivity extends AppCompatActivity {
 
     private Library library;
     private ArrayList<String> bookshelfName;
-    private ArrayList<Book> booksFromSearch, spinnerBookshelfSelection;
+    private ArrayList<Book> booksFromSearch, spinnerBookshelfSelection, booksToDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +51,11 @@ public class BookshelfActivity extends AppCompatActivity {
         Intent intent = getIntent();
         library = Library.getINSTANCE();
         bookshelfName = library.getBookshelfNames();
-        bookshelfName.add(0, " ");
+        bookshelfName.add(0, "");
         booksFromSearch = intent.getParcelableArrayListExtra("organizeBooks");
         spinnerBookshelfSelection = library.getBookshelf("All Books");
+
+
 
         selectBooksTextView = findViewById(R.id.library_selectedbook_textview);
         selectedBooksListView = findViewById(R.id.selected_books_listview);
@@ -67,7 +69,13 @@ public class BookshelfActivity extends AppCompatActivity {
         bookDetailsButton = findViewById(R.id.library_bookdetails_button);
         searchBooksButton = findViewById(R.id.library_searchbooks_button);
 
+        libraryRecyclerView.setHasFixedSize(true);
+        gridLayoutManager = new GridLayoutManager(context, 2);
 
+        libraryRecyclerView.setLayoutManager(gridLayoutManager);
+        spinnerAdapter = new BookSearchAdapter(spinnerBookshelfSelection, activity);
+
+        libraryRecyclerView.setAdapter(spinnerAdapter);
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(context,
                 R.layout.support_simple_spinner_dropdown_item, bookshelfName);
@@ -78,18 +86,21 @@ public class BookshelfActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String shelfName =  (String) parent.getItemAtPosition(position);
 
-                spinnerBookshelfSelection = library.getBookshelf(shelfName);
-
-
-                if(shelfName.equals(" ")) {
+                if(shelfName.equals("")) {
                     addBookshelfButton.setEnabled(true);
-
-                } else {
+                    deleteBookshelfButton.setEnabled(false);
+                    searchBookshelvesEditText.setText(null);
+                } else if (shelfName.equals("All Books")) {
+                    spinnerAdapter.setShelf(library.getBookshelf(shelfName));
                     addBookshelfButton.setEnabled(false);
+                    deleteBookshelfButton.setEnabled(false);
+                    searchBookshelvesEditText.setText(shelfName);
+                } else {
+                    spinnerAdapter.setShelf(library.getBookshelf(shelfName));
+                    addBookshelfButton.setEnabled(false);
+                    deleteBookshelfButton.setEnabled(true);
                     searchBookshelvesEditText.setText(shelfName);
                 }
-
-
             }
 
             @Override
@@ -98,8 +109,7 @@ public class BookshelfActivity extends AppCompatActivity {
             }
         });
 
-
-        if (!booksFromSearch.isEmpty()) {
+        if (booksFromSearch != null) {
 
             searchedBooksAdapter = new BookDetailsAdapter(context, activity, booksFromSearch);
             selectedBooksListView.setAdapter(searchedBooksAdapter);
@@ -121,24 +131,42 @@ public class BookshelfActivity extends AppCompatActivity {
             });
         }
 
-        
-        //Add Recycler View
-
-
-        //addBookshelfButton.setEnabled(false);
         addBookshelfButton.setOnClickListener(v -> {
             //TODO
-            //pull from edit
+            String newShelf = searchBookshelvesEditText.getText().toString();
+            library.addToBookshelf(newShelf);
+            bookshelfName = library.getBookshelfNames();
+            bookshelfName.add(0, "");
+            dataAdapter.clear();
+            dataAdapter.addAll(bookshelfName);
+            dataAdapter.notifyDataSetChanged();
         });
 
         deleteBookshelfButton.setOnClickListener(v -> {
-            //TODO
+            String deleteShelf = searchBookshelvesEditText.getText().toString();
+            library.removeFromBookshelf(deleteShelf);
+            bookshelfName = library.getBookshelfNames();
+            bookshelfName.add(0, "");
+            dataAdapter.clear();
+            dataAdapter.addAll(bookshelfName);
+            dataAdapter.notifyDataSetChanged();
 
         });
 
-        //Add Book Details Button
+        bookDetailsButton.setOnClickListener(v -> {
+            Intent bookDetailsIntent = new Intent(context, BookDetailsActivity.class);
+            booksToDetails = spinnerAdapter.getChosenBooks();
 
-        //Add Search Books Button
+            if(booksToDetails != null) {
+                bookDetailsIntent.putParcelableArrayListExtra("foundbooks", booksToDetails);
+                startActivity(bookDetailsIntent);
+            } else startActivity(bookDetailsIntent);
+        });
+
+        searchBooksButton.setOnClickListener(v -> {
+            Intent bookSearchIntent = new Intent(context, MainActivity.class);
+            startActivity(bookSearchIntent);
+        });
 
 
     }

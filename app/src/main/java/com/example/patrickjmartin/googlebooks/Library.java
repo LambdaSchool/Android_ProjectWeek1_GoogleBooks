@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Library implements Serializable {
 
@@ -43,8 +44,19 @@ public class Library implements Serializable {
 
     public void addToBookshelf(String shelfName, Book toBeAdded) {
         shelfName = toCamelCase(shelfName);
-        bookShelf.computeIfAbsent(shelfName, k-> new ArrayList<>()).add(toBeAdded);
+        Boolean addBook = true;
+        //bookShelf.computeIfAbsent(shelfName, k-> new ArrayList<>()).add(toBeAdded);
 
+        bookShelf.computeIfAbsent(shelfName, k-> new ArrayList<>());
+        for (Book n : bookShelf.get(shelfName)) {
+            if (n.getGoogleBooksID().equals(toBeAdded.getGoogleBooksID())) {
+                addBook = false;
+            }
+        }
+
+        if(addBook) {
+            bookShelf.get(shelfName).add(toBeAdded);
+        }
     }
 
     public void addToBookshelf(String shelfName) {
