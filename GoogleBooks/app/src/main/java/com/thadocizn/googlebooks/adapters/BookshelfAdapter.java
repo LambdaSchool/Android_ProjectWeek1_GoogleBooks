@@ -49,12 +49,6 @@ public class BookshelfAdapter extends RecyclerView.Adapter<BookshelfAdapter.MyVi
                 return false;
             }
         });
-        myViewHolder.addBook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO decide on what I want to use
-            }
-        });
 
         myViewHolder.viewBooks.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,14 +72,11 @@ public class BookshelfAdapter extends RecyclerView.Adapter<BookshelfAdapter.MyVi
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView bookshelfName;
         Button   viewBooks;
-        Button   addBook;
         LinearLayout parent;
 
         public MyViewHolder(@NonNull View bookshelf) {
             super(bookshelf);
             bookshelfName = bookshelf.findViewById(R.id.tvBookshelfName);
-            viewBooks     = bookshelf.findViewById(R.id.btnViewBooks);
-            addBook       = bookshelf.findViewById(R.id.btnAddBook);
             parent = bookshelf.findViewById(R.id.parentBookshelfActivity);
         }
     }
