@@ -16,17 +16,17 @@ public class Book {
         this.read = read;
     }
 
-    public Book(JSONObject inputJson) {
+    public Book(JSONObject jsonObject) {
 
         try {
-            this.id = inputJson.getString("id");
+            this.id = jsonObject.getString("id");
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         JSONObject json = null;
         try {
-            json = inputJson.getJSONObject("volumeInfo");
+            json = jsonObject.getJSONObject("volumeInfo");
 
             try {
                 this.title = json.getString("title");
@@ -58,41 +58,6 @@ public class Book {
         }
         this.review = "";
         this.read = 0;
-    }
-
-    public String toJsonString() {
-        JSONObject json = new JSONObject();
-        try {
-            json.put("id", this.id);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        try {
-            json.put("title", this.title);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        try {
-            json.put("author", this.author);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        try {
-            json.put("imageUrl", this.imageUrl);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        try {
-            json.put("review", this.review);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        try {
-            json.put("read", this.read);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return json.toString();
     }
 
     public String getId() {

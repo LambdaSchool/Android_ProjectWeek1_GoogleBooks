@@ -35,4 +35,11 @@ public class BookDbDao {
             cursor.close();
         }
     }
+
+    public static void deleteBook(Book book){
+        if(db != null){
+            String where = String.format("%s = '%s'", BookDbContract.BookEntry.COLUMN_TITLE, book.getTitle());
+            db.delete(BookDbContract.BookEntry.BOOK_TABLE_NAME, where, null);
+        }
+    }
 }

@@ -89,8 +89,7 @@ public class NetworkAdapter {
         try {
 
             URL url = new URL(urlString);
-            connection = (HttpURLConnection) url
-                    .openConnection();
+            connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
             connection.connect();
             InputStream input = connection.getInputStream();
