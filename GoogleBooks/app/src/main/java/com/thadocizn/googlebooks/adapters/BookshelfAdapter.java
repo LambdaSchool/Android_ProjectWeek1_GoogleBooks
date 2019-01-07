@@ -77,6 +77,7 @@ public class BookshelfAdapter extends RecyclerView.Adapter<BookshelfAdapter.MyVi
         public MyViewHolder(@NonNull View bookshelf) {
             super(bookshelf);
             bookshelfName = bookshelf.findViewById(R.id.tvBookshelfName);
+            viewBooks = bookshelf.findViewById(R.id.btnViewBook);
             parent = bookshelf.findViewById(R.id.parentBookshelfActivity);
         }
     }
