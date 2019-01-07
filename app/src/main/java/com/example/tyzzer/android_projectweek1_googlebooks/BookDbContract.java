@@ -40,13 +40,13 @@ public class BookDbContract {
                 SHELF_TABLE_NAME + ";";
 
 
-        public static final String BOOKSHELF_TABLE_NAME = "book_in_shelf";
+        public static final String BOOKINSHELF_TABLE_NAME = "book_in_shelf";
 
         public static final String COLUMN_BOOK_ID = "book_id";
         public static final String COLUMN_SHELF_ID = "bookshelf_id";
 
-        public static final String SQL_CREATE_BOOKSHELF_TABLE = "CREATE TABLE IF NOT EXISTS "+
-                BOOKSHELF_TABLE_NAME + "(" +
+        public static final String SQL_CREATE_BOOKINSHELF_TABLE = "CREATE TABLE IF NOT EXISTS "+
+                BOOKINSHELF_TABLE_NAME + "(" +
                 _ID +              " INTEGER PRIMARY KEY, " +
                 COLUMN_BOOK_ID +     " TEXT, " +
                 COLUMN_SHELF_ID +     " TEXT, " +
@@ -55,7 +55,7 @@ public class BookDbContract {
                 "FOREIGN KEY (" + COLUMN_SHELF_ID + ") REFERENCES " +
                 SHELF_TABLE_NAME + "(" +COLUMN_SHELF_NAME + "));";
 
-        public static final String SQL_DELETE_BOOKSHELF_TABLE = "DROP TABLE IF EXISTS " +
+        public static final String SQL_DELETE_BOOKINSHELF_TABLE = "DROP TABLE IF EXISTS " +
                 SHELF_TABLE_NAME + ";";
     }
 }
