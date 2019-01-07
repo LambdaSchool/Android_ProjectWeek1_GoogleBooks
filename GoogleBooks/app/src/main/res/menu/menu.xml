@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/viewAllBooks"
+        android:icon="@drawable/ic_book_black_24dp"
+        android:title="@string/view_books"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/viewBookshelves"
+        android:icon="@drawable/ic_library_books_black_24dp"
+        android:title="@string/view_bookshelves"
+        app:showAsAction="ifRoom" />
+</menu>
