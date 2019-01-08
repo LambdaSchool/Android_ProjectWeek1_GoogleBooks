@@ -62,6 +62,9 @@ public class BooksInBookshelfDialogFragment extends Fragment {
                             Toast.LENGTH_LONG).show();
                 }else{
                     BooksViewModel.deleteBookshelf(bookshelf, bookVolumes);
+                    for(BookVolume bookVolume : bookVolumes){
+                        BooksViewModel.removeBookshelfBookRelation(bookshelf, bookVolume);
+                    }
                     new BookshelvesFragment.getShelvesFromDb().execute();
                     if (getFragmentManager() != null) {
                         getFragmentManager().popBackStack();
