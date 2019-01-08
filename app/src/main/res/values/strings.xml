@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Lambda Bookshelf</string>
+    <string name="title_home">Home</string>
+    <string name="title_bookshelves">Your Bookshelves</string>
+    <string name="title_your_books">Your Books</string>
+</resources>

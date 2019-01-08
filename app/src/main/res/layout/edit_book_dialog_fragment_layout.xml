@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/cardview_corner_radius"
+        app:cardElevation="@dimen/cardview_elevation"
+        app:cardUseCompatPadding="true"
+        app:contentPadding="@dimen/cardview_content_padding"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:text="Edit Book"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/set_has_read"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Have you read this book?" />
+
+            <CheckBox
+                android:id="@+id/set_favorite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Set as favorite" />
+
+            <Button
+                android:id="@+id/write_review_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Write a review" />
+
+            <Button
+                android:id="@+id/start_add_bookshelf_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add Book to Bookshelf" />
+
+            <Button
+                android:id="@+id/get_qr_code_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Get Qr Code" />
+
+            <Button
+                android:id="@+id/delete_book_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/holo_red_light"
+                android:text="Delete Book" />
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</android.support.constraint.ConstraintLayout>
