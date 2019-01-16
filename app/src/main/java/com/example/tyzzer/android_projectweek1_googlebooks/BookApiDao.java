@@ -1,11 +1,15 @@
 package com.example.tyzzer.android_projectweek1_googlebooks;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class BookApiDao {
@@ -21,7 +25,7 @@ public class BookApiDao {
             JSONObject dataObject = new JSONObject(result);
             JSONArray bookArray = dataObject.getJSONArray("items");
 
-            for(int i = 0; i < bookArray.length(); i++){
+            for (int i = 0; i < bookArray.length(); i++) {
                 Book book = new Book(bookArray.getJSONObject(i));
                 books.add(book);
             }
@@ -30,5 +34,9 @@ public class BookApiDao {
         }
 
         return books;
+    }
+
+    public static Bitmap getImage(Book book) {
+        return NetworkAdapter.getBitmapFromURL(book.getImageUrl());
     }
 }
