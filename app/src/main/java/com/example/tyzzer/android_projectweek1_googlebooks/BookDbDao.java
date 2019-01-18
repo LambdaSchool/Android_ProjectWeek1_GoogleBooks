@@ -117,7 +117,7 @@ public class BookDbDao {
         }
     }
 
-    private static ArrayList<Bookshelf> listBookshelves(){
+    public static ArrayList<Bookshelf> listBookshelves(){
         String getBookshelf = String.format("SELECT * FROM %s;", BookDbContract.BookEntry.SHELF_TABLE_NAME);
         Cursor cursor = db.rawQuery(getBookshelf, null);
         int index;
@@ -141,7 +141,7 @@ public class BookDbDao {
         }
     }
 
-    public static void createBookinshelf(Bookshelf bookshelf, Book book){
+    public static void addBookInShelf(Bookshelf bookshelf, Book book){
         if(db != null){
             ContentValues values = new ContentValues();
             values.put(BookDbContract.BookEntry.COLUMN_SHELF_ID, bookshelf.getName());
@@ -150,7 +150,7 @@ public class BookDbDao {
         }
     }
 
-    public static void deleteBookinshelf(Bookshelf bookshelf, Book book){
+    public static void deleteBookInShelf(Bookshelf bookshelf, Book book){
         if(db != null){
             String where = String.format("%s = '%s' AND %s='%s'",
                     BookDbContract.BookEntry.COLUMN_SHELF_ID, bookshelf.getName(),
@@ -158,4 +158,55 @@ public class BookDbDao {
             db.delete(BookDbContract.BookEntry.BOOKINSHELF_TABLE_NAME, where, null);
         }
     }
+    public static ArrayList<Book> listBookInShelf(Bookshelf bookshelf){
+        if(db != null){
+            Cursor cursor = db.rawQuery(String.format("SELECT %s.%s FROM %s JOIN %s ON %s.%s = %s.%s WHERE %s.%s=\"%s\"",
+                    BookDbContract.BookEntry.BOOK_TABLE_NAME, BookDbContract.BookEntry.COLUMN_TITLE,
+                    BookDbContract.BookEntry.BOOK_TABLE_NAME,
+                    BookDbContract.BookEntry.BOOKINSHELF_TABLE_NAME,
+                    BookDbContract.BookEntry.BOOK_TABLE_NAME, BookDbContract.BookEntry.COLUMN_TITLE,
+                    BookDbContract.BookEntry.BOOKINSHELF_TABLE_NAME, BookDbContract.BookEntry.COLUMN_BOOK_ID,
+                    BookDbContract.BookEntry.BOOKINSHELF_TABLE_NAME, BookDbContract.BookEntry.COLUMN_SHELF_ID,
+                    bookshelf.getName()), null);
+            ArrayList<String> bookTitles = new ArrayList<>();
+            int index;
+            while(cursor.moveToNext()){
+                index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.COLUMN_TITLE);
+                String title = cursor.getString(index);
+                bookTitles.add(title);
+            }
+            cursor.close();
+            ArrayList<Book> volumes = new ArrayList<>();
+            for(String title : bookTitles){
+                cursor = db.rawQuery(String.format("SELECT * FROM %s WHERE %s=\"%s\"",
+                        BookDbContract.BookEntry.BOOK_TABLE_NAME,
+                        BookDbContract.BookEntry.COLUMN_TITLE, title),
+                        null);
+                while(cursor.moveToNext()){
+                    Book volume = getBookData(cursor);
+                    volumes.add(volume);
+                }
+            }
+            return volumes;
+        }else{
+            return new ArrayList<>();
+        }
+    }
+
+    @NonNull
+    private static Book getBookData(Cursor cursor) {
+        int index;
+        index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.COLUMN_TITLE);
+        String title = cursor.getString(index);
+        index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.COLUMN_IMAGE_URL);
+        String imageUrl = cursor.getString(index);
+        index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.COLUMN_REVIEW);
+        String userReview = cursor.getString(index);
+        index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.COLUMN_AUTHOR);
+        String authors = cursor.getString(index);
+        index = cursor.getColumnIndexOrThrow(BookDbContract.BookEntry.COLUMN_READ);
+        int read = cursor.getInt(index);
+        return new Book(title, imageUrl, userReview, authors, read);
+    }
+
 }

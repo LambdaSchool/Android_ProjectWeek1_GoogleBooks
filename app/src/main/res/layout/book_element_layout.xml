@@ -53,20 +53,17 @@
             card_view:layout_constraintStart_toEndOf="@+id/book_cover"
             card_view:layout_constraintTop_toBottomOf="@+id/book_title" />
 
-        <ImageButton
+        <CheckBox
             android:id="@+id/favorite_button"
-            android:layout_width="36dp"
+            android:layout_width="45dp"
             android:layout_height="38dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginRight="24dp"
             android:layout_marginBottom="8dp"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintHorizontal_bias="1.0"
-            card_view:layout_constraintStart_toEndOf="@+id/book_title"
-            card_view:srcCompat="@android:drawable/btn_star" />
+            card_view:layout_constraintStart_toEndOf="@+id/book_title" />
 
         <TextView
             android:id="@+id/textView"

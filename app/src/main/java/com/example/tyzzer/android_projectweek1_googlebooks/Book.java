@@ -1,12 +1,16 @@
 package com.example.tyzzer.android_projectweek1_googlebooks;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Book {
+public class Book implements Parcelable {
     private String id, title, author, imageUrl, review;
-    private Integer read;
+    private int read;
+    private boolean selected;
 
     public Book(String title, String author, String imageUrl, String review, int read) {
         this.title = title;
@@ -24,9 +28,8 @@ public class Book {
             e.printStackTrace();
         }
 
-        JSONObject json = null;
         try {
-            json = jsonObject.getJSONObject("volumeInfo");
+            JSONObject json = jsonObject.getJSONObject("volumeInfo");
 
             try {
                 this.title = json.getString("title");
@@ -34,18 +37,11 @@ public class Book {
                 e.printStackTrace();
             }
             try {
-                JSONArray authors = json.getJSONArray("authors");
-                author = "";
-                for (int i = 0; i < authors.length(); i++) {
-                    if (i < (authors.length() - 1)) {
-                        author += authors.getString(i) + ", ";
-                    } else {
-                        author += authors.getString(i);
-                    }
-                }
-                this.author = author;
+                JSONArray authorsJsonArray = json.getJSONArray("authors");
+                this.author = parseAuthors(authorsJsonArray);
             } catch (JSONException e) {
                 e.printStackTrace();
+                this.author = "";
             }
             try {
                 JSONObject links = json.getJSONObject("imageLinks");
@@ -57,8 +53,65 @@ public class Book {
             e.printStackTrace();
         }
         this.review = "";
+        this.selected = false;
         this.read = 0;
     }
+    private static String parseAuthors(JSONArray authorsAry) {
+
+        StringBuilder authorsString = new StringBuilder();
+
+        for (int i = 0; i < authorsAry.length(); i++) {
+            try {
+                if (i == 0) {
+                    authorsString.append(authorsAry.getString(i));
+                } else {
+                    authorsString.append(" - ").append(authorsAry.getString(i));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return authorsString.toString();
+    }
+
+    protected Book(Parcel in) {
+        title = in.readString();
+        author = in.readString();
+        review = in.readString();
+        imageUrl = in.readString();
+        read = in.readInt();
+        selected = in.readByte() != 0;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(author);
+        dest.writeString(review);
+        dest.writeString(imageUrl);
+        dest.writeInt(read);
+        dest.writeByte((byte)(selected ? 1 : 0));
+
+    }
+
+    public static final Creator<Book> CREATOR = new Creator<Book>() {
+        @Override
+        public Book createFromParcel(Parcel in) {
+            return new Book(in);
+        }
+
+        @Override
+        public Book[] newArray(int size) {
+            return new Book[size];
+        }
+    };
+
 
     public String getId() {
         return id;
@@ -106,5 +159,13 @@ public class Book {
 
     public void setRead(int read) {
         this.read = read;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }

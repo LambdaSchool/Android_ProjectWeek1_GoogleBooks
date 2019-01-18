@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class BookApiDao {
     public static final String BASE_URL = "https://www.googleapis.com/books/v1/volumes/?q=";
@@ -36,7 +37,7 @@ public class BookApiDao {
         return books;
     }
 
-    public static Bitmap getImage(Book book) {
-        return NetworkAdapter.getBitmapFromURL(book.getImageUrl());
+    public static Bitmap getImage(String url){
+        return NetworkAdapter.getBitmapFromURL(url);
     }
 }
