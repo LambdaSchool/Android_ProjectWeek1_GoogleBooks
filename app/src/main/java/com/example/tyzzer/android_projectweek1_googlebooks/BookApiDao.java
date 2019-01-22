@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class BookApiDao {
+public class   BookApiDao {
     public static final String BASE_URL = "https://www.googleapis.com/books/v1/volumes/?q=";
 
     public static ArrayList<Book> searchBooks(String searchString) {

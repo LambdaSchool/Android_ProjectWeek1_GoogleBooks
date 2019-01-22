@@ -3,7 +3,6 @@ package com.example.tyzzer.android_projectweek1_googlebooks;
 import java.util.ArrayList;
 
 public class BookRepo {
-    public class BooksRepo {
         private ArrayList<Book> booksList;
 
         public void addBook(final Book book) {
@@ -56,5 +55,4 @@ public class BookRepo {
             return BookDbDao.listBookInShelf(bookshelf);
         }
 
-    }
 }

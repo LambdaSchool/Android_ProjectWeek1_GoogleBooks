@@ -18,4 +18,12 @@ public class Bookshelf {
     public void setName(String name) {
         this.name = name;
     }
+
+    public ArrayList<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(ArrayList<Book> books) {
+        this.books = books;
+    }
 }
