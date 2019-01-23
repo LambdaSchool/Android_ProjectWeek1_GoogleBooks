@@ -16,12 +16,14 @@ public class BookDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(BookDbContract.BookEntry.SQL_CREATE_BOOK_TABLE);
         sqLiteDatabase.execSQL(BookDbContract.BookEntry.SQL_CREATE_SHELF_TABLE);
+        sqLiteDatabase.execSQL(BookDbContract.BookEntry.SQL_CREATE_BOOKINSHELF_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVer, int newVer) {
         sqLiteDatabase.execSQL(BookDbContract.BookEntry.SQL_DELETE_BOOK_TABLE);
         sqLiteDatabase.execSQL(BookDbContract.BookEntry.SQL_DELETE_SHELF_TABLE);
+        sqLiteDatabase.execSQL(BookDbContract.BookEntry.SQL_DELETE_BOOKINSHELF_TABLE);
         this.onCreate(sqLiteDatabase);
     }
 

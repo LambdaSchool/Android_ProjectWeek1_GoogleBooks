@@ -86,19 +86,10 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.ViewHo
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Book book = new Book(data.getTitle(), data.getAuthor(), data.getImageUrl(), data.getReview(), data.isRead());
-                Bookshelf defaultShelf = new Bookshelf("default");
                 dataList.get(viewHolder.getAdapterPosition()).setSelected(isChecked);
-                BookDbDao.addBookInShelf(defaultShelf, book);
+                BookDbDao.addBook(book);
             }
         });
-
-        if(data.isSelected()){
-            viewHolder.parentView.setBackgroundColor(Color.CYAN);
-        } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                viewHolder.parentView.setBackground(null);
-            }
-        }
     }
 
     @Override
