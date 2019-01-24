@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class BookDbHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "BookDatabase.db";
 
     public BookDbHelper(Context context) {
@@ -17,6 +17,7 @@ public class BookDbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(BookDbContract.BookEntry.SQL_CREATE_BOOK_TABLE);
         sqLiteDatabase.execSQL(BookDbContract.BookEntry.SQL_CREATE_SHELF_TABLE);
         sqLiteDatabase.execSQL(BookDbContract.BookEntry.SQL_CREATE_BOOKINSHELF_TABLE);
+        sqLiteDatabase.execSQL(BookDbContract.BookEntry.CREATE_SHELF_TO_READ);
     }
 
     @Override

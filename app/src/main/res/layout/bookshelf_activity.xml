@@ -6,10 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/books_list"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/bookshelf_list_recyclerview"
         android:layout_width="368dp"
-        android:layout_height="432dp"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="36dp"
@@ -24,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.428" >
 
-    </LinearLayout>
+    </android.support.v7.widget.RecyclerView>
 
     <EditText
         android:id="@+id/bookshelf_name"
@@ -36,7 +36,7 @@
         android:layout_marginBottom="8dp"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/books_list"
+        app:layout_constraintBottom_toTopOf="@+id/bookshelf_list_recyclerview"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

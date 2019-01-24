@@ -5,17 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,78 +21,68 @@ import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
-public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.ViewHolder>{
+public class BookInShelfAdapter extends RecyclerView.Adapter<BookInShelfAdapter.ViewHolder> {
+    public static final String BOOK_EDIT_KEY = "bookedit";
     Bitmap bitmap = null;
-    static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView bookTitle, bookAuthor;
-        CheckBox favoriteButton;
-        ImageView bookCover;
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView BiSCover;
+        TextView BiSAuthor, BiSTitle;
         ViewGroup parentView;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView){
             super(itemView);
-            favoriteButton = itemView.findViewById(R.id.favorite_button);
-            bookCover = itemView.findViewById(R.id.book_cover);
-            bookTitle = itemView.findViewById(R.id.book_title);
-            bookAuthor = itemView.findViewById(R.id.book_author);
-            parentView = itemView.findViewById(R.id.book_element_parent_layout);
+            parentView = itemView.findViewById(R.id.bookinshelf_element_parent_layout);
+            BiSCover = itemView.findViewById(R.id.bookinshelf_cover);
+            BiSAuthor = itemView.findViewById(R.id.bookinshelf_author);
+            BiSTitle = itemView.findViewById(R.id.bookinshelf_title);
         }
     }
 
     private ArrayList<Book> dataList;
-    private ArrayList<Book> bookList = new ArrayList<>();
+    private String bookshelfTitle;
     private Context context;
     private Activity activity;
 
-    BookListAdapter(ArrayList<Book> dataList, Activity activity) {
+    BookInShelfAdapter(ArrayList<Book> dataList, String bookshelfTitle, Activity activity){
         this.dataList = dataList;
+        this.bookshelfTitle = bookshelfTitle;
         this.activity = activity;
     }
 
-    @NonNull
     @Override
-    public BookListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        context = viewGroup.getContext();
-        View view = LayoutInflater.from(
-                viewGroup.getContext())
-                .inflate(
-                        R.layout.book_element_layout,
-                        viewGroup,
-                        false);
-        return new ViewHolder(view);
-    }
-
-
-    @Override
-    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         final Book data = dataList.get(i);
         final String url = data.getImageUrl();
-        Boolean switchState = viewHolder.favoriteButton.isChecked();
 
-        viewHolder.bookTitle.setText(data.getTitle());
-        viewHolder.bookAuthor.setText(data.getAuthor());
-        if(url != null) {
-            new DownloadBookImageTask(viewHolder.bookCover).execute(url);
-        }
-
-        viewHolder.favoriteButton.setOnCheckedChangeListener(null);
-        viewHolder.favoriteButton.setChecked(data.isSelected());
-        viewHolder.favoriteButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        viewHolder.BiSTitle.setText(data.getTitle());
+        viewHolder.BiSAuthor.setText(data.getAuthor());
+        viewHolder.BiSTitle.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Book book = new Book(data.getTitle(), data.getAuthor(), data.getImageUrl(), data.getReview(), data.isRead());
-                Bookshelf bookshelf = new Bookshelf("To Read");
-                dataList.get(viewHolder.getAdapterPosition()).setSelected(isChecked);
-                BookDbDao.addBook(book);
-                BookDbDao.addBookInShelf(bookshelf, book);
+            public void onClick(View v) {
+                Intent intent = new Intent(context, BookDetails.class);
+                intent.putExtra(BOOK_EDIT_KEY, data.getTitle());
+                activity.startActivity(intent);
             }
         });
+        if(url != null) {
+            new DownloadBookImageTask(viewHolder.BiSCover).execute(url);
+        }
     }
 
     @Override
     public int getItemCount() {
         return dataList.size();
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        context = viewGroup.getContext();
+        View view = LayoutInflater.from
+                (viewGroup.getContext()).inflate(R.layout.bookinshelf_element_layout, viewGroup, false);
+        return new BookInShelfAdapter.ViewHolder(view);
     }
 
     private class DownloadBookImageTask extends AsyncTask<String, Void, Bitmap> {

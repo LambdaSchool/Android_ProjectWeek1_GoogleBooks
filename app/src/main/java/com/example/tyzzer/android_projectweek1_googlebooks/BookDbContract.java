@@ -57,5 +57,9 @@ public class BookDbContract {
 
         public static final String SQL_DELETE_BOOKINSHELF_TABLE = "DROP TABLE IF EXISTS " +
                 SHELF_TABLE_NAME + ";";
+
+        public static final String CREATE_SHELF_TO_READ =
+                String.format("INSERT INTO %s (%s) VALUES ('%s');",
+                        SHELF_TABLE_NAME, COLUMN_SHELF_NAME, "To Read");
     }
 }
